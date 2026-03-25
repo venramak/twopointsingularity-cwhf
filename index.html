@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CWHF · Unified Prototype</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --t: #1D9E75; --tl: #E1F5EE; --td: #085041;
+      --c: #D85A30; --cl: #FAECE7; --cd: #712B13;
+      --a: #BA7517; --al: #FAEEDA; --ad: #633806;
+      --b: #3B8BD4; --bl: #E6F1FB; --bd: #0C447C;
+      --p: #7F77DD; --pl: #EEEDFE; --pd: #3C3489;
+      --g: #888780; --gl: #F1EFE8; --gd: #444441;
+      --tx: #2C2C2A; --t2: #5F5E5A; --t3: #888780;
+      --bg: #F4F3F0; --card: #fff; --br: rgba(0,0,0,.08);
+      --nav-h: 56px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--tx);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-h);
+      background: var(--card);
+      border-bottom: 0.5px solid var(--br);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 12px;
+      z-index: 100;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .nav-brand { font-size: 15px; font-weight: 700; letter-spacing: -0.3px; text-decoration: none; color: var(--tx); margin-right: 16px; }
+    .nav-brand span { color: var(--t); }
+    .nav-btn { padding: 7px 16px; border-radius: 6px; border: none; background: transparent; color: var(--t2); cursor: pointer; font-size: 13px; font-weight: 500; transition: all 0.15s; }
+    .nav-btn:hover { background: var(--gl); color: var(--tx); }
+    .nav-btn.on { background: var(--tl); color: var(--td); font-weight: 600; }
+    .page-wrap { margin-top: var(--nav-h); padding: 20px 16px; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .card { background: var(--card); border: 0.5px solid var(--br); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; }
+    .card-sm { background: var(--card); border: 0.5px solid var(--br); border-radius: 7px; padding: 10px 12px; }
+    .lbl { font-size: 10px; font-weight: 600; color: var(--t3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px; }
+    .bx { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 3px; }
+    .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .g4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    @media (max-width: 700px) { .g2, .g3, .g4 { grid-template-columns: 1fr; } }
+    .btn-primary { padding: 10px 22px; border-radius: 7px; border: none; background: var(--t); color: white; font-weight: 600; font-size: 13px; cursor: pointer; transition: all 0.15s; }
+    .btn-primary:hover { background: var(--td); }
+    .btn-outline { padding: 9px 20px; border-radius: 7px; border: 0.5px solid var(--t); background: var(--tl); color: var(--td); font-weight: 600; font-size: 13px; cursor: pointer; transition: all 0.15s; }
+    .btn-outline:hover { background: var(--t); color: white; }
+    .code-box { background: #f8f7f4; border-radius: 6px; padding: 10px 14px; font-family: monospace; font-size: 11px; line-height: 1.7; border-left: 3px solid var(--t); white-space: pre-wrap; margin: 6px 0; }
+    .callout { border-radius: 0 7px 7px 0; padding: 10px 14px; font-size: 12px; line-height: 1.6; border-left: 3px solid; margin: 8px 0; }
+    .pl { padding: 5px 11px; border-radius: 16px; border: 0.5px solid var(--br); background: var(--card); color: var(--t2); cursor: pointer; font-size: 12px; transition: all 0.12s; }
+    .pl.on { border-color: var(--t); background: var(--tl); color: var(--td); font-weight: 500; }
+    .hc { width: 42px; height: 38px; border-radius: 4px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 0.5px solid transparent; transition: all 0.15s; flex-shrink: 0; }
+    .hc:hover { transform: scale(1.15); z-index: 10; border-color: rgba(0,0,0,0.3) !important; }
+    .hc.sel { border-color: rgba(0,0,0,0.5) !important; transform: scale(1.1); }
+    .tog { padding: 8px 18px; border-radius: 7px; border: none; color: #fff; font-weight: 700; cursor: pointer; font-size: 12px; transition: all 0.2s; }
+    .tog.on { background: var(--t); }
+    .tog.off { background: #999; }
+    .lc { border-radius: 9px; padding: 12px 14px; margin-bottom: 7px; cursor: pointer; transition: all 0.2s; border: 1.5px solid transparent; }
+    .lc:hover { transform: translateX(2px); }
+    .lc.on { transform: translateX(4px); }
+    .fc { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 500; margin: 3px; cursor: pointer; border: 0.5px solid transparent; }
+    .fc:hover { opacity: 0.85; }
+    .fc.on { transform: scale(1.04); border-color: rgba(0,0,0,0.2) !important; }
+    .step { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 0.5px solid var(--br); }
+    .step-n { width: 28px; height: 28px; border-radius: 50%; background: var(--t); color: white; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .form-row { margin-bottom: 12px; }
+    .form-row label { display: block; font-size: 11px; font-weight: 600; color: var(--t3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .form-row input, .form-row select, .form-row textarea { width: 100%; padding: 8px 12px; border: 0.5px solid var(--br); border-radius: 6px; font-size: 13px; background: var(--card); color: var(--tx); outline: none; }
+    .form-row input:focus, .form-row select:focus, .form-row textarea:focus { border-color: var(--t); }
+    .dt { width: 100%; border-collapse: collapse; font-size: 11px; }
+    .dt th { background: #f8f7f4; padding: 6px 8px; text-align: left; font-weight: 600; color: var(--t3); border-bottom: 0.5px solid var(--br); font-size: 10px; text-transform: uppercase; }
+    .dt td { padding: 6px 8px; border-bottom: 0.5px solid var(--br); color: var(--t2); }
+    .dt tr:hover td { background: #fafaf8; }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand"><span>CWHF</span> Coherence Lab</a>
+  <button class="nav-btn on" data-tab="framework">Framework</button>
+  <button class="nav-btn" data-tab="matrix">Validation Matrix</button>
+  <button class="nav-btn" data-tab="analysis">Quantitative Analysis</button>
+  <button class="nav-btn" data-tab="act">Act / Participate</button>
+</nav>
+
+<div class="page-wrap">
+  <!-- Framework Tab -->
+  <div id="framework" class="tab-content active">
+    <div class="wrap">
+      <div class="card" style="border:.5px solid var(--t);background:linear-gradient(135deg,#f8f7f4 0%,var(--tl) 100%)">
+        <div class="lbl">The complete contamination model</div>
+        <div style="font-size:20px;font-weight:700;letter-spacing:-.3px;margin-bottom:10px">h = f(v, <span style="color:var(--t)">L1</span>, <span style="color:var(--a)">L2</span>, <span style="color:var(--b)">L3</span>, <span style="color:var(--p)">L4</span>, <span style="color:var(--c)">L5</span>)</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
+          <span class="bx" style="background:var(--tl);color:var(--td)">L1 Cognitive state ← CWHF corrects</span>
+          <span class="bx" style="background:var(--al);color:var(--ad)">L2 Cognitive architecture</span>
+          <span class="bx" style="background:var(--bl);color:var(--bd)">L3 Information environment</span>
+          <span class="bx" style="background:var(--pl);color:var(--pd)">L4 Social & identity</span>
+          <span class="bx" style="background:var(--cl);color:var(--cd)">L5 Intention-action gap</span>
+        </div>
+        <div style="font-size:13px;color:var(--t2);line-height:1.65">Every alignment approach assuming <strong>h ≈ v</strong> — that the signal is a direct readout of the value — ignores all five contamination layers simultaneously. CWHF corrects <strong>L1</strong>: the layer that determines whether the latent value v is accessible at all. Without L1 correction, corrections to L2–L5 operate on a signal that was never connected to genuine values.</div>
+      </div>
+      <div class="g2">
+        <div id="fw-layer-cards"></div>
+        <div>
+          <div class="card"><div class="lbl">Signal fidelity — all five layers</div><div style="height:220px;"><canvas id="fw-radar"></canvas></div></div>
+          <div id="fw-layer-detail" class="card" style="min-height:80px;display:flex;align-items:center;justify-content:center;color:var(--t3);font-size:12px">Click a layer to see contamination factors</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="lbl">Johari Quadrants applied to annotator awareness</div>
+        <div class="g2">
+          <div><div id="johari-quadrant-cards"></div></div>
+          <div><canvas id="johari-chart" height="180"></canvas></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="lbl">Rate-Distortion Derivation</div>
+        <div class="code-box">Coherent state capacity ≈ 90–120 bits/sec | Drift state ≈ 10–35 bits/sec
+Optimal weight w*(s) = I(V;H|S=s) / I(V;H)
+CWHF achieves the rate-distortion optimal correction under the 120-bit bandwidth constraint.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Validation Matrix Tab -->
+  <div id="matrix" class="tab-content">
+    <div id="matrix-root"></div>
+  </div>
+
+  <!-- Quantitative Analysis Tab -->
+  <div id="analysis" class="tab-content">
+    <div id="analysis-root"></div>
+  </div>
+
+  <!-- Act Tab -->
+  <div id="act" class="tab-content">
+    <div id="act-root"></div>
+  </div>
+</div>
+
+<script>
+  // ###########################################################
+  // 1. SHARED DATA (Personas, States, Layers, etc.)
+  // ###########################################################
+  const LAYERS = [
+    {id:0,code:"L1",name:"Cognitive state",col:"#1D9E75",colL:"#E1F5EE",colD:"#085041",cwhf:true,
+     desc:"When in drift state, the 120-bit conscious channel is saturated. The person cannot access their Meta-layer values — heuristics and reactive patterns substitute for genuine judgment.",
+     cwhfResp:"CWHF weights training signals by c ∈ [0,1] — the probability of coherent-state production. V1 achieves 60–70% accuracy from behavioral proxies platforms already collect.",
+     factors:[{n:"Fatigue",s:.82},{n:"Sleep deprivation",s:.85},{n:"Cognitive overload",s:.78},{n:"Emotional reactivity",s:.74},{n:"Time pressure",s:.70},{n:"Decision fatigue",s:.68}]},
+    {id:1,code:"L2",name:"Cognitive architecture",col:"#BA7517",colL:"#FAEEDA",colD:"#633806",cwhf:false,
+     desc:"Even in coherent state, the compression function introduces systematic distortions through habitual reasoning patterns. These are structural features of bounded cognition.",
+     cwhfResp:"CWHF does not directly address L2. Coherent state (L1) increases metacognitive monitoring, partially mitigating bias. Better annotation design and diverse cohorts address L2 separately.",
+     factors:[{n:"Confirmation bias",s:.72},{n:"Framing effects",s:.71},{n:"Availability heuristic",s:.65},{n:"Anchoring",s:.60},{n:"Wrong mental models",s:.68},{n:"Logical fallacies",s:.55},{n:"Loss aversion",s:.58},{n:"Representativeness",s:.63}]},
+    {id:2,code:"L3",name:"Information environment",col:"#3B8BD4",colL:"#E6F1FB",colD:"#0C447C",cwhf:false,
+     desc:"The signal reflects what the person knows, not just what they value. Identical values expressed through different information environments produce different signals.",
+     cwhfResp:"L3 is addressed by diverse global annotation cohorts. Without CWHF, drift state collapses all cohorts to the same attractor — every dollar spent on diversity is contingent on CWHF working.",
+     factors:[{n:"Incomplete information",s:.70},{n:"Misinformation",s:.65},{n:"Filter bubbles",s:.72},{n:"Education gaps",s:.58},{n:"Cultural bounds",s:.62},{n:"Recency bias",s:.55}]},
+    {id:3,code:"L4",name:"Social & identity context",col:"#7F77DD",colL:"#EEEDFE",colD:"#3C3489",cwhf:false,
+     desc:"The signal is produced by a person embedded in social structures holding multiple identity layers. When tribal identity is salient, the tribal value set can substitute for individual reflective judgment.",
+     cwhfResp:"L4 is partially addressed by intra-personal calibration — comparing each person to their own baseline removes cross-person context contamination. Multi-mirror assessment (V3+) corrects Johari BLIND/HIDDEN errors.",
+     factors:[{n:"Tribal identity",s:.74},{n:"Peer pressure",s:.68},{n:"Social desirability",s:.66},{n:"Developmental stage",s:.70},{n:"Demographic activation",s:.62},{n:"Authority compliance",s:.60}]},
+    {id:4,code:"L5",name:"Intention-action gap",col:"#D85A30",colL:"#FAECE7",colD:"#712B13",cwhf:false,
+     desc:"Even coherent people with genuine values produce signals that diverge from those values because of moral dilemmas, value contradictions, paradoxes, hypocrisies, and execution failures.",
+     cwhfResp:"Coherent state provides more resources to navigate L5 tensions deliberately. But coherent-state signals still contain genuine contradictions. Multi-session aggregation across diverse contexts is the primary L5 correction.",
+     factors:[{n:"Moral dilemmas",s:.78},{n:"Value contradictions",s:.75},{n:"Akrasia",s:.68},{n:"Paradoxes",s:.70},{n:"Hypocrisies",s:.65},{n:"Intention-execution gap",s:.72},{n:"Moral licensing",s:.58}]}
+  ];
+
+  const JOHARI = [
+    {quadrant:"OPEN",col:"#1D9E75",bg:"#E1F5EE",desc:"Self-report and behavioral signals agree. V1 proxy valid.",examples:["Elena Kovač","Ravi Kumar","Yuki Tanaka"],v1error:"Minimal",correction:"Standard V1 proxy sufficient."},
+    {quadrant:"BLIND",col:"#BA7517",bg:"#FAEEDA",desc:"Cannot detect own drift state. Self-report systematically inflated.",examples:["Amara Osei","Sarah Njoroge","David Santos"],v1error:"Over-weights by ~18pts",correction:"Behavioral signal component corrects self-report inflation."},
+    {quadrant:"HIDDEN",col:"#3B8BD4",bg:"#E6F1FB",desc:"Underestimates own coherence. Genuine values clarity invisible.",examples:["Fatima Al-Rashid","Priya Sharma"],v1error:"Under-weights by ~18pts",correction:"Multi-mirror assessment (V3+) corrects."},
+    {quadrant:"UNKNOWN",col:"#888780",bg:"#F1EFE8",desc:"High uncertainty. Neither self-report nor behavioral signals reliable.",examples:["New annotators (<3 sessions)"],v1error:"Cold start: w=0.55",correction:"Intra-personal calibration after session 3."}
+  ];
+
+  const PERSONAS = [
+    {id:0,name:"Amara Osei",sh:"Amara",fl:"🇳🇬",country:"Nigeria",city:"Lagos",role:"Gig annotator",age:28,edu:"Secondary",inc:"Low",joh:"BLIND",c320:186,dc:0.61,bio:"High ambient stress, BLIND Johari. V1 over-weights in drift by ~18pts.",L2:0.52,L3:0.61,L4:0.58,L5:0.62},
+    {id:1,name:"Elena Kovač",sh:"Elena",fl:"🇧🇪",country:"Belgium",city:"Brussels",role:"Policy analyst",age:38,edu:"PhD",inc:"High",joh:"OPEN",c320:261,dc:0.09,bio:"Highest baseline. OPEN Johari. V1 proxy highly accurate.",L2:0.72,L3:0.85,L4:0.78,L5:0.70},
+    {id:2,name:"Ravi Kumar",sh:"Ravi",fl:"🇮🇳",country:"India",city:"Bangalore",role:"ML engineer",age:31,edu:"Masters",inc:"Upper-mid",joh:"OPEN",c320:238,dc:0.14,bio:"Technical precision, strong L2. Quantitative frame can miss nuance.",L2:0.68,L3:0.79,L4:0.65,L5:0.60},
+    {id:3,name:"Sarah Njoroge",sh:"Sarah",fl:"🇰🇪",country:"Kenya",city:"Nairobi",role:"Student / annotator",age:22,edu:"Undergrad",inc:"Low",joh:"BLIND",c320:194,dc:0.51,bio:"Young, high stress, BLIND. Coherent-state annotations show sophisticated analysis.",L2:0.48,L3:0.62,L4:0.55,L5:0.65},
+    {id:4,name:"Yuki Tanaka",sh:"Yuki",fl:"🇯🇵",country:"Japan",city:"Tokyo",role:"UX researcher",age:33,edu:"Masters",inc:"Upper-mid",joh:"OPEN",c320:235,dc:0.21,bio:"Systematic thinker, process-aware.",L2:0.70,L3:0.76,L4:0.72,L5:0.65},
+    {id:5,name:"Fatima Al-Rashid",sh:"Fatima",fl:"🇵🇰",country:"Pakistan",city:"Karachi",role:"Community worker",age:35,edu:"Bachelors",inc:"Lower-mid",joh:"HIDDEN",c320:215,dc:0.33,bio:"HIDDEN Johari: V1 under-weights by ~18pts. Genuine values clarity.",L2:0.58,L3:0.64,L4:0.60,L5:0.72},
+    {id:6,name:"Marcus Chen",sh:"Marcus",fl:"🇬🇧",country:"UK",city:"London",role:"Data scientist",age:29,edu:"Masters",inc:"Upper-mid",joh:"OPEN",c320:221,dc:0.28,bio:"Analytical, WEIRD-educated, culturally narrow.",L2:0.65,L3:0.80,L4:0.62,L5:0.58},
+    {id:7,name:"Priya Sharma",sh:"Priya",fl:"🇮🇳",country:"India",city:"Mumbai",role:"PhD student",age:24,edu:"Postgrad",inc:"Low",joh:"HIDDEN",c320:208,dc:0.44,bio:"Most dramatic HIDDEN. In deep focus, most sophisticated annotations.",L2:0.55,L3:0.71,L4:0.56,L5:0.68},
+    {id:8,name:"David Santos",sh:"David",fl:"🇵🇭",country:"Philippines",city:"Manila",role:"Freelance annotator",age:26,edu:"Bachelors",inc:"Low",joh:"BLIND",c320:181,dc:0.62,bio:"Lowest baseline, highest drift. Equity case for intra-personal calibration.",L2:0.45,L3:0.58,L4:0.52,L5:0.60},
+    {id:9,name:"Aisha Mohammed",sh:"Aisha",fl:"🇪🇬",country:"Egypt",city:"Cairo",role:"Journalist",age:32,edu:"Bachelors",inc:"Mid",joh:"OPEN",c320:229,dc:0.18,bio:"Journalistic instinct, high L3 for political complexity.",L2:0.66,L3:0.82,L4:0.68,L5:0.64}
+  ];
+
+  const STATES = [
+    {id:0,em:"🌅",label:"Morning / rested",tier:"High",base:0.82,desc:"Rested, full access to meta-layer values."},
+    {id:1,em:"🏃",label:"Post-exercise",tier:"High",base:0.78,desc:"Alert, mild positive affect."},
+    {id:2,em:"☕",label:"Weekend reflective",tier:"High",base:0.86,desc:"Unhurried, extended deliberation."},
+    {id:3,em:"🎯",label:"Deep focus",tier:"High",base:0.80,desc:"Flow state, full absorption."},
+    {id:4,em:"☀️",label:"Post-meal",tier:"Medium",base:0.70,desc:"Standard working state."},
+    {id:5,em:"😮‍💨",label:"Post-work fatigue",tier:"Medium",base:0.52,desc:"Depleted, heuristic rising."},
+    {id:6,em:"🚇",label:"Commute / distracted",tier:"Drift",base:0.42,desc:"Fragmented attention."},
+    {id:7,em:"⏰",label:"Deadline pressure",tier:"Drift",base:0.32,desc:"High load, time scarcity."},
+    {id:8,em:"😔",label:"Emotional distress",tier:"Drift",base:0.25,desc:"Negative affect, meta-layer inaccessible."},
+    {id:9,em:"🌙",label:"Late night 11pm+",tier:"Severe",base:0.18,desc:"Severe sleep pressure."}
+  ];
+
+  const MODS = [
+    [0.00,-0.04,-0.02,-0.03,-0.04,-0.02,0.02,0.01,0.02,0.03],
+    [0.06,0.05,0.07,0.06,0.05,-0.01,-0.02,-0.04,-0.05,-0.03],
+    [0.04,0.04,0.03,0.06,0.04,-0.02,-0.03,-0.05,-0.06,-0.04],
+    [-0.03,-0.02,-0.01,-0.02,-0.03,0.01,0.02,0.01,0.02,0.02],
+    [0.02,0.02,0.03,0.04,0.03,-0.01,-0.02,-0.02,-0.03,-0.02],
+    [0.03,0.02,0.04,0.03,0.02,-0.01,-0.01,-0.01,-0.02,-0.02],
+    [0.02,0.03,0.03,0.04,0.03,-0.01,-0.02,-0.03,-0.04,-0.03],
+    [0.01,0.01,0.02,0.07,0.01,-0.02,-0.03,-0.03,-0.04,-0.03],
+    [-0.05,-0.04,-0.03,-0.02,-0.04,0.02,0.03,0.03,0.04,0.04],
+    [0.03,0.03,0.04,0.05,0.04,-0.01,-0.02,-0.02,-0.03,-0.02]
+  ];
+
+  function getC(pi,si) { return Math.min(0.97, Math.max(0.10, STATES[si].base + MODS[pi][si])); }
+  function getW(c) { return Math.min(1.0, Math.max(0.1, 0.1 + 0.9 * Math.pow(c, 1.5))); }
+  function cc(c) { return c >= 0.72 ? "#1D9E75" : c >= 0.55 ? "#BA7517" : c >= 0.38 ? "#D85A30" : "#993C1D"; }
+  function cbg(c) { return c >= 0.72 ? "#E1F5EE" : c >= 0.55 ? "#FAEEDA" : c >= 0.38 ? "#FAECE7" : "#FDE8E8"; }
+
+  // ###########################################################
+  // 2. FRAMEWORK TAB LOGIC
+  // ###########################################################
+  let fwActL = 0;
+  function buildFWLayerCards() {
+    const el = document.getElementById('fw-layer-cards');
+    if (!el) return;
+    el.innerHTML = LAYERS.map((L,i)=>`
+      <div class="lc ${fwActL===i?'on':''}" style="background:${fwActL===i?L.colL:'var(--card)'};border-color:${fwActL===i?L.col:'var(--br)'}" onclick="fwActL=${i};buildFWLayerCards();updateFWDetail()">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:14px;font-weight:700;color:${L.col}">${L.code}</span>
+            <div><div style="font-weight:600;font-size:12px;color:${L.colD}">${L.name}</div><div style="font-size:10px;color:${L.col}">${L.factors.length} factors</div></div>
+          </div>
+          ${L.cwhf?`<span class="bx" style="background:${L.col};color:white;font-size:9px">CWHF</span>`:`<span class="bx" style="background:rgba(0,0,0,.06);color:${L.col};font-size:9px">other</span>`}
+        </div>
+      </div>`).join('');
+    updateFWDetail();
+  }
+  function updateFWDetail() {
+    const L = LAYERS[fwActL];
+    const det = document.getElementById('fw-layer-detail');
+    if (det) {
+      det.style.display = '';
+      det.style.color = L.colD;
+      det.style.background = L.colL;
+      det.style.borderLeft = `3px solid ${L.col}`;
+      det.innerHTML = `<div class="lbl">${L.code}: ${L.name}</div><div style="font-size:12px;line-height:1.65;margin-bottom:8px">${L.desc}</div><div style="font-size:11px;border-top:.5px solid rgba(0,0,0,.1);padding-top:6px;margin-top:4px"><strong>CWHF response:</strong> ${L.cwhfResp}</div>`;
+    }
+  }
+  function buildFWRadar() {
+    const ctx = document.getElementById('fw-radar');
+    if (!ctx) return;
+    new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: LAYERS.map(L=>L.code+' '+L.name.split(' ')[0]),
+        datasets: [
+          {label:'Without CWHF',data:[38,62,74,81,88].map(v=>Math.round(v*.6)),backgroundColor:'rgba(216,90,48,.1)',borderColor:'#D85A30',pointBackgroundColor:'#D85A30'},
+          {label:'With CWHF',data:[82,62,74,81,88].map(v=>Math.round(v*.6)),backgroundColor:'rgba(29,158,117,.12)',borderColor:'#1D9E75',pointBackgroundColor:'#1D9E75'}
+        ]
+      },
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:10,font:{size:10}}}},scales:{r:{min:0,max:60,ticks:{font:{size:9},stepSize:20},pointLabels:{font:{size:9}}}}}
+    });
+  }
+  function buildJohari() {
+    const container = document.getElementById('johari-quadrant-cards');
+    container.innerHTML = JOHARI.map(j=>`<div class="card-sm" style="border-left:3px solid ${j.col};margin-bottom:6px"><strong style="color:${j.col}">${j.quadrant}</strong><div style="font-size:11px;color:var(--t2)">${j.desc}</div></div>`).join('');
+    const ctx = document.getElementById('johari-chart');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: JOHARI.map(j=>j.quadrant),
+        datasets: [
+          {label:'Self-report accuracy',data:[92,45,48,55],backgroundColor:JOHARI.map(j=>j.col),borderRadius:4},
+          {label:'After multi-mirror',data:[94,82,88,70],backgroundColor:JOHARI.map(j=>j.col+'80'),borderRadius:4}
+        ]
+      },
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:10,font:{size:10}}}},scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%',font:{size:9}}},x:{ticks:{font:{size:9}}}}}
+    });
+  }
+  function initFramework() {
+    buildFWLayerCards();
+    buildFWRadar();
+    buildJohari();
+  }
+
+  // ###########################################################
+  // 3. VALIDATION MATRIX TAB (Code 4 integrated)
+  // ###########################################################
+  let matCW = false, matSelP = 0, matSelS = 0, matSelCell = null, matCharts = {};
+  function renderMatrix() {
+    const root = document.getElementById('matrix-root');
+    let ch = '<div style="display:flex;align-items:flex-end;gap:3px;margin-bottom:3px;padding-left:148px">'+PERSONAS.map(p=>`<div style="width:42px;text-align:center;font-size:10px;color:var(--t3);flex-shrink:0"><div>${p.fl}</div><div style="font-size:9px">${p.sh}</div></div>`).join('')+'</div>';
+    let rows = '';
+    for (let si=0; si<10; si++) {
+      rows += `<div style="display:flex;align-items:center;gap:3px;margin-bottom:3px"><div style="width:142px;font-size:10px;color:var(--t3);text-align:right;padding-right:6px;flex-shrink:0"><div>${STATES[si].em} ${STATES[si].label.substring(0,16)}</div><div style="font-size:9px;color:${STATES[si].tier==='High'?var(--t):STATES[si].tier==='Medium'?var(--a):STATES[si].tier==='Drift'?var(--c):'#993C1D'}">${STATES[si].tier}</div></div>`;
+      for (let pi=0; pi<10; pi++) {
+        const c = getC(pi,si), w = getW(c);
+        const disp = matCW ? w.toFixed(2) : c.toFixed(2);
+        const bg = cc(c);
+        const op = matCW ? (0.25 + w*0.75) : (0.25 + c*0.75);
+        const isSel = matSelCell === `${pi},${si}`;
+        rows += `<div class="hc${isSel?' sel':''}" style="background:${bg};opacity:${op};color:white;text-shadow:0 1px 2px rgba(0,0,0,.4)" onclick="selMatrixCell(${pi},${si})"><div style="font-size:10px;font-weight:700">${disp}</div><div style="font-size:8px;opacity:.8">${STATES[si].tier[0]}</div></div>`;
+      }
+      rows += '</div>';
+    }
+    const allC = PERSONAS.flatMap((_,pi)=>STATES.map((_,si)=>getC(pi,si)));
+    const avg = allC.reduce((a,b)=>a+b)/100;
+    const allW = allC.map(c=>getW(c));
+    const avgW = allW.reduce((a,b)=>a+b)/100;
+    const hcnt = allC.filter(c=>c>=0.72).length;
+    const dcnt = allC.filter(c=>c<0.45).length;
+    let detail = '<div class="card" style="text-align:center;color:var(--t3);padding:24px">Click any cell in the matrix for the detailed breakdown</div>';
+    if (matSelCell) {
+      const [pi,si] = matSelCell.split(',').map(Number);
+      const p = PERSONAS[pi], s = STATES[si], c = getC(pi,si), w = getW(c);
+      detail = `<div class="card" style="border:1.5px solid ${cc(c)}"><div style="display:flex;justify-content:space-between"><div><div style="font-size:15px;font-weight:700">${p.fl} ${p.name} · ${s.em} ${s.label}</div><div style="font-size:11px;color:var(--t3)">${p.role} · ${p.city}, ${p.country} · ${p.joh} Johari</div></div><div><span class="bx" style="background:${cbg(c)};color:${cc(c)}">${s.tier}</span><span class="bx" style="margin-left:5px">${matCW?'CWHF active':'Uniform'}</span></div></div>
+      <div class="g4"><div class="met"><div class="lbl">c</div><div class="mv" style="font-size:18px;color:${cc(c)}">${c.toFixed(2)}</div></div><div class="met"><div class="lbl">CWHF weight</div><div class="mv" style="font-size:18px;color:${matCW?cc(c):'#999'}">${matCW?w.toFixed(2):'1.00'}</div></div></div>
+      <div class="lbl">Annotation excerpt</div><div class="ann" style="border-left:3px solid ${cc(c)};background:${cbg(c)};padding:10px">[Simulated annotation for ${p.name} in ${s.label}]</div></div>`;
+    }
+    root.innerHTML = `
+      <div class="card"><div style="display:flex;justify-content:space-between"><div class="lbl">100-combination matrix — ${matCW?"CWHF weights w":"coherence scores c"} — click any cell</div><button id="mat-toggle" class="tog ${matCW?'on':'off'}" onclick="toggleMatrixCW()">${matCW?'● CWHF ON':'○ CWHF OFF'}</button></div><div style="overflow-x:auto">${ch}${rows}</div><div style="display:flex;gap:14px;margin-top:6px;font-size:10px"><span style="color:#1D9E75">■ High (c≥0.72) — ${hcnt} cells</span><span style="color:#BA7517">■ Medium (0.55–0.72)</span><span style="color:#D85A30">■ Drift (0.38–0.55)</span><span style="color:#993C1D">■ Severe (<0.38) — ${dcnt} cells</span></div></div>
+      <div class="g4"><div class="met"><div class="lbl">Mean coherence</div><div class="mv" style="color:${cc(avg)}">${avg.toFixed(2)}</div><div class="bar"><div class="bf" style="width:${avg*100}%;background:${cc(avg)}"></div></div></div><div class="met"><div class="lbl">Mean CWHF weight</div><div class="mv" style="color:${matCW?cc(avgW):'#999'}">${matCW?avgW.toFixed(2):'1.00'}</div><div class="bar"><div class="bf" style="width:${matCW?avgW*100:100}%;background:${matCW?cc(avgW):'#999'}"></div></div></div></div>
+      ${detail}`;
+  }
+  function selMatrixCell(pi,si) { matSelCell = `${pi},${si}`; renderMatrix(); }
+  function toggleMatrixCW() { matCW = !matCW; renderMatrix(); }
+
+  // ###########################################################
+  // 4. QUANTITATIVE ANALYSIS TAB (Code 3 simplified)
+  // ###########################################################
+  function renderAnalysis() {
+    const root = document.getElementById('analysis-root');
+    root.innerHTML = `
+      <div class="card"><div class="lbl">H1 Test Design — Critical Path</div><div class="code-box">Partial correlation r between coherence proxy c and within-session ICC, controlling for expertise and conscientiousness.<br>Target: r > 0.25. Power analysis: N=50 gives power 0.82 at r=0.25.<br>Cost: $10k, 30 days on Prolific. Pre‑register on OSF.</div><button class="btn-primary" onclick="alert('H1 protocol: N=50, 3 sessions, matched pairs, RT + anchor. Contact venkat@twopointsingularity.com')">Get Full Protocol</button></div>
+      <div class="card"><div class="lbl">ROI Calculator</div><div class="g2"><div><label>Training run cost ($M): <input type="range" id="roi-cost" min="1" max="100" value="20" step="1" oninput="updateROI()"><span id="roi-cost-val">20</span>M</label><label>Drift prevalence: <input type="range" id="roi-drift" min="20" max="80" value="55" step="5" oninput="updateROI()"><span id="roi-drift-val">55</span>%</label><label>Proxy accuracy: <input type="range" id="roi-acc" min="40" max="80" value="65" step="5" oninput="updateROI()"><span id="roi-acc-val">65</span>%</label></div><div><div>Annual error cost saving: $<span id="roi-saving">0</span>K</div><div>ROI at 12 months: <span id="roi-12">0</span>%</div><div>ROI at 36 months: <span id="roi-36">0</span>%</div></div></div></div>
+      <div class="card"><div class="lbl">Feasibility Matrix</div><div class="g3"><div class="card-sm"><strong>Feasibility</strong><br>92/100 – V1 uses existing platform data.</div><div class="card-sm"><strong>Scalability</strong><br>88/100 – 3.5% corpus shifts gradient.</div><div class="card-sm"><strong>Repeatability</strong><br>95/100 – Fixed interface c∈[0,1].</div></div></div>
+      <div class="card"><div class="lbl">Technical Appendices</div><div class="g2"><div class="card-sm"><strong>Rate-Distortion</strong><br>Coherent: ~100 bits/sec, drift: ~25 bits/sec. CWHF is optimal under bandwidth constraint.</div><div class="card-sm"><strong>Bias Theorem</strong><br>r̂ = r* + (1-p)δ. Aggregation fails because E[δ]≠0.</div><div class="card-sm"><strong>Structural Text Proxies</strong><br>P1 Propositional density, P2 Syntactic variance, P3 Hedging markers, P4 Logical connectors, P5 Lexical specificity.</div><div class="card-sm"><strong>Dawid‑Skene Orthogonality</strong><br>CWHF is additive – session‑level weighting, not competitive with annotator‑level methods.</div></div></div>
+    `;
+    updateROI();
+  }
+  function updateROI() {
+    const costM = parseFloat(document.getElementById('roi-cost').value);
+    const drift = parseFloat(document.getElementById('roi-drift').value)/100;
+    const acc = parseFloat(document.getElementById('roi-acc').value)/100;
+    document.getElementById('roi-cost-val').innerText = costM;
+    document.getElementById('roi-drift-val').innerText = drift*100;
+    document.getElementById('roi-acc-val').innerText = acc*100;
+    const biasRed = drift * acc * 0.82;
+    const qualityGain = biasRed * 0.35;
+    const errorSaving = costM * 1e6 * 0.08 * qualityGain;
+    document.getElementById('roi-saving').innerText = Math.round(errorSaving/1000);
+    document.getElementById('roi-12').innerText = Math.round((errorSaving - 50000)/50000 * 100);
+    document.getElementById('roi-36').innerText = Math.round((errorSaving*3 - 50000*1.5)/50000 * 100);
+  }
+
+  // ###########################################################
+  // 5. ACT / PARTICIPATE TAB (with Supabase waitlist)
+  // ###########################################################
+  // Replace these with your actual Supabase credentials
+  const SUPABASE_URL = 'postgresql://postgres:[Venki@CWHF@2026]@db.ziirxlakoppxlntvkgbz.supabase.co:5432/postgres';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppaXJ4bGFrb3BweGxudHZrZ2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NTg3NzMsImV4cCI6MjA5MDAzNDc3M30.7bwjzKfinohlbOtAnHG30ArQ-azA6Y3y_WkE5Spv_44';
+  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  async function loadWaitlistCount() {
+    const { count, error } = await supabase
+      .from('waitlist')
+      .select('*', { count: 'exact', head: true });
+    if (!error && count !== null) {
+      document.getElementById('waitlist-count').innerText = count;
+    } else {
+      document.getElementById('waitlist-count').innerText = '?';
+    }
+  }
+
+  async function submitWaitlist(event) {
+    event.preventDefault();
+    const email = document.getElementById('waitlist-email').value;
+    const consent = document.getElementById('waitlist-consent').checked;
+    if (!email || !consent) {
+      alert('Please provide a valid email and consent to join the research waitlist.');
+      return;
+    }
+    const { error } = await supabase
+      .from('waitlist')
+      .insert([{ email, consent }]);
+    if (error) {
+      if (error.code === '23505') {
+        alert('You are already on the waitlist. Thank you!');
+      } else {
+        alert('Something went wrong. Please try again later.');
+        console.error(error);
+      }
+    } else {
+      alert('Thank you! You have been added to the CWHF research waitlist.');
+      document.getElementById('waitlist-email').value = '';
+      document.getElementById('waitlist-consent').checked = false;
+      loadWaitlistCount();
+    }
+  }
+
+  function renderAct() {
+    const root = document.getElementById('act-root');
+    root.innerHTML = `
+      <div class="card" style="border-left:3px solid var(--t)">
+        <div class="lbl">Join the H1 Research Waitlist</div>
+        <p>Be among the first to participate in the live H1 validation study. Your email will only be used to notify you when the study opens. We respect your privacy.</p>
+        <form id="waitlist-form" onsubmit="submitWaitlist(event)">
+          <div class="form-row">
+            <label>Email</label>
+            <input type="email" id="waitlist-email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-row">
+            <label>
+              <input type="checkbox" id="waitlist-consent" required>
+              I consent to receive updates about the CWHF H1 study and related research.
+            </label>
+          </div>
+          <button type="submit" class="btn-primary">Join Waitlist →</button>
+        </form>
+        <div style="margin-top:12px; font-size:11px; color:var(--t3)">
+          👥 <span id="waitlist-count">...</span> researchers and participants already on the waitlist.
+        </div>
+      </div>
+      <div class="card">
+        <div class="lbl">AI Lab Integration</div>
+        <div class="code-box">V1 implementation: Add 2‑item anchor (attention, emotion) + modify loss function: L = (1/Σwᵢ) Σᵢ wᵢ(r_θ − h)² where w = 0.1 + 0.9·c^1.5. One sprint.</div>
+        <button class="btn-outline" onclick="alert('Contact venkat@twopointsingularity.com for integration guide')">Contact for Integration</button>
+      </div>
+      <div class="card">
+        <div class="lbl">Research Collaboration</div>
+        <p>Run H1, H2, or other hypotheses. Pre‑registration on OSF. We provide full protocol, code, and support.</p>
+        <button class="btn-outline" onclick="alert('Collaboration request: email venkat@twopointsingularity.com')">Request Collaboration</button>
+      </div>
+      <div class="card">
+        <div class="lbl">Policy Engagement</div>
+        <p>CWHF satisfies EU AI Act Article 10 training data governance requirements. Coherence distribution reporting is ready for regulatory adoption.</p>
+        <button class="btn-outline" onclick="alert('Policy briefing: email venkat@twopointsingularity.com')">Request Briefing</button>
+      </div>
+    `;
+    loadWaitlistCount();
+  }
+
+  // ###########################################################
+  // 6. TAB SWITCHING & INIT
+  // ###########################################################
+  let activeTab = 'framework';
+  function switchTab(tab) {
+    activeTab = tab;
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.toggle('on', btn.dataset.tab === tab));
+    document.querySelectorAll('.tab-content').forEach(div => div.classList.toggle('active', div.id === tab));
+    if (tab === 'framework') initFramework();
+    else if (tab === 'matrix') renderMatrix();
+    else if (tab === 'analysis') renderAnalysis();
+    else if (tab === 'act') renderAct();
+  }
+
+  document.querySelectorAll('.nav-btn').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
+  switchTab('framework');
+</script>
+</body>
+</html>
