@@ -1,478 +1,1636 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CWHF · Unified Prototype</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    :root {
-      --t: #1D9E75; --tl: #E1F5EE; --td: #085041;
-      --c: #D85A30; --cl: #FAECE7; --cd: #712B13;
-      --a: #BA7517; --al: #FAEEDA; --ad: #633806;
-      --b: #3B8BD4; --bl: #E6F1FB; --bd: #0C447C;
-      --p: #7F77DD; --pl: #EEEDFE; --pd: #3C3489;
-      --g: #888780; --gl: #F1EFE8; --gd: #444441;
-      --tx: #2C2C2A; --t2: #5F5E5A; --t3: #888780;
-      --bg: #F4F3F0; --card: #fff; --br: rgba(0,0,0,.08);
-      --nav-h: 56px;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
-      background: var(--bg);
-      color: var(--tx);
-      font-size: 13px;
-      line-height: 1.6;
-    }
-    .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: var(--nav-h);
-      background: var(--card);
-      border-bottom: 0.5px solid var(--br);
-      display: flex;
-      align-items: center;
-      padding: 0 20px;
-      gap: 12px;
-      z-index: 100;
-      overflow-x: auto;
-      white-space: nowrap;
-    }
-    .nav-brand { font-size: 15px; font-weight: 700; letter-spacing: -0.3px; text-decoration: none; color: var(--tx); margin-right: 16px; }
-    .nav-brand span { color: var(--t); }
-    .nav-btn { padding: 7px 16px; border-radius: 6px; border: none; background: transparent; color: var(--t2); cursor: pointer; font-size: 13px; font-weight: 500; transition: all 0.15s; }
-    .nav-btn:hover { background: var(--gl); color: var(--tx); }
-    .nav-btn.on { background: var(--tl); color: var(--td); font-weight: 600; }
-    .page-wrap { margin-top: var(--nav-h); padding: 20px 16px; }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-    .card { background: var(--card); border: 0.5px solid var(--br); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; }
-    .card-sm { background: var(--card); border: 0.5px solid var(--br); border-radius: 7px; padding: 10px 12px; }
-    .lbl { font-size: 10px; font-weight: 600; color: var(--t3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px; }
-    .bx { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 3px; }
-    .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .g4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-    @media (max-width: 700px) { .g2, .g3, .g4 { grid-template-columns: 1fr; } }
-    .btn-primary { padding: 10px 22px; border-radius: 7px; border: none; background: var(--t); color: white; font-weight: 600; font-size: 13px; cursor: pointer; transition: all 0.15s; }
-    .btn-primary:hover { background: var(--td); }
-    .btn-outline { padding: 9px 20px; border-radius: 7px; border: 0.5px solid var(--t); background: var(--tl); color: var(--td); font-weight: 600; font-size: 13px; cursor: pointer; transition: all 0.15s; }
-    .btn-outline:hover { background: var(--t); color: white; }
-    .code-box { background: #f8f7f4; border-radius: 6px; padding: 10px 14px; font-family: monospace; font-size: 11px; line-height: 1.7; border-left: 3px solid var(--t); white-space: pre-wrap; margin: 6px 0; }
-    .callout { border-radius: 0 7px 7px 0; padding: 10px 14px; font-size: 12px; line-height: 1.6; border-left: 3px solid; margin: 8px 0; }
-    .pl { padding: 5px 11px; border-radius: 16px; border: 0.5px solid var(--br); background: var(--card); color: var(--t2); cursor: pointer; font-size: 12px; transition: all 0.12s; }
-    .pl.on { border-color: var(--t); background: var(--tl); color: var(--td); font-weight: 500; }
-    .hc { width: 42px; height: 38px; border-radius: 4px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 0.5px solid transparent; transition: all 0.15s; flex-shrink: 0; }
-    .hc:hover { transform: scale(1.15); z-index: 10; border-color: rgba(0,0,0,0.3) !important; }
-    .hc.sel { border-color: rgba(0,0,0,0.5) !important; transform: scale(1.1); }
-    .tog { padding: 8px 18px; border-radius: 7px; border: none; color: #fff; font-weight: 700; cursor: pointer; font-size: 12px; transition: all 0.2s; }
-    .tog.on { background: var(--t); }
-    .tog.off { background: #999; }
-    .lc { border-radius: 9px; padding: 12px 14px; margin-bottom: 7px; cursor: pointer; transition: all 0.2s; border: 1.5px solid transparent; }
-    .lc:hover { transform: translateX(2px); }
-    .lc.on { transform: translateX(4px); }
-    .fc { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 500; margin: 3px; cursor: pointer; border: 0.5px solid transparent; }
-    .fc:hover { opacity: 0.85; }
-    .fc.on { transform: scale(1.04); border-color: rgba(0,0,0,0.2) !important; }
-    .step { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 0.5px solid var(--br); }
-    .step-n { width: 28px; height: 28px; border-radius: 50%; background: var(--t); color: white; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .form-row { margin-bottom: 12px; }
-    .form-row label { display: block; font-size: 11px; font-weight: 600; color: var(--t3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
-    .form-row input, .form-row select, .form-row textarea { width: 100%; padding: 8px 12px; border: 0.5px solid var(--br); border-radius: 6px; font-size: 13px; background: var(--card); color: var(--tx); outline: none; }
-    .form-row input:focus, .form-row select:focus, .form-row textarea:focus { border-color: var(--t); }
-    .dt { width: 100%; border-collapse: collapse; font-size: 11px; }
-    .dt th { background: #f8f7f4; padding: 6px 8px; text-align: left; font-weight: 600; color: var(--t3); border-bottom: 0.5px solid var(--br); font-size: 10px; text-transform: uppercase; }
-    .dt td { padding: 6px 8px; border-bottom: 0.5px solid var(--br); color: var(--t2); }
-    .dt tr:hover td { background: #fafaf8; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CWHF Coherence Lab — Signal ≠ Value</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+/* ── TOKENS ─────────────────────────────────────────────────────── */
+:root{
+  --t:#1D9E75;--tl:#E1F5EE;--td:#085041;
+  --c:#D85A30;--cl:#FAECE7;--cd:#712B13;
+  --a:#BA7517;--al:#FAEEDA;--ad:#633806;
+  --b:#3B8BD4;--bl:#E6F1FB;--bd:#0C447C;
+  --p:#7F77DD;--pl:#EEEDFE;--pd:#3C3489;
+  --g:#888780;--gl:#F1EFE8;--gd:#444441;
+  --tx:#1C1C1A;--t2:#5F5E5A;--t3:#888780;
+  --bg:#F2F1EE;--card:#fff;--br:rgba(0,0,0,.08);
+  --nav:56px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:var(--bg);color:var(--tx);font-size:13px;line-height:1.6;overflow-x:hidden}
+
+/* ── NAV ─────────────────────────────────────────────────────────── */
+.nav{position:fixed;top:0;left:0;right:0;height:var(--nav);background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:.5px solid var(--br);z-index:1000;display:flex;align-items:center;padding:0 20px;gap:0}
+.brand{font-size:14px;font-weight:700;letter-spacing:-.3px;text-decoration:none;color:var(--tx);margin-right:24px;flex-shrink:0}
+.brand span{color:var(--t)}
+.nav-tabs{display:flex;gap:2px;flex:1}
+.nt{padding:6px 14px;border-radius:6px;border:none;background:transparent;color:var(--t2);cursor:pointer;font-size:12px;font-weight:500;transition:all .15s;white-space:nowrap}
+.nt:hover{background:var(--gl);color:var(--tx)}
+.nt.on{background:var(--tl);color:var(--td);font-weight:600}
+.nav-right{display:flex;align-items:center;gap:8px;margin-left:auto}
+
+/* ── MODE TOGGLE ─────────────────────────────────────────────────── */
+.mode-toggle{display:flex;border-radius:8px;border:.5px solid var(--br);overflow:hidden;background:#f8f7f4}
+.mt{padding:5px 14px;border:none;cursor:pointer;font-size:11px;font-weight:600;color:var(--t2);background:transparent;transition:all .15s}
+.mt.on{color:white}
+.mt.mock.on{background:var(--g)}
+.mt.live.on{background:var(--t)}
+
+/* ── MODE BADGES ─────────────────────────────────────────────────── */
+.mock-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:4px;font-size:10px;font-weight:700;background:#E8E7E0;color:var(--gd);text-transform:uppercase;letter-spacing:.05em}
+.live-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:4px;font-size:10px;font-weight:700;background:var(--tl);color:var(--td);text-transform:uppercase;letter-spacing:.05em}
+.live-badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--t);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ── LANG SELECT ─────────────────────────────────────────────────── */
+.lang-sel{padding:4px 8px;border:.5px solid var(--br);border-radius:5px;font-size:11px;background:var(--card);cursor:pointer;color:var(--t2)}
+
+/* ── LAYOUT ──────────────────────────────────────────────────────── */
+.main{margin-top:var(--nav);min-height:calc(100vh - var(--nav))}
+.pg{display:none}.pg.on{display:block}
+.wrap{max-width:1080px;margin:0 auto;padding:20px 16px 80px}
+
+/* ── TAB BAR ─────────────────────────────────────────────────────── */
+.tbar{background:var(--card);border-bottom:.5px solid var(--br);position:sticky;top:var(--nav);z-index:90;padding:0 16px}
+.tbar-inner{max-width:1080px;margin:0 auto;display:flex;gap:0}
+.tb{padding:12px 16px;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--t2);cursor:pointer;font-size:12px;font-weight:500;white-space:nowrap;transition:all .15s}
+.tb:hover{color:var(--tx)}
+.tb.on{color:var(--t);border-bottom-color:var(--t);font-weight:600}
+.tc{display:none}.tc.on{display:block}
+
+/* ── CARDS ───────────────────────────────────────────────────────── */
+.card{background:var(--card);border:.5px solid var(--br);border-radius:10px;padding:14px 16px;margin-bottom:10px}
+.card-sm{background:var(--card);border:.5px solid var(--br);border-radius:7px;padding:10px 12px}
+.lbl{font-size:10px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.bx{display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;border-radius:3px}
+
+/* ── GRIDS ───────────────────────────────────────────────────────── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media(max-width:680px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+/* ── METRICS ─────────────────────────────────────────────────────── */
+.met{background:#f8f7f4;border-radius:7px;padding:10px 12px}
+.mv{font-size:24px;font-weight:700;letter-spacing:-.5px}
+.bar{height:4px;background:#E8E7E4;border-radius:2px;margin-top:4px}
+.bf{height:4px;border-radius:2px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+
+/* ── PILLS ───────────────────────────────────────────────────────── */
+.pl{padding:4px 10px;border-radius:16px;border:.5px solid var(--br);background:var(--card);color:var(--t2);cursor:pointer;font-size:11px;transition:all .12s}
+.pl.on{border-color:var(--t);background:var(--tl);color:var(--td);font-weight:500}
+
+/* ── TABLES ──────────────────────────────────────────────────────── */
+.dt{width:100%;border-collapse:collapse;font-size:11px}
+.dt th{background:#f8f7f4;padding:6px 8px;text-align:left;font-weight:600;color:var(--t3);border-bottom:.5px solid var(--br);font-size:10px;text-transform:uppercase}
+.dt td{padding:6px 8px;border-bottom:.5px solid var(--br);color:var(--t2);vertical-align:top}
+.dt tr:hover td{background:#fafaf8}
+
+/* ── CALLOUT ─────────────────────────────────────────────────────── */
+.callout{border-radius:0 7px 7px 0;padding:10px 14px;font-size:12px;line-height:1.65;border-left:3px solid;margin:8px 0}
+.code{font-family:'Courier New',monospace;background:#f8f7f4;border-radius:6px;padding:10px 14px;font-size:11px;line-height:1.7;border-left:3px solid var(--t);white-space:pre-wrap;margin:6px 0}
+
+/* ── HEATMAP CELLS ───────────────────────────────────────────────── */
+.hc{width:44px;height:36px;border-radius:4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;border:.5px solid transparent;transition:all .15s;flex-shrink:0;font-size:10px;font-weight:700;color:white;text-shadow:0 1px 2px rgba(0,0,0,.3)}
+.hc:hover{transform:scale(1.18);z-index:10;border-color:rgba(0,0,0,.3)!important}
+.hc.sel{border-color:rgba(0,0,0,.5)!important;transform:scale(1.1);box-shadow:0 2px 8px rgba(0,0,0,.2)}
+
+/* ── LIVE SESSION UI ─────────────────────────────────────────────── */
+.session-step{display:none}.session-step.on{display:block}
+.slider-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.slider-row label{font-weight:600;font-size:13px;min-width:120px}
+.slider-row input[type=range]{flex:1;accent-color:var(--t);height:6px}
+.slider-val{width:32px;text-align:center;font-weight:700;font-size:16px;color:var(--t)}
+.task-card{border:.5px solid var(--br);border-radius:10px;padding:16px;margin-bottom:0;background:var(--card)}
+.task-prompt{font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
+.task-text{font-size:13px;color:var(--tx);line-height:1.7;margin-bottom:14px;padding:10px 14px;background:#f8f7f4;border-radius:6px;border-left:3px solid var(--br)}
+.task-text.gold-hi{border-left-color:var(--t)}
+.task-text.gold-lo{border-left-color:var(--c)}
+.rating-btns{display:flex;gap:8px}
+.rb{width:44px;height:44px;border-radius:8px;border:.5px solid var(--br);background:var(--card);cursor:pointer;font-size:14px;font-weight:600;color:var(--t2);transition:all .15s}
+.rb:hover{border-color:var(--t);background:var(--tl);color:var(--td)}
+.rb.sel{border-color:var(--t);background:var(--t);color:white}
+.pair-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.pair-btn{padding:10px 14px;border-radius:8px;border:.5px solid var(--br);background:var(--card);cursor:pointer;font-size:12px;color:var(--t2);text-align:left;transition:all .15s;line-height:1.5}
+.pair-btn:hover,.pair-btn.sel{border-color:var(--t);background:var(--tl);color:var(--td)}
+.progress-bar{height:4px;background:#E8E7E4;border-radius:2px;margin-bottom:16px}
+.progress-fill{height:4px;background:var(--t);border-radius:2px;transition:width .4s}
+.task-nav{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.btn-prim{padding:10px 22px;border-radius:7px;border:none;background:var(--t);color:white;font-weight:600;font-size:13px;cursor:pointer;transition:all .15s}
+.btn-prim:hover{background:var(--td)}
+.btn-prim:disabled{background:#ccc;cursor:default}
+.btn-sec{padding:9px 20px;border-radius:7px;border:.5px solid var(--t);background:var(--tl);color:var(--td);font-weight:600;font-size:13px;cursor:pointer;transition:all .15s}
+.btn-sec:hover{background:var(--t);color:white}
+.btn-ghost{padding:9px 20px;border-radius:7px;border:.5px solid var(--br);background:transparent;color:var(--t2);font-weight:500;font-size:13px;cursor:pointer}
+
+/* ── HERO ─────────────────────────────────────────────────────────── */
+.hero{padding:40px 20px;text-align:center;max-width:680px;margin:0 auto 8px}
+.hero h1{font-size:36px;font-weight:700;letter-spacing:-.5px;margin-bottom:12px}
+.hero h1 span{color:var(--t)}
+.hero p{font-size:15px;color:var(--t2);line-height:1.7;margin-bottom:24px}
+
+/* ── SCORE DISPLAY ───────────────────────────────────────────────── */
+.score-ring{width:140px;height:140px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 16px;position:relative}
+.score-ring svg{position:absolute;top:0;left:0;transform:rotate(-90deg)}
+.score-num{font-size:40px;font-weight:700;letter-spacing:-1px;color:var(--tx)}
+.score-lbl{font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase}
+.delta-display{font-size:28px;font-weight:700;letter-spacing:-.5px}
+.delta-pos{color:var(--t)}
+.delta-neg{color:var(--c)}
+.delta-neu{color:var(--g)}
+
+/* ── MERKLE TREE VIZ ─────────────────────────────────────────────── */
+.merkle-node{font-family:'Courier New',monospace;font-size:10px;padding:5px 10px;border-radius:4px;border:.5px solid var(--br);background:#f8f7f4;margin:2px;display:inline-block;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.merkle-root-node{background:var(--tl);border-color:var(--t);color:var(--td);font-weight:600}
+
+/* ── PACKET VIZ ──────────────────────────────────────────────────── */
+.packet{font-family:'Courier New',monospace;font-size:12px;background:#0D1117;color:#E6EDF3;border-radius:8px;padding:16px;line-height:1.8;position:relative}
+.pk{color:#7EE787}.pv{color:#FFA657}.ps{color:#79C0FF}
+
+/* ── STEP WIZARD ─────────────────────────────────────────────────── */
+.step-indicator{display:flex;gap:6px;align-items:center;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
+.si{width:28px;height:28px;border-radius:50%;border:2px solid var(--br);background:var(--bg);color:var(--t3);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;transition:all .3s}
+.si.done{background:var(--t);border-color:var(--t);color:white}
+.si.curr{background:var(--card);border-color:var(--t);color:var(--t)}
+.si-line{width:20px;height:2px;background:var(--br);border-radius:1px}
+.si-line.done{background:var(--t)}
+
+/* ── FORMS ───────────────────────────────────────────────────────── */
+.form-row{margin-bottom:12px}
+.form-row label{display:block;font-size:11px;font-weight:600;color:var(--t3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em}
+.form-row input,.form-row select,.form-row textarea{width:100%;padding:8px 12px;border:.5px solid var(--br);border-radius:6px;font-size:13px;background:var(--card);color:var(--tx);outline:none}
+.form-row input:focus,.form-row select:focus{border-color:var(--t)}
+
+/* ── CONSENT ─────────────────────────────────────────────────────── */
+.consent-item{display:flex;gap:10px;padding:10px 0;border-bottom:.5px solid var(--br)}
+.consent-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.consent-text{font-size:12px;color:var(--t2);line-height:1.6}
+.consent-text strong{color:var(--tx)}
+
+/* ── HYPOTHESIS CARDS ────────────────────────────────────────────── */
+.hyp-card{border-radius:9px;padding:12px 14px;margin-bottom:8px;border-left:4px solid}
+.hyp-status{display:flex;gap:6px;align-items:center;margin-top:8px;flex-wrap:wrap}
+
+/* ── NOTIFICATION ────────────────────────────────────────────────── */
+.notif{position:fixed;bottom:24px;right:24px;background:var(--tx);color:white;padding:12px 20px;border-radius:8px;font-size:13px;font-weight:500;z-index:9999;transform:translateY(80px);opacity:0;transition:all .3s;max-width:300px}
+.notif.on{transform:translateY(0);opacity:1}
+</style>
 </head>
 <body>
 
+<!-- ══ NAV ══════════════════════════════════════════════════════════ -->
 <nav class="nav">
-  <a class="nav-brand"><span>CWHF</span> Coherence Lab</a>
-  <button class="nav-btn on" data-tab="framework">Framework</button>
-  <button class="nav-btn" data-tab="matrix">Validation Matrix</button>
-  <button class="nav-btn" data-tab="analysis">Quantitative Analysis</button>
-  <button class="nav-btn" data-tab="act">Act / Participate</button>
+  <a class="brand" href="#"><span>CWHF</span> Coherence Lab</a>
+  <div class="nav-tabs">
+    <button class="nt on" onclick="nav(0)">Framework</button>
+    <button class="nt"    onclick="nav(1)">Simulate</button>
+    <button class="nt"    onclick="nav(2)">Live H1</button>
+    <button class="nt"    onclick="nav(3)">Research</button>
+    <button class="nt"    onclick="nav(4)">Signal</button>
+  </div>
+  <div class="nav-right">
+    <div class="mode-toggle">
+      <button class="mt mock" id="mt-mock" onclick="setMode('mock')">MOCK</button>
+      <button class="mt live on" id="mt-live" onclick="setMode('live')">LIVE</button>
+    </div>
+    <select class="lang-sel" onchange="mockLang(this.value)" title="Language (demo)">
+      <option value="en">🇺🇸 EN</option>
+      <option value="hi">🇮🇳 HI</option>
+      <option value="es">🇪🇸 ES</option>
+      <option value="fr">🇫🇷 FR</option>
+      <option value="ar">🇸🇦 AR</option>
+      <option value="zh">🇨🇳 ZH</option>
+    </select>
+  </div>
 </nav>
 
-<div class="page-wrap">
-  <!-- Framework Tab -->
-  <div id="framework" class="tab-content active">
-    <div class="wrap">
-      <div class="card" style="border:.5px solid var(--t);background:linear-gradient(135deg,#f8f7f4 0%,var(--tl) 100%)">
-        <div class="lbl">The complete contamination model</div>
-        <div style="font-size:20px;font-weight:700;letter-spacing:-.3px;margin-bottom:10px">h = f(v, <span style="color:var(--t)">L1</span>, <span style="color:var(--a)">L2</span>, <span style="color:var(--b)">L3</span>, <span style="color:var(--p)">L4</span>, <span style="color:var(--c)">L5</span>)</div>
-        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
-          <span class="bx" style="background:var(--tl);color:var(--td)">L1 Cognitive state ← CWHF corrects</span>
-          <span class="bx" style="background:var(--al);color:var(--ad)">L2 Cognitive architecture</span>
-          <span class="bx" style="background:var(--bl);color:var(--bd)">L3 Information environment</span>
-          <span class="bx" style="background:var(--pl);color:var(--pd)">L4 Social & identity</span>
-          <span class="bx" style="background:var(--cl);color:var(--cd)">L5 Intention-action gap</span>
+<!-- ══ PAGES ══════════════════════════════════════════════════════════ -->
+<div class="main" id="main">
+  <div class="pg on" id="pg0" tabindex="-1"></div>
+  <div class="pg" id="pg1" tabindex="-1"></div>
+  <div class="pg" id="pg2" tabindex="-1"></div>
+  <div class="pg" id="pg3" tabindex="-1"></div>
+  <div class="pg" id="pg4" tabindex="-1"></div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<!-- ══ ENGINE ════════════════════════════════════════════════════════ -->
+<script>
+'use strict';
+
+// ─── CONSTANTS ────────────────────────────────────────────────────
+const DB_NAME = 'CWHF_Lab_v1';
+const DB_VER = 1;
+let db = null;
+let currentPage = 0;
+let currentMode = 'live';
+let charts = {};
+
+// ─── TASK BANK ────────────────────────────────────────────────────
+// 8 tasks: 5 rating, 1 pairwise, 3 hidden gold items
+const TASKS = [
+  { id:'T1', type:'rating', is_gold:false, pair_id:'P1',
+    prompt:"Rate this AI response for accuracy:",
+    text:"Democratic participation requires informed citizens. Education systems should prioritize critical thinking and media literacy to strengthen democratic institutions." },
+  { id:'T2', type:'rating', is_gold:true, gold_dir:'high', pair_id:'P2',
+    prompt:"Rate this AI response for accuracy:",
+    text:"Multiple randomised controlled trials confirm that mRNA COVID-19 vaccines reduce severe illness and hospitalisation by over 90% in initially healthy adults." },
+  { id:'T3', type:'rating', is_gold:false, pair_id:'P1',
+    prompt:"Rate this AI response for accuracy:",
+    text:"Economic inequality, measured by the Gini coefficient, has increased in most OECD nations over the past three decades according to the OECD Income Distribution Database." },
+  { id:'T4', type:'rating', is_gold:true, gold_dir:'low', pair_id:'P3',
+    prompt:"Rate this AI response for accuracy:",
+    text:"The French Revolution began in 1889 with the storming of the Bastille, which marked the decisive end of absolute monarchy in France." },
+  { id:'T5', type:'rating', is_gold:false, pair_id:'P2',
+    prompt:"Rate this AI response for accuracy:",
+    text:"Machine learning models identify statistical patterns in training data; their performance on novel distributions depends on the distributional similarity between training and deployment contexts." },
+  { id:'T6', type:'pairwise', is_gold:true, gold_correct:'A',
+    prompt:"Which response is more factually accurate?",
+    optionA:"Antibiotics work by killing or inhibiting bacteria. They have no effect on viral infections like the common cold or influenza.",
+    optionB:"Antibiotics are effective against both bacterial and viral infections, making them suitable for treating colds, flu, and COVID-19." },
+  { id:'T7', type:'rating', is_gold:true, gold_dir:'high', pair_id:'P3',
+    prompt:"Rate this AI response for accuracy:",
+    text:"Regular aerobic exercise of 150 minutes per week is associated with significant reductions in depression and anxiety symptoms across multiple meta-analyses of randomised trials." },
+  { id:'T8', type:'rating', is_gold:false, pair_id:'P4',
+    prompt:"Rate this AI response for accuracy:",
+    text:"The IPCC Sixth Assessment Report (2021) concludes with high confidence that human activities are the primary driver of observed warming since the mid-20th century." }
+];
+
+// ─── SIMULATION DATA ──────────────────────────────────────────────
+const PERSONAS = [
+  {id:0,n:"Amara Osei",sh:"Amara",fl:"🇳🇬",role:"Gig annotator",c320:186,dc:.61,joh:"BLIND",
+   L2:.52,L3:.61,L4:.58,L5:.62},
+  {id:1,n:"Elena Kovač",sh:"Elena",fl:"🇧🇪",role:"Policy analyst",c320:261,dc:.09,joh:"OPEN",
+   L2:.72,L3:.85,L4:.78,L5:.70},
+  {id:2,n:"Ravi Kumar",sh:"Ravi",fl:"🇮🇳",role:"ML engineer",c320:238,dc:.14,joh:"OPEN",
+   L2:.68,L3:.79,L4:.65,L5:.60},
+  {id:3,n:"Sarah Njoroge",sh:"Sarah",fl:"🇰🇪",role:"Student/annotator",c320:194,dc:.51,joh:"BLIND",
+   L2:.48,L3:.62,L4:.55,L5:.65},
+  {id:4,n:"Yuki Tanaka",sh:"Yuki",fl:"🇯🇵",role:"UX researcher",c320:235,dc:.21,joh:"OPEN",
+   L2:.70,L3:.76,L4:.72,L5:.65},
+  {id:5,n:"Fatima Al-Rashid",sh:"Fatima",fl:"🇵🇰",role:"Community worker",c320:215,dc:.33,joh:"HIDDEN",
+   L2:.58,L3:.64,L4:.60,L5:.72},
+  {id:6,n:"Marcus Chen",sh:"Marcus",fl:"🇬🇧",role:"Data scientist",c320:221,dc:.28,joh:"OPEN",
+   L2:.65,L3:.80,L4:.62,L5:.58},
+  {id:7,n:"Priya Sharma",sh:"Priya",fl:"🇮🇳",role:"PhD student",c320:208,dc:.44,joh:"HIDDEN",
+   L2:.55,L3:.71,L4:.56,L5:.68},
+  {id:8,n:"David Santos",sh:"David",fl:"🇵🇭",role:"Freelance annotator",c320:181,dc:.62,joh:"BLIND",
+   L2:.45,L3:.58,L4:.52,L5:.60},
+  {id:9,n:"Aisha Mohammed",sh:"Aisha",fl:"🇪🇬",role:"Journalist",c320:229,dc:.18,joh:"OPEN",
+   L2:.66,L3:.82,L4:.68,L5:.64}
+];
+const STATES = [
+  {id:0,l:"Morning rested",em:"🌅",tier:"High",base:.82},
+  {id:1,l:"Post-exercise",em:"🏃",tier:"High",base:.78},
+  {id:2,l:"Weekend reflective",em:"☕",tier:"High",base:.86},
+  {id:3,l:"Deep focus",em:"🎯",tier:"High",base:.80},
+  {id:4,l:"Post-meal midday",em:"☀️",tier:"Medium",base:.70},
+  {id:5,l:"Post-work fatigue",em:"😮‍💨",tier:"Medium",base:.52},
+  {id:6,l:"Commute distracted",em:"🚇",tier:"Drift",base:.42},
+  {id:7,l:"Deadline pressure",em:"⏰",tier:"Drift",base:.32},
+  {id:8,l:"Emotional distress",em:"😔",tier:"Drift",base:.25},
+  {id:9,l:"Late night 11pm+",em:"🌙",tier:"Severe",base:.18}
+];
+const MODS=[
+  [0,-.04,-.02,-.03,-.04,-.02,+.02,+.01,+.02,+.03],
+  [+.06,+.05,+.07,+.06,+.05,-.01,-.02,-.04,-.05,-.03],
+  [+.04,+.04,+.03,+.06,+.04,-.02,-.03,-.05,-.06,-.04],
+  [-.03,-.02,-.01,-.02,-.03,+.01,+.02,+.01,+.02,+.02],
+  [+.02,+.02,+.03,+.04,+.03,-.01,-.02,-.02,-.03,-.02],
+  [+.03,+.02,+.04,+.03,+.02,-.01,-.01,-.01,-.02,-.02],
+  [+.02,+.03,+.03,+.04,+.03,-.01,-.02,-.03,-.04,-.03],
+  [+.01,+.01,+.02,+.07,+.01,-.02,-.03,-.03,-.04,-.03],
+  [-.05,-.04,-.03,-.02,-.04,+.02,+.03,+.03,+.04,+.04],
+  [+.03,+.03,+.04,+.05,+.04,-.01,-.02,-.02,-.03,-.02]
+];
+
+function getC(pi,si){return Math.min(.97,Math.max(.10,parseFloat((STATES[si].base+MODS[pi][si]).toFixed(2))));}
+function getW(c){return Math.min(1,Math.max(.1,.1+.9*Math.pow(c,1.5)));}
+function cc(c){return c>=.72?"#1D9E75":c>=.55?"#BA7517":c>=.38?"#D85A30":"#993C1D";}
+function cbg(c){return c>=.72?"#E1F5EE":c>=.55?"#FAEEDA":c>=.38?"#FAECE7":"#FDE8E8";}
+function pct(v){return Math.round(v*100)+'%';}
+
+// ─── INDEXEDDB ENGINE ─────────────────────────────────────────────
+async function initDB(){
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, DB_VER);
+    req.onupgradeneeded = e => {
+      const d = e.target.result;
+      if(!d.objectStoreNames.contains('sessions')){
+        const s = d.createObjectStore('sessions',{keyPath:'id'});
+        s.createIndex('ts','ts');
+      }
+      if(!d.objectStoreNames.contains('user')){
+        d.createObjectStore('user',{keyPath:'key'});
+      }
+      if(!d.objectStoreNames.contains('merkle')){
+        d.createObjectStore('merkle',{keyPath:'key'});
+      }
+    };
+    req.onsuccess = e => { db = e.target.result; resolve(db); };
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function dbPut(store, data){ return new Promise((res,rej)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).put(data).onsuccess=()=>res();tx.onerror=()=>rej(tx.error);});}
+async function dbGet(store, key){ return new Promise((res,rej)=>{const tx=db.transaction(store,'readonly');const req=tx.objectStore(store).get(key);req.onsuccess=()=>res(req.result);req.onerror=()=>rej(req.error);});}
+async function dbGetAll(store){ return new Promise((res,rej)=>{const tx=db.transaction(store,'readonly');const req=tx.objectStore(store).getAll();req.onsuccess=()=>res(req.result);req.onerror=()=>rej(req.error);});}
+
+async function getUser(){
+  let u = await dbGet('user','profile');
+  if(!u){
+    u = {key:'profile', userId: crypto.randomUUID(), createdAt: Date.now(), sessionCount:0, consentGiven:false};
+    await dbPut('user', u);
+  }
+  return u;
+}
+
+async function saveSessions(session){
+  session.id = session.id || crypto.randomUUID();
+  await dbPut('sessions', session);
+  const u = await getUser();
+  u.sessionCount = (u.sessionCount||0)+1;
+  await dbPut('user', u);
+}
+
+async function getSessions(){
+  return dbGetAll('sessions');
+}
+
+// ─── COMPUTATION ENGINE ───────────────────────────────────────────
+function variance(arr){
+  if(arr.length===0) return 0;
+  const m=arr.reduce((a,b)=>a+b,0)/arr.length;
+  return arr.reduce((a,b)=>a+(b-m)**2,0)/arr.length;
+}
+function stdDev(arr){ return Math.sqrt(variance(arr)); }
+function clamp(v,lo,hi){ return Math.min(hi,Math.max(lo,v)); }
+
+function computeCoherence(session){
+  const {attention, emotion, responses, startTime} = session;
+
+  // Anchor score (0-1)
+  const anchorScore = (attention + emotion) / 10;
+
+  // Rating consistency (ICC proxy)
+  const ratings = responses.filter(r=>r.type==='rating').map(r=>r.value);
+  const ratingVar = ratings.length > 1 ? stdDev(ratings)/4 : 0.5;
+  const iccProxy = clamp(1 - ratingVar, 0, 1);
+
+  // Response time score (CV of RTs)
+  const rts = responses.map(r=>r.rt).filter(rt=>rt>500 && rt<30000);
+  const rtCV = rts.length > 1 ? stdDev(rts)/Math.max(1,rts.reduce((a,b)=>a+b)/rts.length) : 0.5;
+  const rtScore = clamp(1 - rtCV/2, 0, 1);
+
+  // Gold task accuracy
+  const goldResponses = responses.filter(r=>r.is_gold);
+  let goldScore = 0.5; // default if no gold
+  if(goldResponses.length > 0){
+    let correct = 0;
+    goldResponses.forEach(gr=>{
+      if(gr.type==='pairwise' && gr.value === gr.gold_correct) correct++;
+      else if(gr.type==='rating' && gr.gold_dir==='high' && gr.value>=4) correct++;
+      else if(gr.type==='rating' && gr.gold_dir==='low' && gr.value<=2) correct++;
+    });
+    goldScore = correct / goldResponses.length;
+  }
+
+  // V1 formula (from whitepaper):
+  // c = 0.30*anchor + 0.30*(1-ratingVar) + 0.25*rtScore + 0.15*goldScore
+  const c = clamp(
+    0.30*anchorScore + 0.30*iccProxy + 0.25*rtScore + 0.15*goldScore,
+    0.05, 0.97
+  );
+  const w = getW(c);
+  const confidence = clamp(0.4 + 0.06*Math.min(session.sessionNumber||1, 10), 0, 1);
+
+  return {
+    c: parseFloat(c.toFixed(3)),
+    w: parseFloat(w.toFixed(3)),
+    anchorScore: parseFloat(anchorScore.toFixed(3)),
+    iccProxy: parseFloat(iccProxy.toFixed(3)),
+    rtScore: parseFloat(rtScore.toFixed(3)),
+    goldScore: parseFloat(goldScore.toFixed(3)),
+    confidence: parseFloat(confidence.toFixed(3))
+  };
+}
+
+// ─── MERKLE ENGINE ────────────────────────────────────────────────
+async function sha256(str){
+  const enc = new TextEncoder();
+  const buf = await crypto.subtle.digest('SHA-256', enc.encode(str));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+async function buildMerkleTree(sessions){
+  if(sessions.length===0) return {root:'0'.repeat(64), leaves:[], tree:[]};
+  // Create leaf hashes
+  const leaves = await Promise.all(sessions.map(s=>
+    sha256(JSON.stringify({id:s.id, ts:s.ts, c:s.metrics.c, w:s.metrics.w}))
+  ));
+  // Build tree level by level
+  let level = [...leaves];
+  const tree = [level];
+  while(level.length > 1){
+    const next = [];
+    for(let i=0; i<level.length; i+=2){
+      const left = level[i];
+      const right = level[i+1] || left;
+      next.push(await sha256(left+right));
+    }
+    level = next;
+    tree.push(level);
+  }
+  return {root: level[0], leaves, tree};
+}
+
+async function generateSignalPacket(session, prevC, merkleRoot){
+  const deltaC = prevC !== null ? parseFloat((session.metrics.c - prevC).toFixed(3)) : null;
+  const sessionHash = await sha256(JSON.stringify({id:session.id, ts:session.ts, c:session.metrics.c}));
+  return {
+    schema: "cwhf/1.0",
+    c_weight: session.metrics.c,
+    delta_c: deltaC,
+    confidence: session.metrics.confidence,
+    session_n: session.sessionNumber || 1,
+    gold_accuracy: session.metrics.goldScore,
+    merkle_root: merkleRoot || sessionHash.slice(0,16)+'...',
+    context: "rlhf_annotation",
+    lang: document.querySelector('.lang-sel').value || 'en',
+    timestamp: new Date(session.ts).toISOString(),
+    raw_data: null,
+    privacy: "local_only"
+  };
+}
+
+// ─── LIVE SESSION STATE ───────────────────────────────────────────
+let liveSession = {
+  id: null, ts: null,
+  attention: 3, emotion: 3,
+  responses: [],
+  currentTask: 0,
+  taskStartTime: null,
+  metrics: null,
+  sessionNumber: 1
+};
+
+// ─── NOTIFICATION ─────────────────────────────────────────────────
+function notify(msg, dur=3000){
+  const el=document.getElementById('notif');
+  el.textContent=msg;el.classList.add('on');
+  setTimeout(()=>el.classList.remove('on'),dur);
+}
+
+// ─── NAVIGATION ───────────────────────────────────────────────────
+function nav(i){
+  currentPage=i;
+  document.querySelectorAll('.nt').forEach((b,j)=>b.classList.toggle('on',i===j));
+  document.querySelectorAll('.pg').forEach((p,j)=>p.classList.toggle('on',i===j));
+  Object.values(charts).forEach(c=>{try{c.destroy();}catch(e){}});
+  charts={};
+  const renders=[renderFramework,renderSimulate,renderLiveH1,renderResearch,renderSignal];
+  renders[i]();
+}
+
+function setMode(m){
+  currentMode=m;
+  document.getElementById('mt-mock').classList.toggle('on',m==='mock');
+  document.getElementById('mt-live').classList.toggle('on',m==='live');
+  nav(currentPage);
+}
+
+function mockLang(lang){
+  const names={'en':'English','hi':'हिंदी','es':'Español','fr':'Français','ar':'العربية','zh':'中文'};
+  notify(`Language: ${names[lang]} (demo — full localisation in production)`);
+}
+
+function showTab(pfx,i){
+  document.querySelectorAll(`.${pfx}-tb`).forEach((b,j)=>b.classList.toggle('on',i===j));
+  document.querySelectorAll(`.${pfx}-tc`).forEach((c,j)=>c.classList.toggle('on',i===j));
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PAGE 0 — FRAMEWORK
+// ═══════════════════════════════════════════════════════════════════
+function renderFramework(){
+  document.getElementById('pg0').innerHTML = `
+  <div class="wrap">
+    <div class="hero">
+      <div style="margin-bottom:10px">${currentMode==='mock'?`<span class="mock-badge">● Mock simulation</span>`:`<span class="live-badge">Live validation</span>`}</div>
+      <h1>The <span>Signal</span><br>Is Not the Value</h1>
+      <p>AI systems train on human feedback without asking whether that feedback reflects what humans genuinely value. It doesn't — not always, not even close. This is the framework that corrects it.</p>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button class="btn-prim" onclick="nav(2)">Validate it yourself →</button>
+        <button class="btn-sec" onclick="nav(1)">See simulation</button>
+      </div>
+    </div>
+
+    <div class="g2" style="margin-bottom:10px">
+      <div class="card" style="border:.5px solid var(--t);background:linear-gradient(135deg,#f8f7f4,var(--tl))">
+        <div class="lbl">The contamination model</div>
+        <div style="font-size:22px;font-weight:700;letter-spacing:-.3px;margin-bottom:10px">
+          h = f(v, <span style="color:var(--t)">L1</span>, <span style="color:var(--a)">L2</span>, <span style="color:var(--b)">L3</span>, <span style="color:var(--p)">L4</span>, <span style="color:var(--c)">L5</span>)
         </div>
-        <div style="font-size:13px;color:var(--t2);line-height:1.65">Every alignment approach assuming <strong>h ≈ v</strong> — that the signal is a direct readout of the value — ignores all five contamination layers simultaneously. CWHF corrects <strong>L1</strong>: the layer that determines whether the latent value v is accessible at all. Without L1 correction, corrections to L2–L5 operate on a signal that was never connected to genuine values.</div>
-      </div>
-      <div class="g2">
-        <div id="fw-layer-cards"></div>
-        <div>
-          <div class="card"><div class="lbl">Signal fidelity — all five layers</div><div style="height:220px;"><canvas id="fw-radar"></canvas></div></div>
-          <div id="fw-layer-detail" class="card" style="min-height:80px;display:flex;align-items:center;justify-content:center;color:var(--t3);font-size:12px">Click a layer to see contamination factors</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px">
+          <span class="bx" style="background:var(--t);color:white">L1 Cognitive state ← CWHF</span>
+          <span class="bx" style="background:var(--al);color:var(--ad)">L2 Architecture</span>
+          <span class="bx" style="background:var(--bl);color:var(--bd)">L3 Information</span>
+          <span class="bx" style="background:var(--pl);color:var(--pd)">L4 Identity</span>
+          <span class="bx" style="background:var(--cl);color:var(--cd)">L5 Intent gap</span>
         </div>
+        <p style="font-size:12px;color:var(--t2);line-height:1.65">Every alignment approach assuming <strong>h ≈ v</strong> ignores all five layers. CWHF corrects L1 — the layer determining whether genuine values are accessible at all.</p>
       </div>
-      <div class="card">
-        <div class="lbl">Johari Quadrants applied to annotator awareness</div>
-        <div class="g2">
-          <div><div id="johari-quadrant-cards"></div></div>
-          <div><canvas id="johari-chart" height="180"></canvas></div>
+      <div class="card" style="border:.5px solid var(--c)">
+        <div class="lbl">The bias theorem</div>
+        <div class="code">r̂ = r* + (1−p)δ
+
+r̂  = what AI learns
+r*  = genuine human values  
+(1−p)δ = permanent bias term
+
+p  = coherent-state fraction
+δ  = drift distortion; E[δ] ≠ 0</div>
+        <div class="callout" style="background:var(--cl);border-color:var(--c);color:var(--cd);font-size:11px">The bias is permanent. More data does not fix a directionally biased estimator. Only coherence weighting corrects it.</div>
+      </div>
+    </div>
+
+    <div class="g4" style="margin-bottom:10px">
+      ${[['5','Independent research programmes confirming state-dependence','var(--t)'],['$50K','One-time cost to implement V1 across any training run','var(--a)'],['0–1','The coherence score — the only number that travels','var(--b)'],['Δc','The delta is the metric — like a CGM glucose delta','var(--p)']].map(([n,d,col])=>`
+      <div class="met">
+        <div class="mv" style="color:${col};font-size:28px">${n}</div>
+        <div style="font-size:11px;color:var(--t2);line-height:1.5;margin-top:4px">${d}</div>
+      </div>`).join('')}
+    </div>
+
+    <div class="card">
+      <div class="lbl">What the Fitbit/CGM analogy means</div>
+      <div class="g3">
+        ${[
+          ['Fitbit steps','Sends step count — not your GPS path, not your heart rate waveform.','You get data about your activity without surrendering your location.'],
+          ['CGM glucose delta','Sends glucose Δ trend — not your blood composition, not your eating data.','You share the useful signal without exposing the raw measurement.'],
+          ['CWHF coherence score','Sends c_weight + Δc — not your annotations, responses, demographics, or identity.','AI labs get the training signal quality weight. Nothing personal travels.']
+        ].map(([t,d,r])=>`<div class="card-sm"><div style="font-weight:600;font-size:12px;margin-bottom:4px">${t}</div><div style="font-size:11px;color:var(--t2);line-height:1.5;margin-bottom:6px">${d}</div><div style="font-size:11px;color:var(--td);line-height:1.5">${r}</div></div>`).join('')}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="lbl">Architecture — what is mock vs live</div>
+      <table class="dt">
+        <thead><tr><th>Layer</th><th>Mock mode (95%)</th><th>Live mode (5% — real)</th><th>What travels</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600">Simulation</td><td>100×10 synthetic personas × states</td><td>Not applicable</td><td>Nothing</td></tr>
+          <tr><td style="font-weight:600">Session</td><td>Preloaded sessions, animated</td><td>Your real anchor + 8 tasks, RTs captured</td><td>Nothing during session</td></tr>
+          <tr><td style="font-weight:600">Storage</td><td>In-memory only</td><td>IndexedDB — your device, never server</td><td>Never leaves device</td></tr>
+          <tr><td style="font-weight:600">Score</td><td>Illustrated with synthetic data</td><td>Computed from your actual responses</td><td>Nothing automatically</td></tr>
+          <tr><td style="font-weight:600">Signal packet</td><td>Mock JSON shown as illustration</td><td>Generated locally from your real c_weight</td><td>Only on explicit consent</td></tr>
+          <tr><td style="font-weight:600">Merkle tree</td><td>Illustrated with fake hashes</td><td>Real SHA-256 chain of your sessions</td><td>Only root hash — no leaves</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PAGE 1 — SIMULATE (MOCK)
+// ═══════════════════════════════════════════════════════════════════
+let simCW=false, simSelCell=null, simSelP=0, simSelS=0;
+
+function renderSimulate(){
+  document.getElementById('pg1').innerHTML = `
+  <div class="tbar"><div class="tbar-inner">
+    <button class="tb sim-tb on" onclick="showTab('sim',0)">Matrix</button>
+    <button class="tb sim-tb"    onclick="showTab('sim',1)">Personas</button>
+    <button class="tb sim-tb"    onclick="showTab('sim',2)">States</button>
+    <button class="tb sim-tb"    onclick="showTab('sim',3)">Pipeline</button>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;padding:8px 0">
+      <button id="sim-tog" class="btn-ghost" style="padding:5px 12px;font-size:11px" onclick="simToggle()"
+        >○ CWHF OFF</button>
+      <span class="mock-badge">● Synthetic data</span>
+    </div>
+  </div></div>
+
+  <div class="tc sim-tc on" id="sim-0"><div class="wrap">
+    <div class="card">
+      <div class="lbl">100-combination coherence matrix — ${simCW?'CWHF weights':'coherence scores'} — click any cell</div>
+      <div style="overflow-x:auto" id="sim-matrix"></div>
+      <div style="display:flex;gap:14px;margin-top:6px;font-size:10px;flex-wrap:wrap">
+        <span style="color:#1D9E75">■ High ≥0.72</span>
+        <span style="color:#BA7517">■ Medium 0.55–0.72</span>
+        <span style="color:#D85A30">■ Drift 0.38–0.55</span>
+        <span style="color:#993C1D">■ Severe &lt;0.38</span>
+      </div>
+    </div>
+    <div class="g4" id="sim-mets" style="margin-bottom:10px"></div>
+    <div id="sim-cell-detail" class="card" style="text-align:center;color:var(--t3);padding:20px;font-size:12px">Click any cell</div>
+  </div></div>
+
+  <div class="tc sim-tc" id="sim-1"><div class="wrap">
+    <div class="card">
+      <div class="lbl">Select persona</div>
+      <div style="display:flex;flex-wrap:wrap;gap:5px" id="sim-p-pills"></div>
+    </div>
+    <div class="g2">
+      <div class="card" style="margin-bottom:0">
+        <div class="lbl">Coherence across all states</div>
+        <div style="height:200px;position:relative"><canvas id="sim-p-chart"></canvas></div>
+      </div>
+      <div class="card" style="margin-bottom:0" id="sim-p-detail"></div>
+    </div>
+  </div></div>
+
+  <div class="tc sim-tc" id="sim-2"><div class="wrap">
+    <div class="card">
+      <div class="lbl">Select state</div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:5px" id="sim-s-btns"></div>
+    </div>
+    <div class="g2">
+      <div class="card" style="margin-bottom:0">
+        <div class="lbl">All personas in this state</div>
+        <div style="height:200px;position:relative"><canvas id="sim-s-chart"></canvas></div>
+      </div>
+      <div class="card" style="margin-bottom:0" id="sim-s-diversity"></div>
+    </div>
+  </div></div>
+
+  <div class="tc sim-tc" id="sim-3"><div class="wrap">
+    <div class="g2">
+      <div class="card" style="margin-bottom:0">
+        <div class="lbl">Gradient distribution by tier</div>
+        <div style="height:200px;position:relative"><canvas id="sim-pipe-chart"></canvas></div>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <div class="lbl">Generational compounding</div>
+        <div style="height:200px;position:relative"><canvas id="sim-gen-chart"></canvas></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="lbl">Key simulation findings</div>
+      <div class="g3">
+        ${[
+          ['High-c gradient share','32% → 40% with CWHF (+25%)','var(--t)'],
+          ['Late-night gradient share','1.9% → 0.5% (-74%)','var(--c)'],
+          ['Diversity collapse','At drift state, 10 personas from 10 countries produce near-identical annotations. Spread: 0.09. Drift erases diversity.','var(--a)']
+        ].map(([t,d,col])=>`<div class="card-sm" style="border-left:3px solid ${col}"><div style="font-weight:600;font-size:12px;margin-bottom:4px">${t}</div><div style="font-size:11px;color:var(--t2);line-height:1.5">${d}</div></div>`).join('')}
+      </div>
+    </div>
+  </div></div>`;
+
+  buildSimMatrix();
+  buildSimMets();
+  buildSimPersonaTab();
+  buildSimStateTab();
+  buildSimPipelineCharts();
+}
+
+function simToggle(){
+  simCW=!simCW;
+  const btn=document.getElementById('sim-tog');
+  btn.textContent=simCW?'● CWHF ON':'○ CWHF OFF';
+  btn.style.borderColor=simCW?'var(--t)':'var(--br)';
+  btn.style.color=simCW?'var(--t)':'var(--t2)';
+  buildSimMatrix();buildSimMets();
+  const ct=document.querySelector('.sim-tb.on');
+  if(ct) showTab('sim',Array.from(document.querySelectorAll('.sim-tb')).indexOf(ct));
+}
+
+function buildSimMatrix(){
+  const wrap=document.getElementById('sim-matrix');
+  if(!wrap)return;
+  const ph=PERSONAS.map(p=>`<div style="width:44px;text-align:center;font-size:10px;color:var(--t3);flex-shrink:0"><div>${p.fl}</div><div style="font-size:9px">${p.sh}</div></div>`).join('');
+  let html=`<div style="display:flex;gap:3px;margin-bottom:3px;padding-left:124px">${ph}</div>`;
+  for(let si=0;si<10;si++){
+    html+=`<div style="display:flex;align-items:center;gap:3px;margin-bottom:3px"><div style="width:118px;font-size:10px;color:var(--t3);text-align:right;padding-right:6px;flex-shrink:0;line-height:1.2"><div>${STATES[si].em} ${STATES[si].l.substring(0,14)}</div><div style="font-size:9px;color:${cc(STATES[si].base)}">${STATES[si].tier}</div></div>`;
+    for(let pi=0;pi<10;pi++){
+      const c=getC(pi,si),w=getW(c);
+      const disp=simCW?w.toFixed(2):c.toFixed(2);
+      const op=simCW?(.25+w*.75):(.25+c*.75);
+      const isSel=simSelCell===`${pi},${si}`;
+      html+=`<div class="hc${isSel?' sel':''}" style="background:${cc(c)};opacity:${op}" onclick="simSelectCell(${pi},${si})">${disp}<div style="font-size:8px;opacity:.7">${STATES[si].tier[0]}</div></div>`;
+    }
+    html+='</div>';
+  }
+  wrap.innerHTML=html;
+}
+
+function simSelectCell(pi,si){
+  simSelP=pi;simSelS=si;simSelCell=`${pi},${si}`;
+  buildSimMatrix();
+  const p=PERSONAS[pi],s=STATES[si];
+  const c=getC(pi,si),w=getW(c);
+  const det=document.getElementById('sim-cell-detail');
+  if(!det)return;
+  det.style.textAlign='left';det.style.color='';
+  det.innerHTML=`
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+    <div><div style="font-size:14px;font-weight:700">${p.fl} ${p.n} · ${s.em} ${s.l}</div>
+    <div style="font-size:11px;color:var(--t3)">${p.role} · <span class="bx" style="background:${p.joh==='OPEN'?'var(--tl)':p.joh==='HIDDEN'?'var(--bl)':'var(--al)'};color:${p.joh==='OPEN'?'var(--td)':p.joh==='HIDDEN'?'var(--bd)':'var(--ad)'}">${p.joh}</span></div></div>
+    <span class="bx" style="background:${cbg(c)};color:${cc(c)}">${s.tier} coherence</span>
+  </div>
+  <div class="g4" style="margin-bottom:12px">
+    ${[['Coherence c',c.toFixed(2),c],['CWHF weight',simCW?w.toFixed(2):'1.00',simCW?w:1.0],['Bias δ',((1-c)*.82).toFixed(2),1-(1-c)*.82],['Fidelity',pct(((c+(c>=.6?p.L2:p.L2*.75)+p.L3)/3)),((c+(c>=.6?p.L2:p.L2*.75)+p.L3)/3)]].map(([l,v,b])=>`
+    <div class="met"><div class="lbl">${l}</div><div class="mv" style="font-size:18px;color:${cc(typeof b==='number'?b:c)}">${v}</div>
+    <div class="bar"><div class="bf" style="width:${Math.round((typeof b==='number'?b:c)*100)}%;background:${cc(typeof b==='number'?b:c)}"></div></div></div>`).join('')}
+  </div>
+  <div style="background:${cbg(c)};border-left:3px solid ${cc(c)};border-radius:0 7px 7px 0;padding:10px 13px;font-size:12px;font-style:italic;color:var(--t2);line-height:1.65">
+    ${c>=.70 ? `"The causal chain has moderate empirical support (r≈0.3–0.4) but effect sizes are modest cross-nationally. 'Should prioritize' requires comparative ROI evidence. The response overstates certainty. 3/5 — directionally valid."` :
+      c>=.50 ? `"Education and democracy are connected. Media literacy is important. Could be more specific. 4/5."` :
+      `"Good response. 4/5."`}
+  </div>`;
+}
+
+function buildSimMets(){
+  const el=document.getElementById('sim-mets');
+  if(!el)return;
+  const allC=PERSONAS.flatMap((_,pi)=>STATES.map((_,si)=>getC(pi,si)));
+  const allW=allC.map(c=>getW(c));
+  const avg=v=>parseFloat((v.reduce((a,b)=>a+b)/v.length).toFixed(2));
+  const hcnt=allC.filter(c=>c>=.72).length;
+  const dcnt=allC.filter(c=>c<.45).length;
+  el.innerHTML=[['Mean coherence',avg(allC)],[simCW?'Mean CWHF weight':'Uniform weight',simCW?avg(allW):'1.00'],['High-c cells',`${hcnt}/100`],['Drift cells',`${dcnt}/100`]].map(([l,v],i)=>`
+  <div class="met"><div class="lbl">${l}</div>
+  <div class="mv" style="color:${i===2?'var(--t)':i===3?'var(--c)':cc(typeof v==='number'?v:.5)}">${typeof v==='number'?v.toFixed(2):v}</div>
+  ${typeof v==='number'?`<div class="bar"><div class="bf" style="width:${Math.round(v*100)}%;background:${cc(v)}"></div></div>`:''}</div>`).join('');
+}
+
+function buildSimPersonaTab(){
+  const pills=document.getElementById('sim-p-pills');
+  if(!pills)return;
+  pills.innerHTML=PERSONAS.map((p,i)=>`<button class="pl${simSelP===i?' on':''}" onclick="simSelP=${i};refreshSimPersona()">${p.fl} ${p.sh}</button>`).join('');
+  refreshSimPersona();
+}
+
+function refreshSimPersona(){
+  document.querySelectorAll('#sim-p-pills .pl').forEach((b,i)=>b.classList.toggle('on',i===simSelP));
+  const p=PERSONAS[simSelP];
+  const allC=STATES.map((_,si)=>getC(simSelP,si));
+  const det=document.getElementById('sim-p-detail');
+  if(det)det.innerHTML=`<div class="lbl">Profile</div>${[['Johari',p.joh],['C320',p.c320+'/320'],['ΔC recovery',p.dc],['L2',p.L2.toFixed(2)],['L3',p.L3.toFixed(2)],['L4',p.L4.toFixed(2)],['L5',p.L5.toFixed(2)]].map(([l,v])=>`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:.5px solid var(--br);font-size:11px"><span style="color:var(--t2)">${l}</span><span style="font-weight:600">${v}</span></div>`).join('')}`;
+  kc('simP');
+  const ctx=document.getElementById('sim-p-chart');
+  if(!ctx)return;
+  const allW=allC.map(c=>getW(c));
+  charts.simP=new Chart(ctx,{type:'bar',data:{labels:STATES.map(s=>s.em+s.l.substring(0,7)),datasets:[
+    {label:'c',data:allC,backgroundColor:allC.map(c=>cc(c)+'99'),borderColor:allC.map(c=>cc(c)),borderWidth:1,borderRadius:3},
+    ...(simCW?[{label:'w',data:allW,type:'line',borderColor:'#1D9E75',tension:.3,pointRadius:3,fill:false}]:[])
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:8,font:{size:10}}}},
+    scales:{y:{min:0,max:1,ticks:{font:{size:9}}},x:{ticks:{font:{size:9},maxRotation:35}}}}});
+}
+
+function buildSimStateTab(){
+  const btns=document.getElementById('sim-s-btns');
+  if(!btns)return;
+  btns.innerHTML=STATES.map((s,i)=>`<button style="padding:5px 8px;border-radius:5px;font-size:11px;cursor:pointer;border:.5px solid ${i===simSelS?s.base>=.6?'var(--t)':s.base>=.4?'var(--a)':'var(--c)':'var(--br)'};background:${i===simSelS?cbg(s.base):'var(--card)'};font-weight:${i===simSelS?700:400}" onclick="simSelS=${i};refreshSimState()">${s.em} ${s.l}</button>`).join('');
+  refreshSimState();
+}
+
+function refreshSimState(){
+  document.querySelectorAll('#sim-s-btns button').forEach((b,i)=>{const s=STATES[i];b.style.borderColor=i===simSelS?cc(s.base):'var(--br)';b.style.fontWeight=i===simSelS?700:400;});
+  const s=STATES[simSelS];
+  const vals=PERSONAS.map((_,pi)=>getC(pi,simSelS));
+  const mean=vals.reduce((a,b)=>a+b)/10;
+  const spread=Math.max(...vals)-Math.min(...vals);
+  const collapsed=spread<.18;
+  const div=document.getElementById('sim-s-diversity');
+  if(div)div.innerHTML=`<div class="lbl">${s.em} ${s.l}</div>
+    <div style="padding:10px;border-radius:7px;background:${collapsed?'var(--cl)':'var(--tl)'};margin-bottom:10px">
+      <div style="font-weight:600;color:${collapsed?'var(--cd)':'var(--td)'}">${collapsed?'⚠ Diversity collapse':'✓ Diversity preserved'}</div>
+      <div style="font-size:11px;color:var(--t2);margin-top:3px">Spread: ${spread.toFixed(2)} · Mean: ${mean.toFixed(2)} · ${collapsed?'All 10 produce near-identical annotations. Drift erases diversity.':'Genuine cultural and professional diversity visible.'}</div>
+    </div>
+    ${PERSONAS.map((p,pi)=>{const c=getC(pi,simSelS);return`<div style="display:flex;align-items:center;gap:8px;padding:3px 0;border-bottom:.5px solid var(--br)"><span>${p.fl}</span><span style="flex:1;font-size:11px">${p.sh}</span><div style="width:60px;height:5px;background:#E8E7E4;border-radius:3px;overflow:hidden"><div style="height:5px;width:${c*100}%;background:${cc(c)}"></div></div><span style="font-size:11px;font-weight:700;min-width:28px;color:${cc(c)}">${c.toFixed(2)}</span></div>`;}).join('')}`;
+  kc('simS');
+  const ctx=document.getElementById('sim-s-chart');
+  if(!ctx)return;
+  const ws=vals.map(c=>getW(c));
+  charts.simS=new Chart(ctx,{type:'bar',data:{labels:PERSONAS.map(p=>p.fl+p.sh),datasets:[
+    {label:'c',data:vals,backgroundColor:vals.map(c=>cc(c)+'99'),borderColor:vals.map(c=>cc(c)),borderWidth:1,borderRadius:3},
+    ...(simCW?[{label:'w',data:ws,type:'line',borderColor:'#1D9E75',tension:.3,pointRadius:3,fill:false}]:[])
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:8,font:{size:10}}}},
+    scales:{y:{min:0,max:1,ticks:{font:{size:9}}},x:{ticks:{font:{size:9}}}}}});
+}
+
+function buildSimPipelineCharts(){
+  kc('simPipe');kc('simGen');
+  const pc=document.getElementById('sim-pipe-chart');
+  const gc=document.getElementById('sim-gen-chart');
+  const cnts=[0,0,0,0],ws=[0,0,0,0];
+  PERSONAS.forEach((_,pi)=>STATES.forEach((_,si)=>{const c=getC(pi,si),idx=c>=.72?0:c>=.55?1:c>=.38?2:3;cnts[idx]++;ws[idx]+=getW(c);}));
+  const wt=ws.reduce((a,b)=>a+b);
+  if(pc)charts.simPipe=new Chart(pc,{type:'bar',data:{labels:['High','Medium','Drift','Severe'],datasets:[
+    {label:'Uniform',data:cnts.map(v=>v),backgroundColor:'#B4B2A9',borderRadius:3},
+    {label:'CWHF',data:ws.map(v=>(v/wt*100).toFixed(1)),backgroundColor:'#1D9E75',borderRadius:3}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:8,font:{size:10}}}},scales:{y:{ticks:{font:{size:9}}},x:{ticks:{font:{size:9}}}}}});
+  if(gc)charts.simGen=new Chart(gc,{type:'line',data:{labels:['G1','G2','G3','G4','G5','G6','G7','G8'],datasets:[
+    {label:'No CWHF',data:[.39,.47,.56,.64,.71,.77,.82,.86],borderColor:'#D85A30',backgroundColor:'rgba(216,90,48,.08)',fill:true,tension:.3,pointRadius:3,borderWidth:2},
+    {label:'With CWHF',data:[.39,.32,.26,.21,.17,.14,.11,.09],borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,.08)',fill:true,tension:.3,pointRadius:3,borderWidth:2}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:8,font:{size:10}}}},
+    scales:{y:{min:0,max:1,title:{display:true,text:'Distance from r*',font:{size:9}},ticks:{font:{size:9}}},x:{ticks:{font:{size:9}}}}}});
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PAGE 2 — LIVE H1 SESSION
+// ═══════════════════════════════════════════════════════════════════
+let liveStep = 0; // 0=welcome 1=consent 2=anchor 3=tasks 4=computing 5=insight 6=signal
+
+function renderLiveH1(){
+  const el=document.getElementById('pg2');
+  el.innerHTML=`<div class="wrap" style="max-width:680px">
+    <div style="text-align:center;margin-bottom:16px">
+      <span class="live-badge" style="font-size:11px;padding:4px 12px">Live H1 Session — Real measurement</span>
+    </div>
+    <div class="step-indicator" id="live-steps"></div>
+    <div id="live-content"></div>
+  </div>`;
+  liveStep=0;
+  liveSession={id:null,ts:Date.now(),attention:3,emotion:3,responses:[],currentTask:0,taskStartTime:null,metrics:null,sessionNumber:1};
+  renderLiveStep(0);
+}
+
+function renderStepIndicator(step){
+  const steps=['Welcome','Consent','State','Tasks','Compute','Insight','Signal'];
+  const el=document.getElementById('live-steps');
+  if(!el)return;
+  el.innerHTML=steps.map((s,i)=>`
+    ${i>0?`<div class="si-line${i<=step?' done':''}"></div>`:''}
+    <div class="si${i<step?' done':i===step?' curr':''}" title="${s}">${i<step?'✓':i+1}</div>`).join('');
+}
+
+function renderLiveStep(step){
+  liveStep=step;
+  renderStepIndicator(step);
+  const el=document.getElementById('live-content');
+  if(!el)return;
+  const renders=[lsWelcome,lsConsent,lsAnchor,lsTasks,lsCompute,lsInsight,lsSignal];
+  if(renders[step]) renders[step](el);
+}
+
+function lsWelcome(el){
+  el.innerHTML=`<div class="card" style="text-align:center;padding:32px">
+    <div style="font-size:48px;margin-bottom:12px">🧠</div>
+    <h2 style="font-size:22px;font-weight:700;margin-bottom:10px">You are about to become a validator</h2>
+    <p style="font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:8px;max-width:480px;margin-left:auto;margin-right:auto">
+      This 5-minute session will measure your coherence score — how aligned your cognitive state is with your genuine values right now.
+      Your score stays on this device. Only a single number (0–1) leaves, and only with your explicit consent.
+    </p>
+    <p style="font-size:12px;color:var(--t3);margin-bottom:24px">This IS the H1 validation. You are not reading about it. You are doing it.</p>
+    <button class="btn-prim" onclick="renderLiveStep(1)" style="font-size:14px;padding:12px 32px">Begin →</button>
+  </div>`;
+}
+
+function lsConsent(el){
+  el.innerHTML=`<div class="card">
+    <div style="font-size:16px;font-weight:700;margin-bottom:4px">Before we start — what you're agreeing to</div>
+    <div style="font-size:12px;color:var(--t3);margin-bottom:16px">This is a research prototype, not a production system. Read carefully.</div>
+    ${[
+      ['🔒','All data stays on this device','Your responses, ratings, and scores are stored in IndexedDB — your browser\'s local database. Nothing is sent to any server automatically.'],
+      ['📊','One number only leaves — with consent','Your coherence score (0–1) and delta can be exported as a JSON packet. This is the only thing that would travel to researchers, and only if you click \'Share\'.'],
+      ['🌳','Merkle tree protects your identity','Your session chain is hashed using SHA-256. The root hash proves the chain is intact without revealing its contents. Cryptographic privacy.'],
+      ['⚖️','Intra-personal calibration','You are compared only to your own previous sessions — never to population norms. No structural disadvantage is encoded.'],
+      ['🚪','Withdraw anytime','Your local data can be cleared from browser settings. Before export, you have full control.'],
+    ].map(([ic,t,d])=>`<div class="consent-item"><div class="consent-icon">${ic}</div><div class="consent-text"><strong>${t}</strong> — ${d}</div></div>`).join('')}
+    <div style="margin-top:20px;padding:12px;background:var(--tl);border-radius:8px;font-size:12px;color:var(--td)">
+      This is a proof-of-concept prototype. The real app would have IRB approval, formal consent, and institutional safeguards. This demonstrates what is technically possible.
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:16px">
+      <button class="btn-ghost" onclick="renderLiveStep(0)">← Back</button>
+      <button class="btn-prim" onclick="renderLiveStep(2)">I understand — proceed →</button>
+    </div>
+  </div>`;
+}
+
+function lsAnchor(el){
+  el.innerHTML=`<div class="card">
+    <div style="font-size:16px;font-weight:700;margin-bottom:4px">State anchor — 30 seconds</div>
+    <p style="font-size:13px;color:var(--t2);line-height:1.65;margin-bottom:20px">Two honest questions about your cognitive state right now. This becomes part of your coherence score computation. No right or wrong answer.</p>
+    <div style="margin-bottom:24px">
+      <div class="lbl">How is your attention right now?</div>
+      <div class="slider-row">
+        <label style="min-width:80px;color:var(--t3)">Scattered</label>
+        <input type="range" min="1" max="5" value="3" id="att-slider" oninput="document.getElementById('att-val').textContent=this.value;liveSession.attention=parseInt(this.value)">
+        <div class="slider-val" id="att-val">3</div>
+        <label style="min-width:60px;color:var(--t3)">Sharp</label>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--t3);padding:0 90px 0 90px">
+        <span>1 — Totally scattered</span>
+        <span>3 — Okay</span>
+        <span>5 — Fully present</span>
+      </div>
+    </div>
+    <div style="margin-bottom:24px">
+      <div class="lbl">How is your emotional baseline right now?</div>
+      <div class="slider-row">
+        <label style="min-width:80px;color:var(--t3)">Reactive</label>
+        <input type="range" min="1" max="5" value="3" id="emo-slider" oninput="document.getElementById('emo-val').textContent=this.value;liveSession.emotion=parseInt(this.value)">
+        <div class="slider-val" id="emo-val">3</div>
+        <label style="min-width:60px;color:var(--t3)">Calm</label>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--t3);padding:0 90px 0 90px">
+        <span>1 — Emotionally reactive</span>
+        <span>3 — Neutral</span>
+        <span>5 — Calm and settled</span>
+      </div>
+    </div>
+    <div class="callout" style="background:var(--tl);border-color:var(--t);color:var(--td);font-size:12px">This anchor forms 30% of your coherence score. The rest comes from your actual response patterns — which you cannot consciously control.</div>
+    <div style="display:flex;justify-content:space-between;margin-top:16px">
+      <button class="btn-ghost" onclick="renderLiveStep(1)">← Back</button>
+      <button class="btn-prim" onclick="startTasks()">Start rating tasks →</button>
+    </div>
+  </div>`;
+}
+
+function startTasks(){
+  liveSession.responses=[];
+  liveSession.currentTask=0;
+  liveSession.ts=Date.now();
+  liveSession.id=crypto.randomUUID();
+  renderLiveStep(3);
+}
+
+function lsTasks(el){
+  const task=TASKS[liveSession.currentTask];
+  const progress=(liveSession.currentTask/TASKS.length)*100;
+  liveSession.taskStartTime=performance.now();
+  el.innerHTML=`
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div style="font-size:11px;color:var(--t3)">Task ${liveSession.currentTask+1} of ${TASKS.length}</div>
+      <span class="live-badge" style="font-size:9px">RT being recorded</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+    <div class="task-card">
+      <div class="task-prompt">${task.prompt}</div>
+      ${task.type==='rating'?`
+        <div class="task-text">${task.text}</div>
+        <div class="lbl" style="margin-bottom:8px">Your rating (1 = Very inaccurate · 5 = Very accurate)</div>
+        <div class="rating-btns" id="rating-btns">
+          ${[1,2,3,4,5].map(n=>`<button class="rb" id="rb${n}" onclick="selectRating(${n})">${n}</button>`).join('')}
         </div>
+      `:`
+        <div class="lbl" style="margin-bottom:8px">${task.prompt}</div>
+        <div class="pair-opts">
+          <button class="pair-btn" id="pairA" onclick="selectPair('A')"><strong>A:</strong> ${task.optionA}</button>
+          <button class="pair-btn" id="pairB" onclick="selectPair('B')"><strong>B:</strong> ${task.optionB}</button>
+        </div>
+      `}
+    </div>
+    <div class="task-nav">
+      <div style="font-size:11px;color:var(--t3)">Your response is being timed — be honest, not fast</div>
+      <button class="btn-prim" id="next-task-btn" onclick="nextTask()" disabled>Next →</button>
+    </div>
+  </div>`;
+}
+
+let selectedRating=null,selectedPair=null;
+function selectRating(n){
+  selectedRating=n;
+  document.querySelectorAll('.rb').forEach((b,i)=>b.classList.toggle('sel',i+1===n));
+  document.getElementById('next-task-btn').disabled=false;
+}
+function selectPair(opt){
+  selectedPair=opt;
+  document.getElementById('pairA').classList.toggle('sel',opt==='A');
+  document.getElementById('pairB').classList.toggle('sel',opt==='B');
+  document.getElementById('next-task-btn').disabled=false;
+}
+
+function nextTask(){
+  const rt=performance.now()-liveSession.taskStartTime;
+  const task=TASKS[liveSession.currentTask];
+  const resp={
+    taskId:task.id,
+    type:task.type,
+    rt:Math.round(rt),
+    is_gold:task.is_gold||false
+  };
+  if(task.type==='rating'){
+    resp.value=selectedRating;
+    if(task.is_gold){resp.gold_dir=task.gold_dir;}
+  } else {
+    resp.value=selectedPair;
+    if(task.is_gold){resp.gold_correct=task.gold_correct;}
+  }
+  liveSession.responses.push(resp);
+  selectedRating=null;selectedPair=null;
+  liveSession.currentTask++;
+  if(liveSession.currentTask>=TASKS.length){
+    renderLiveStep(4);
+  } else {
+    lsTasks(document.getElementById('live-content'));
+  }
+}
+
+function lsCompute(el){
+  el.innerHTML=`<div class="card" style="text-align:center;padding:32px">
+    <div style="font-size:36px;margin-bottom:16px">⚙️</div>
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:12px">Computing your coherence score</h3>
+    <div class="code" style="text-align:left;margin-bottom:16px">
+<span id="compute-log">Collecting responses...</span>
+    </div>
+    <div id="compute-progress" style="height:6px;background:#E8E7E4;border-radius:3px;overflow:hidden;margin-bottom:16px">
+      <div id="compute-bar" style="height:6px;width:0%;background:var(--t);transition:width .3s;border-radius:3px"></div>
+    </div>
+  </div>`;
+  runComputation();
+}
+
+async function runComputation(){
+  const log=document.getElementById('compute-log');
+  const bar=document.getElementById('compute-bar');
+  const steps=[
+    [10,'Anchor score = ('+liveSession.attention+' + '+liveSession.emotion+') / 10 = '+((liveSession.attention+liveSession.emotion)/10).toFixed(2)],
+    [25,'Rating variance = '+stdDev(liveSession.responses.filter(r=>r.type==='rating').map(r=>r.value)).toFixed(3)],
+    [40,'ICC proxy = 1 - rating_std / 4 = '+clamp(1-stdDev(liveSession.responses.filter(r=>r.type==='rating').map(r=>r.value))/4,0,1).toFixed(3)],
+    [55,'RT variance: '+(liveSession.responses.map(r=>r.rt))+'ms'],
+    [70,'Gold task accuracy computed...'],
+    [85,'Applying V1 formula: c = 0.30*anchor + 0.30*icc + 0.25*rt + 0.15*gold'],
+    [95,'Building Merkle leaf hash (SHA-256)...'],
+    [100,'Complete.']
+  ];
+  for(const [pct,msg] of steps){
+    await new Promise(r=>setTimeout(r,350+Math.random()*200));
+    if(log)log.textContent=msg;
+    if(bar)bar.style.width=pct+'%';
+  }
+  // Run real computation
+  const sessions=await getSessions();
+  liveSession.sessionNumber=sessions.length+1;
+  liveSession.metrics=computeCoherence(liveSession);
+  const prevSession=sessions.length>0?sessions[sessions.length-1]:null;
+  liveSession.prevC=prevSession?prevSession.metrics.c:null;
+  liveSession.deltaC=prevSession?parseFloat((liveSession.metrics.c-prevSession.metrics.c).toFixed(3)):null;
+  // Build Merkle leaf
+  const allSessions=[...sessions,liveSession];
+  const merkle=await buildMerkleTree(allSessions);
+  liveSession.merkleRoot=merkle.root;
+  liveSession.merkleLeaves=merkle.leaves;
+  // Save to IndexedDB
+  await saveSessions({
+    id:liveSession.id,
+    ts:liveSession.ts,
+    anchor:{attention:liveSession.attention,emotion:liveSession.emotion},
+    responses:liveSession.responses,
+    metrics:liveSession.metrics,
+    deltaC:liveSession.deltaC,
+    sessionNumber:liveSession.sessionNumber,
+    merkleRoot:liveSession.merkleRoot
+  });
+  renderLiveStep(5);
+}
+
+function lsInsight(el){
+  const m=liveSession.metrics;
+  const dc=liveSession.deltaC;
+  const c=m.c;
+  const interpretation = c>=.75?'Strong coherence — your genuine values are highly accessible right now. High-quality annotation window.':
+    c>=.60?'Good coherence — you are in a reasonably reflective state. Your signals are reliable.':
+    c>=.45?'Moderate coherence — some drift present. Your signals are usable but below your potential baseline.':
+    'Drift state — your genuine values are partially inaccessible. Your annotation signals would be systematically biased in this state.';
+  const deltaInterp=dc===null?'First session — baseline established.':
+    dc>0.05?`Δc = +${dc.toFixed(2)} — your coherence improved from last session. The observer effect is real.`:
+    dc<-0.05?`Δc = ${dc.toFixed(2)} — coherence dropped since last session. This variation IS the H1 data.`:
+    `Δc = ${dc>=0?'+':''}${dc.toFixed(2)} — stable coherence across sessions.`;
+
+  el.innerHTML=`<div class="card" style="text-align:center;padding:24px 20px 20px">
+    <div style="font-size:14px;font-weight:700;margin-bottom:16px">Your coherence score</div>
+    <div id="score-ring" style="width:140px;height:140px;margin:0 auto 16px;position:relative">
+      <svg width="140" height="140" style="transform:rotate(-90deg)">
+        <circle cx="70" cy="70" r="58" fill="none" stroke="#E8E7E4" stroke-width="10"/>
+        <circle cx="70" cy="70" r="58" fill="none" stroke="${cc(c)}" stroke-width="10"
+          stroke-dasharray="${Math.round(c*364)} 364" stroke-linecap="round"/>
+      </svg>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center">
+        <div class="score-num" style="color:${cc(c)}">${c.toFixed(2)}</div>
+        <div class="score-lbl">c_weight</div>
       </div>
-      <div class="card">
-        <div class="lbl">Rate-Distortion Derivation</div>
-        <div class="code-box">Coherent state capacity ≈ 90–120 bits/sec | Drift state ≈ 10–35 bits/sec
-Optimal weight w*(s) = I(V;H|S=s) / I(V;H)
-CWHF achieves the rate-distortion optimal correction under the 120-bit bandwidth constraint.</div>
-      </div>
+    </div>
+    ${dc!==null?`<div class="delta-display ${dc>0.02?'delta-pos':dc<-0.02?'delta-neg':'delta-neu'}" style="margin-bottom:8px">${dc>=0?'+':''}${dc.toFixed(2)} <span style="font-size:14px;color:var(--t3);font-weight:400">Δc</span></div>`:
+    `<div style="font-size:14px;color:var(--t3);margin-bottom:8px">Session 1 — baseline set</div>`}
+    <div style="font-size:12px;color:var(--t2);line-height:1.6;margin-bottom:20px;max-width:440px;margin-left:auto;margin-right:auto">${interpretation}</div>
+  </div>
+
+  <div class="g3" style="margin-bottom:10px">
+    <div class="met"><div class="lbl">Anchor score</div><div class="mv" style="color:${cc(m.anchorScore)};font-size:18px">${m.anchorScore.toFixed(2)}</div><div class="bar"><div class="bf" style="width:${m.anchorScore*100}%;background:${cc(m.anchorScore)}"></div></div></div>
+    <div class="met"><div class="lbl">ICC proxy</div><div class="mv" style="color:${cc(m.iccProxy)};font-size:18px">${m.iccProxy.toFixed(2)}</div><div class="bar"><div class="bf" style="width:${m.iccProxy*100}%;background:${cc(m.iccProxy)}"></div></div></div>
+    <div class="met"><div class="lbl">Gold accuracy</div><div class="mv" style="color:${cc(m.goldScore)};font-size:18px">${m.goldScore.toFixed(2)}</div><div class="bar"><div class="bf" style="width:${m.goldScore*100}%;background:${cc(m.goldScore)}"></div></div></div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">What this means for AI training</div>
+    <div class="code" style="margin-bottom:8px">Your session weight in RLHF training:
+w = 0.1 + 0.9 × ${c.toFixed(2)}^1.5 = ${m.w.toFixed(2)}
+
+${dc!==null?`Δc observer effect: ${deltaInterp}`:deltaInterp}
+
+Session ${liveSession.sessionNumber} stored locally (IndexedDB).
+Merkle leaf: ${liveSession.merkleRoot?.slice(0,16)}...
+Raw data: stays on this device.</div>
+    <p style="font-size:12px;color:var(--t2);line-height:1.6">A weight of <strong>${m.w.toFixed(2)}</strong> means your annotations from this session would contribute ${Math.round(m.w*100)}% of what a full-weight annotation contributes to the reward model gradient. If you were in drift state (c=0.25), your weight would be ${getW(0.25).toFixed(2)}. The difference is what CWHF corrects for.</p>
+  </div>
+
+  <div id="trend-section"></div>
+
+  <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px">
+    <button class="btn-prim" onclick="renderLiveStep(6)">See signal packet →</button>
+    <button class="btn-sec" onclick="renderLiveStep(2)">Run another session</button>
+    <button class="btn-ghost" onclick="nav(3)">View research dashboard</button>
+  </div>`;
+
+  loadTrend();
+}
+
+async function loadTrend(){
+  const sessions=await getSessions();
+  if(sessions.length<2){return;}
+  const el=document.getElementById('trend-section');
+  if(!el)return;
+  el.innerHTML=`<div class="card"><div class="lbl">Your coherence trend (${sessions.length} sessions)</div><div style="height:150px;position:relative"><canvas id="trend-chart"></canvas></div></div>`;
+  setTimeout(()=>{
+    const ctx=document.getElementById('trend-chart');
+    if(!ctx)return;
+    kc('trend');
+    charts.trend=new Chart(ctx,{type:'line',data:{
+      labels:sessions.map((_,i)=>`S${i+1}`),
+      datasets:[{
+        label:'c_weight',
+        data:sessions.map(s=>s.metrics?.c||0),
+        borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,.1)',fill:true,tension:.3,pointRadius:5,
+        pointBackgroundColor:sessions.map(s=>cc(s.metrics?.c||0))
+      }]
+    },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{y:{min:0,max:1,ticks:{font:{size:9}}},x:{ticks:{font:{size:9}}}}}});
+  },100);
+}
+
+async function lsSignal(el){
+  const sessions=await getSessions();
+  const prevC=sessions.length>1?sessions[sessions.length-2].metrics.c:null;
+  const packet=await generateSignalPacket({
+    id:liveSession.id,ts:liveSession.ts,metrics:liveSession.metrics,
+    sessionNumber:liveSession.sessionNumber,merkleRoot:liveSession.merkleRoot
+  },prevC,liveSession.merkleRoot);
+  const merkle=await buildMerkleTree(sessions);
+
+  el.innerHTML=`<div class="card">
+    <div style="font-size:16px;font-weight:700;margin-bottom:4px">Your signal packet</div>
+    <p style="font-size:12px;color:var(--t2);line-height:1.6;margin-bottom:12px">This is the <em>only</em> thing that would travel to researchers if you choose to share. No annotations. No raw responses. No personal data. Like a CGM sending only the glucose delta — not your blood composition.</p>
+    <div class="packet" id="packet-json">${formatPacket(packet)}</div>
+    <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+      <button class="btn-sec" onclick="dlPacket()">↓ Download packet</button>
+      <button class="btn-prim" onclick="mockSend()">🔬 Simulate send to lab</button>
+      <button class="btn-ghost" onclick="clearData()">🗑 Clear local data</button>
     </div>
   </div>
 
-  <!-- Validation Matrix Tab -->
-  <div id="matrix" class="tab-content">
-    <div id="matrix-root"></div>
+  <div class="card" style="margin-top:0">
+    <div style="font-size:14px;font-weight:700;margin-bottom:10px">Merkle tree — your session chain</div>
+    <p style="font-size:12px;color:var(--t2);line-height:1.6;margin-bottom:12px">SHA-256 hash chain of all your sessions. The root proves integrity without revealing contents. Only the root travels.</p>
+    <div style="text-align:center">
+      <div style="display:flex;justify-content:center;margin-bottom:8px">
+        <div class="merkle-node merkle-root-node">ROOT: ${merkle.root.slice(0,20)}...</div>
+      </div>
+      <div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin-bottom:8px">
+        ${merkle.leaves.map(l=>`<div class="merkle-node">${l.slice(0,12)}...</div>`).join('')}
+      </div>
+      <div style="font-size:10px;color:var(--t3)">${merkle.leaves.length} session leaf${merkle.leaves.length!==1?'s':''} → 1 root hash</div>
+    </div>
+    <div id="mock-send-result"></div>
   </div>
 
-  <!-- Quantitative Analysis Tab -->
-  <div id="analysis" class="tab-content">
-    <div id="analysis-root"></div>
-  </div>
+  <div style="margin-top:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+    <button class="btn-ghost" onclick="renderLiveStep(5)">← Back to insight</button>
+    <button class="btn-sec" onclick="renderLiveStep(2)">Start new session →</button>
+    <button class="btn-ghost" onclick="nav(3)">Research dashboard</button>
+  </div>`;
+}
 
-  <!-- Act Tab -->
-  <div id="act" class="tab-content">
-    <div id="act-root"></div>
-  </div>
-</div>
+function formatPacket(p){
+  const j=JSON.stringify(p,null,2);
+  return j.replace(/"(\w+)":/g,'<span class="pk">"$1":</span>')
+    .replace(/: "(.*?)"/g,': <span class="pv">"$1"</span>')
+    .replace(/: ([\d.]+)/g,': <span class="ps">$1</span>')
+    .replace(/: null/g,': <span style="color:#7EE787">null</span>');
+}
 
-<script>
-  // ###########################################################
-  // 1. SHARED DATA (Personas, States, Layers, etc.)
-  // ###########################################################
-  const LAYERS = [
-    {id:0,code:"L1",name:"Cognitive state",col:"#1D9E75",colL:"#E1F5EE",colD:"#085041",cwhf:true,
-     desc:"When in drift state, the 120-bit conscious channel is saturated. The person cannot access their Meta-layer values — heuristics and reactive patterns substitute for genuine judgment.",
-     cwhfResp:"CWHF weights training signals by c ∈ [0,1] — the probability of coherent-state production. V1 achieves 60–70% accuracy from behavioral proxies platforms already collect.",
-     factors:[{n:"Fatigue",s:.82},{n:"Sleep deprivation",s:.85},{n:"Cognitive overload",s:.78},{n:"Emotional reactivity",s:.74},{n:"Time pressure",s:.70},{n:"Decision fatigue",s:.68}]},
-    {id:1,code:"L2",name:"Cognitive architecture",col:"#BA7517",colL:"#FAEEDA",colD:"#633806",cwhf:false,
-     desc:"Even in coherent state, the compression function introduces systematic distortions through habitual reasoning patterns. These are structural features of bounded cognition.",
-     cwhfResp:"CWHF does not directly address L2. Coherent state (L1) increases metacognitive monitoring, partially mitigating bias. Better annotation design and diverse cohorts address L2 separately.",
-     factors:[{n:"Confirmation bias",s:.72},{n:"Framing effects",s:.71},{n:"Availability heuristic",s:.65},{n:"Anchoring",s:.60},{n:"Wrong mental models",s:.68},{n:"Logical fallacies",s:.55},{n:"Loss aversion",s:.58},{n:"Representativeness",s:.63}]},
-    {id:2,code:"L3",name:"Information environment",col:"#3B8BD4",colL:"#E6F1FB",colD:"#0C447C",cwhf:false,
-     desc:"The signal reflects what the person knows, not just what they value. Identical values expressed through different information environments produce different signals.",
-     cwhfResp:"L3 is addressed by diverse global annotation cohorts. Without CWHF, drift state collapses all cohorts to the same attractor — every dollar spent on diversity is contingent on CWHF working.",
-     factors:[{n:"Incomplete information",s:.70},{n:"Misinformation",s:.65},{n:"Filter bubbles",s:.72},{n:"Education gaps",s:.58},{n:"Cultural bounds",s:.62},{n:"Recency bias",s:.55}]},
-    {id:3,code:"L4",name:"Social & identity context",col:"#7F77DD",colL:"#EEEDFE",colD:"#3C3489",cwhf:false,
-     desc:"The signal is produced by a person embedded in social structures holding multiple identity layers. When tribal identity is salient, the tribal value set can substitute for individual reflective judgment.",
-     cwhfResp:"L4 is partially addressed by intra-personal calibration — comparing each person to their own baseline removes cross-person context contamination. Multi-mirror assessment (V3+) corrects Johari BLIND/HIDDEN errors.",
-     factors:[{n:"Tribal identity",s:.74},{n:"Peer pressure",s:.68},{n:"Social desirability",s:.66},{n:"Developmental stage",s:.70},{n:"Demographic activation",s:.62},{n:"Authority compliance",s:.60}]},
-    {id:4,code:"L5",name:"Intention-action gap",col:"#D85A30",colL:"#FAECE7",colD:"#712B13",cwhf:false,
-     desc:"Even coherent people with genuine values produce signals that diverge from those values because of moral dilemmas, value contradictions, paradoxes, hypocrisies, and execution failures.",
-     cwhfResp:"Coherent state provides more resources to navigate L5 tensions deliberately. But coherent-state signals still contain genuine contradictions. Multi-session aggregation across diverse contexts is the primary L5 correction.",
-     factors:[{n:"Moral dilemmas",s:.78},{n:"Value contradictions",s:.75},{n:"Akrasia",s:.68},{n:"Paradoxes",s:.70},{n:"Hypocrisies",s:.65},{n:"Intention-execution gap",s:.72},{n:"Moral licensing",s:.58}]}
-  ];
+async function dlPacket(){
+  const sessions=await getSessions();
+  const prevC=sessions.length>1?sessions[sessions.length-2].metrics.c:null;
+  const packet=await generateSignalPacket({id:liveSession.id,ts:liveSession.ts,metrics:liveSession.metrics,sessionNumber:liveSession.sessionNumber,merkleRoot:liveSession.merkleRoot},prevC,liveSession.merkleRoot);
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(packet,null,2)],{type:'application/json'}));
+  a.download=`cwhf_signal_${Date.now()}.json`;a.click();
+  notify('Signal packet downloaded. This is all that would travel to researchers.');
+}
 
-  const JOHARI = [
-    {quadrant:"OPEN",col:"#1D9E75",bg:"#E1F5EE",desc:"Self-report and behavioral signals agree. V1 proxy valid.",examples:["Elena Kovač","Ravi Kumar","Yuki Tanaka"],v1error:"Minimal",correction:"Standard V1 proxy sufficient."},
-    {quadrant:"BLIND",col:"#BA7517",bg:"#FAEEDA",desc:"Cannot detect own drift state. Self-report systematically inflated.",examples:["Amara Osei","Sarah Njoroge","David Santos"],v1error:"Over-weights by ~18pts",correction:"Behavioral signal component corrects self-report inflation."},
-    {quadrant:"HIDDEN",col:"#3B8BD4",bg:"#E6F1FB",desc:"Underestimates own coherence. Genuine values clarity invisible.",examples:["Fatima Al-Rashid","Priya Sharma"],v1error:"Under-weights by ~18pts",correction:"Multi-mirror assessment (V3+) corrects."},
-    {quadrant:"UNKNOWN",col:"#888780",bg:"#F1EFE8",desc:"High uncertainty. Neither self-report nor behavioral signals reliable.",examples:["New annotators (<3 sessions)"],v1error:"Cold start: w=0.55",correction:"Intra-personal calibration after session 3."}
-  ];
+async function mockSend(){
+  const el=document.getElementById('mock-send-result');
+  if(!el)return;
+  el.innerHTML=`<div style="margin-top:12px;padding:12px;background:#f8f7f4;border-radius:7px;font-size:12px;color:var(--t2)">
+    <div style="font-weight:600;margin-bottom:6px">🔬 Simulating secure send to AI lab...</div>
+    <div id="send-log">Packaging delta packet...</div>
+  </div>`;
+  const steps=['Packaging delta packet...','Attaching Merkle root...','Encrypting with lab public key (mock)...','Routing via CWHF interop endpoint (mock)...','Acknowledgement received...'];
+  for(const s of steps){
+    await new Promise(r=>setTimeout(r,400));
+    document.getElementById('send-log').textContent=s;
+  }
+  el.innerHTML=`<div style="margin-top:12px;padding:12px;background:var(--tl);border-radius:7px;font-size:12px;color:var(--td)">
+    <div style="font-weight:600;margin-bottom:4px">✅ Mock send complete — what actually happened:</div>
+    <div style="line-height:1.8">→ Your c_weight <strong>${liveSession.metrics.c.toFixed(2)}</strong> was packaged as a CWHF/1.0 packet<br>→ Merkle root attached as integrity proof<br>→ Raw responses remained on your device<br>→ In production: packet would go to CWHF interop endpoint<br>→ AI lab receives only the weight — no annotations, no identity</div>
+  </div>`;
+}
 
-  const PERSONAS = [
-    {id:0,name:"Amara Osei",sh:"Amara",fl:"🇳🇬",country:"Nigeria",city:"Lagos",role:"Gig annotator",age:28,edu:"Secondary",inc:"Low",joh:"BLIND",c320:186,dc:0.61,bio:"High ambient stress, BLIND Johari. V1 over-weights in drift by ~18pts.",L2:0.52,L3:0.61,L4:0.58,L5:0.62},
-    {id:1,name:"Elena Kovač",sh:"Elena",fl:"🇧🇪",country:"Belgium",city:"Brussels",role:"Policy analyst",age:38,edu:"PhD",inc:"High",joh:"OPEN",c320:261,dc:0.09,bio:"Highest baseline. OPEN Johari. V1 proxy highly accurate.",L2:0.72,L3:0.85,L4:0.78,L5:0.70},
-    {id:2,name:"Ravi Kumar",sh:"Ravi",fl:"🇮🇳",country:"India",city:"Bangalore",role:"ML engineer",age:31,edu:"Masters",inc:"Upper-mid",joh:"OPEN",c320:238,dc:0.14,bio:"Technical precision, strong L2. Quantitative frame can miss nuance.",L2:0.68,L3:0.79,L4:0.65,L5:0.60},
-    {id:3,name:"Sarah Njoroge",sh:"Sarah",fl:"🇰🇪",country:"Kenya",city:"Nairobi",role:"Student / annotator",age:22,edu:"Undergrad",inc:"Low",joh:"BLIND",c320:194,dc:0.51,bio:"Young, high stress, BLIND. Coherent-state annotations show sophisticated analysis.",L2:0.48,L3:0.62,L4:0.55,L5:0.65},
-    {id:4,name:"Yuki Tanaka",sh:"Yuki",fl:"🇯🇵",country:"Japan",city:"Tokyo",role:"UX researcher",age:33,edu:"Masters",inc:"Upper-mid",joh:"OPEN",c320:235,dc:0.21,bio:"Systematic thinker, process-aware.",L2:0.70,L3:0.76,L4:0.72,L5:0.65},
-    {id:5,name:"Fatima Al-Rashid",sh:"Fatima",fl:"🇵🇰",country:"Pakistan",city:"Karachi",role:"Community worker",age:35,edu:"Bachelors",inc:"Lower-mid",joh:"HIDDEN",c320:215,dc:0.33,bio:"HIDDEN Johari: V1 under-weights by ~18pts. Genuine values clarity.",L2:0.58,L3:0.64,L4:0.60,L5:0.72},
-    {id:6,name:"Marcus Chen",sh:"Marcus",fl:"🇬🇧",country:"UK",city:"London",role:"Data scientist",age:29,edu:"Masters",inc:"Upper-mid",joh:"OPEN",c320:221,dc:0.28,bio:"Analytical, WEIRD-educated, culturally narrow.",L2:0.65,L3:0.80,L4:0.62,L5:0.58},
-    {id:7,name:"Priya Sharma",sh:"Priya",fl:"🇮🇳",country:"India",city:"Mumbai",role:"PhD student",age:24,edu:"Postgrad",inc:"Low",joh:"HIDDEN",c320:208,dc:0.44,bio:"Most dramatic HIDDEN. In deep focus, most sophisticated annotations.",L2:0.55,L3:0.71,L4:0.56,L5:0.68},
-    {id:8,name:"David Santos",sh:"David",fl:"🇵🇭",country:"Philippines",city:"Manila",role:"Freelance annotator",age:26,edu:"Bachelors",inc:"Low",joh:"BLIND",c320:181,dc:0.62,bio:"Lowest baseline, highest drift. Equity case for intra-personal calibration.",L2:0.45,L3:0.58,L4:0.52,L5:0.60},
-    {id:9,name:"Aisha Mohammed",sh:"Aisha",fl:"🇪🇬",country:"Egypt",city:"Cairo",role:"Journalist",age:32,edu:"Bachelors",inc:"Mid",joh:"OPEN",c320:229,dc:0.18,bio:"Journalistic instinct, high L3 for political complexity.",L2:0.66,L3:0.82,L4:0.68,L5:0.64}
-  ];
+async function clearData(){
+  if(!confirm('Clear all session data from this device? This cannot be undone.'))return;
+  const req=indexedDB.deleteDatabase(DB_NAME);
+  req.onsuccess=()=>{db=null;initDB().then(()=>{notify('All local data cleared.');renderLiveStep(0);});};
+}
 
-  const STATES = [
-    {id:0,em:"🌅",label:"Morning / rested",tier:"High",base:0.82,desc:"Rested, full access to meta-layer values."},
-    {id:1,em:"🏃",label:"Post-exercise",tier:"High",base:0.78,desc:"Alert, mild positive affect."},
-    {id:2,em:"☕",label:"Weekend reflective",tier:"High",base:0.86,desc:"Unhurried, extended deliberation."},
-    {id:3,em:"🎯",label:"Deep focus",tier:"High",base:0.80,desc:"Flow state, full absorption."},
-    {id:4,em:"☀️",label:"Post-meal",tier:"Medium",base:0.70,desc:"Standard working state."},
-    {id:5,em:"😮‍💨",label:"Post-work fatigue",tier:"Medium",base:0.52,desc:"Depleted, heuristic rising."},
-    {id:6,em:"🚇",label:"Commute / distracted",tier:"Drift",base:0.42,desc:"Fragmented attention."},
-    {id:7,em:"⏰",label:"Deadline pressure",tier:"Drift",base:0.32,desc:"High load, time scarcity."},
-    {id:8,em:"😔",label:"Emotional distress",tier:"Drift",base:0.25,desc:"Negative affect, meta-layer inaccessible."},
-    {id:9,em:"🌙",label:"Late night 11pm+",tier:"Severe",base:0.18,desc:"Severe sleep pressure."}
-  ];
+// ═══════════════════════════════════════════════════════════════════
+// PAGE 3 — RESEARCH DASHBOARD
+// ═══════════════════════════════════════════════════════════════════
+function renderResearch(){
+  document.getElementById('pg3').innerHTML = `
+  <div class="tbar"><div class="tbar-inner">
+    <button class="tb res-tb on" onclick="showTab('res',0)">H1 Status</button>
+    <button class="tb res-tb"    onclick="showTab('res',1)">Hypotheses</button>
+    <button class="tb res-tb"    onclick="showTab('res',2)">Roadmap</button>
+    <button class="tb res-tb"    onclick="showTab('res',3)">My Data</button>
+  </div></div>
 
-  const MODS = [
-    [0.00,-0.04,-0.02,-0.03,-0.04,-0.02,0.02,0.01,0.02,0.03],
-    [0.06,0.05,0.07,0.06,0.05,-0.01,-0.02,-0.04,-0.05,-0.03],
-    [0.04,0.04,0.03,0.06,0.04,-0.02,-0.03,-0.05,-0.06,-0.04],
-    [-0.03,-0.02,-0.01,-0.02,-0.03,0.01,0.02,0.01,0.02,0.02],
-    [0.02,0.02,0.03,0.04,0.03,-0.01,-0.02,-0.02,-0.03,-0.02],
-    [0.03,0.02,0.04,0.03,0.02,-0.01,-0.01,-0.01,-0.02,-0.02],
-    [0.02,0.03,0.03,0.04,0.03,-0.01,-0.02,-0.03,-0.04,-0.03],
-    [0.01,0.01,0.02,0.07,0.01,-0.02,-0.03,-0.03,-0.04,-0.03],
-    [-0.05,-0.04,-0.03,-0.02,-0.04,0.02,0.03,0.03,0.04,0.04],
-    [0.03,0.03,0.04,0.05,0.04,-0.01,-0.02,-0.02,-0.03,-0.02]
-  ];
-
-  function getC(pi,si) { return Math.min(0.97, Math.max(0.10, STATES[si].base + MODS[pi][si])); }
-  function getW(c) { return Math.min(1.0, Math.max(0.1, 0.1 + 0.9 * Math.pow(c, 1.5))); }
-  function cc(c) { return c >= 0.72 ? "#1D9E75" : c >= 0.55 ? "#BA7517" : c >= 0.38 ? "#D85A30" : "#993C1D"; }
-  function cbg(c) { return c >= 0.72 ? "#E1F5EE" : c >= 0.55 ? "#FAEEDA" : c >= 0.38 ? "#FAECE7" : "#FDE8E8"; }
-
-  // ###########################################################
-  // 2. FRAMEWORK TAB LOGIC
-  // ###########################################################
-  let fwActL = 0;
-  function buildFWLayerCards() {
-    const el = document.getElementById('fw-layer-cards');
-    if (!el) return;
-    el.innerHTML = LAYERS.map((L,i)=>`
-      <div class="lc ${fwActL===i?'on':''}" style="background:${fwActL===i?L.colL:'var(--card)'};border-color:${fwActL===i?L.col:'var(--br)'}" onclick="fwActL=${i};buildFWLayerCards();updateFWDetail()">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div style="display:flex;align-items:center;gap:8px">
-            <span style="font-size:14px;font-weight:700;color:${L.col}">${L.code}</span>
-            <div><div style="font-weight:600;font-size:12px;color:${L.colD}">${L.name}</div><div style="font-size:10px;color:${L.col}">${L.factors.length} factors</div></div>
-          </div>
-          ${L.cwhf?`<span class="bx" style="background:${L.col};color:white;font-size:9px">CWHF</span>`:`<span class="bx" style="background:rgba(0,0,0,.06);color:${L.col};font-size:9px">other</span>`}
+  <div class="tc res-tc on" id="res-0"><div class="wrap">
+    <div class="card" style="border:.5px solid var(--t)">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+        <div>
+          <div style="font-size:16px;font-weight:700">H1 Critical Path — Live Status</div>
+          <div style="font-size:12px;color:var(--t3)">Pre-registered on OSF · N=50 target · Prolific platform</div>
         </div>
-      </div>`).join('');
-    updateFWDetail();
-  }
-  function updateFWDetail() {
-    const L = LAYERS[fwActL];
-    const det = document.getElementById('fw-layer-detail');
-    if (det) {
-      det.style.display = '';
-      det.style.color = L.colD;
-      det.style.background = L.colL;
-      det.style.borderLeft = `3px solid ${L.col}`;
-      det.innerHTML = `<div class="lbl">${L.code}: ${L.name}</div><div style="font-size:12px;line-height:1.65;margin-bottom:8px">${L.desc}</div><div style="font-size:11px;border-top:.5px solid rgba(0,0,0,.1);padding-top:6px;margin-top:4px"><strong>CWHF response:</strong> ${L.cwhfResp}</div>`;
-    }
-  }
-  function buildFWRadar() {
-    const ctx = document.getElementById('fw-radar');
-    if (!ctx) return;
-    new Chart(ctx, {
-      type: 'radar',
-      data: {
-        labels: LAYERS.map(L=>L.code+' '+L.name.split(' ')[0]),
-        datasets: [
-          {label:'Without CWHF',data:[38,62,74,81,88].map(v=>Math.round(v*.6)),backgroundColor:'rgba(216,90,48,.1)',borderColor:'#D85A30',pointBackgroundColor:'#D85A30'},
-          {label:'With CWHF',data:[82,62,74,81,88].map(v=>Math.round(v*.6)),backgroundColor:'rgba(29,158,117,.12)',borderColor:'#1D9E75',pointBackgroundColor:'#1D9E75'}
-        ]
-      },
-      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:10,font:{size:10}}}},scales:{r:{min:0,max:60,ticks:{font:{size:9},stepSize:20},pointLabels:{font:{size:9}}}}}
-    });
-  }
-  function buildJohari() {
-    const container = document.getElementById('johari-quadrant-cards');
-    container.innerHTML = JOHARI.map(j=>`<div class="card-sm" style="border-left:3px solid ${j.col};margin-bottom:6px"><strong style="color:${j.col}">${j.quadrant}</strong><div style="font-size:11px;color:var(--t2)">${j.desc}</div></div>`).join('');
-    const ctx = document.getElementById('johari-chart');
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: JOHARI.map(j=>j.quadrant),
-        datasets: [
-          {label:'Self-report accuracy',data:[92,45,48,55],backgroundColor:JOHARI.map(j=>j.col),borderRadius:4},
-          {label:'After multi-mirror',data:[94,82,88,70],backgroundColor:JOHARI.map(j=>j.col+'80'),borderRadius:4}
-        ]
-      },
-      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:10,font:{size:10}}}},scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%',font:{size:9}}},x:{ticks:{font:{size:9}}}}}
-    });
-  }
-  function initFramework() {
-    buildFWLayerCards();
-    buildFWRadar();
-    buildJohari();
-  }
+        <span class="live-badge">Recruiting</span>
+      </div>
+      <div class="g4" style="margin-bottom:12px">
+        ${[['Target N','50 annotators','var(--b)'],['Sessions/person','3 sessions','var(--t)'],['Duration','30 days','var(--a)'],['Budget','$10,000','var(--p)']].map(([l,v,col])=>`<div class="met"><div class="lbl">${l}</div><div class="mv" style="color:${col};font-size:18px">${v}</div></div>`).join('')}
+      </div>
+      <div class="callout" style="background:var(--tl);border-color:var(--t);color:var(--td)">
+        <strong>The one measurable delta:</strong> r &gt; 0.25 partial correlation between coherence proxy (c) and ICC, controlling for expertise and conscientiousness. Power ≥ 0.80 at N=50.
+      </div>
+    </div>
+    <div class="g2">
+      <div class="card" style="margin-bottom:0">
+        <div class="lbl">Mock emerging correlation (N=12 demo sessions)</div>
+        <div style="height:180px;position:relative"><canvas id="res-corr-chart"></canvas></div>
+        <div style="font-size:11px;color:var(--t3);margin-top:4px">Each point = one session. x-axis: ICC proxy. y-axis: gold accuracy. As N grows, correlation emerges. <em>This is seeded mock data.</em></div>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <div class="lbl">Live sessions from this device</div>
+        <div id="res-live-sessions"></div>
+      </div>
+    </div>
+  </div></div>
 
-  // ###########################################################
-  // 3. VALIDATION MATRIX TAB (Code 4 integrated)
-  // ###########################################################
-  let matCW = false, matSelP = 0, matSelS = 0, matSelCell = null, matCharts = {};
-  function renderMatrix() {
-    const root = document.getElementById('matrix-root');
-    let ch = '<div style="display:flex;align-items:flex-end;gap:3px;margin-bottom:3px;padding-left:148px">'+PERSONAS.map(p=>`<div style="width:42px;text-align:center;font-size:10px;color:var(--t3);flex-shrink:0"><div>${p.fl}</div><div style="font-size:9px">${p.sh}</div></div>`).join('')+'</div>';
-    let rows = '';
-    for (let si=0; si<10; si++) {
-      rows += `<div style="display:flex;align-items:center;gap:3px;margin-bottom:3px"><div style="width:142px;font-size:10px;color:var(--t3);text-align:right;padding-right:6px;flex-shrink:0"><div>${STATES[si].em} ${STATES[si].label.substring(0,16)}</div><div style="font-size:9px;color:${STATES[si].tier==='High'?var(--t):STATES[si].tier==='Medium'?var(--a):STATES[si].tier==='Drift'?var(--c):'#993C1D'}">${STATES[si].tier}</div></div>`;
-      for (let pi=0; pi<10; pi++) {
-        const c = getC(pi,si), w = getW(c);
-        const disp = matCW ? w.toFixed(2) : c.toFixed(2);
-        const bg = cc(c);
-        const op = matCW ? (0.25 + w*0.75) : (0.25 + c*0.75);
-        const isSel = matSelCell === `${pi},${si}`;
-        rows += `<div class="hc${isSel?' sel':''}" style="background:${bg};opacity:${op};color:white;text-shadow:0 1px 2px rgba(0,0,0,.4)" onclick="selMatrixCell(${pi},${si})"><div style="font-size:10px;font-weight:700">${disp}</div><div style="font-size:8px;opacity:.8">${STATES[si].tier[0]}</div></div>`;
-      }
-      rows += '</div>';
-    }
-    const allC = PERSONAS.flatMap((_,pi)=>STATES.map((_,si)=>getC(pi,si)));
-    const avg = allC.reduce((a,b)=>a+b)/100;
-    const allW = allC.map(c=>getW(c));
-    const avgW = allW.reduce((a,b)=>a+b)/100;
-    const hcnt = allC.filter(c=>c>=0.72).length;
-    const dcnt = allC.filter(c=>c<0.45).length;
-    let detail = '<div class="card" style="text-align:center;color:var(--t3);padding:24px">Click any cell in the matrix for the detailed breakdown</div>';
-    if (matSelCell) {
-      const [pi,si] = matSelCell.split(',').map(Number);
-      const p = PERSONAS[pi], s = STATES[si], c = getC(pi,si), w = getW(c);
-      detail = `<div class="card" style="border:1.5px solid ${cc(c)}"><div style="display:flex;justify-content:space-between"><div><div style="font-size:15px;font-weight:700">${p.fl} ${p.name} · ${s.em} ${s.label}</div><div style="font-size:11px;color:var(--t3)">${p.role} · ${p.city}, ${p.country} · ${p.joh} Johari</div></div><div><span class="bx" style="background:${cbg(c)};color:${cc(c)}">${s.tier}</span><span class="bx" style="margin-left:5px">${matCW?'CWHF active':'Uniform'}</span></div></div>
-      <div class="g4"><div class="met"><div class="lbl">c</div><div class="mv" style="font-size:18px;color:${cc(c)}">${c.toFixed(2)}</div></div><div class="met"><div class="lbl">CWHF weight</div><div class="mv" style="font-size:18px;color:${matCW?cc(c):'#999'}">${matCW?w.toFixed(2):'1.00'}</div></div></div>
-      <div class="lbl">Annotation excerpt</div><div class="ann" style="border-left:3px solid ${cc(c)};background:${cbg(c)};padding:10px">[Simulated annotation for ${p.name} in ${s.label}]</div></div>`;
-    }
-    root.innerHTML = `
-      <div class="card"><div style="display:flex;justify-content:space-between"><div class="lbl">100-combination matrix — ${matCW?"CWHF weights w":"coherence scores c"} — click any cell</div><button id="mat-toggle" class="tog ${matCW?'on':'off'}" onclick="toggleMatrixCW()">${matCW?'● CWHF ON':'○ CWHF OFF'}</button></div><div style="overflow-x:auto">${ch}${rows}</div><div style="display:flex;gap:14px;margin-top:6px;font-size:10px"><span style="color:#1D9E75">■ High (c≥0.72) — ${hcnt} cells</span><span style="color:#BA7517">■ Medium (0.55–0.72)</span><span style="color:#D85A30">■ Drift (0.38–0.55)</span><span style="color:#993C1D">■ Severe (<0.38) — ${dcnt} cells</span></div></div>
-      <div class="g4"><div class="met"><div class="lbl">Mean coherence</div><div class="mv" style="color:${cc(avg)}">${avg.toFixed(2)}</div><div class="bar"><div class="bf" style="width:${avg*100}%;background:${cc(avg)}"></div></div></div><div class="met"><div class="lbl">Mean CWHF weight</div><div class="mv" style="color:${matCW?cc(avgW):'#999'}">${matCW?avgW.toFixed(2):'1.00'}</div><div class="bar"><div class="bf" style="width:${matCW?avgW*100:100}%;background:${matCW?cc(avgW):'#999'}"></div></div></div></div>
-      ${detail}`;
-  }
-  function selMatrixCell(pi,si) { matSelCell = `${pi},${si}`; renderMatrix(); }
-  function toggleMatrixCW() { matCW = !matCW; renderMatrix(); }
+  <div class="tc res-tc" id="res-1"><div class="wrap" id="res-hyp-content"></div></div>
 
-  // ###########################################################
-  // 4. QUANTITATIVE ANALYSIS TAB (Code 3 simplified)
-  // ###########################################################
-  function renderAnalysis() {
-    const root = document.getElementById('analysis-root');
-    root.innerHTML = `
-      <div class="card"><div class="lbl">H1 Test Design — Critical Path</div><div class="code-box">Partial correlation r between coherence proxy c and within-session ICC, controlling for expertise and conscientiousness.<br>Target: r > 0.25. Power analysis: N=50 gives power 0.82 at r=0.25.<br>Cost: $10k, 30 days on Prolific. Pre‑register on OSF.</div><button class="btn-primary" onclick="alert('H1 protocol: N=50, 3 sessions, matched pairs, RT + anchor. Contact venkat@twopointsingularity.com')">Get Full Protocol</button></div>
-      <div class="card"><div class="lbl">ROI Calculator</div><div class="g2"><div><label>Training run cost ($M): <input type="range" id="roi-cost" min="1" max="100" value="20" step="1" oninput="updateROI()"><span id="roi-cost-val">20</span>M</label><label>Drift prevalence: <input type="range" id="roi-drift" min="20" max="80" value="55" step="5" oninput="updateROI()"><span id="roi-drift-val">55</span>%</label><label>Proxy accuracy: <input type="range" id="roi-acc" min="40" max="80" value="65" step="5" oninput="updateROI()"><span id="roi-acc-val">65</span>%</label></div><div><div>Annual error cost saving: $<span id="roi-saving">0</span>K</div><div>ROI at 12 months: <span id="roi-12">0</span>%</div><div>ROI at 36 months: <span id="roi-36">0</span>%</div></div></div></div>
-      <div class="card"><div class="lbl">Feasibility Matrix</div><div class="g3"><div class="card-sm"><strong>Feasibility</strong><br>92/100 – V1 uses existing platform data.</div><div class="card-sm"><strong>Scalability</strong><br>88/100 – 3.5% corpus shifts gradient.</div><div class="card-sm"><strong>Repeatability</strong><br>95/100 – Fixed interface c∈[0,1].</div></div></div>
-      <div class="card"><div class="lbl">Technical Appendices</div><div class="g2"><div class="card-sm"><strong>Rate-Distortion</strong><br>Coherent: ~100 bits/sec, drift: ~25 bits/sec. CWHF is optimal under bandwidth constraint.</div><div class="card-sm"><strong>Bias Theorem</strong><br>r̂ = r* + (1-p)δ. Aggregation fails because E[δ]≠0.</div><div class="card-sm"><strong>Structural Text Proxies</strong><br>P1 Propositional density, P2 Syntactic variance, P3 Hedging markers, P4 Logical connectors, P5 Lexical specificity.</div><div class="card-sm"><strong>Dawid‑Skene Orthogonality</strong><br>CWHF is additive – session‑level weighting, not competitive with annotator‑level methods.</div></div></div>
-    `;
-    updateROI();
-  }
-  function updateROI() {
-    const costM = parseFloat(document.getElementById('roi-cost').value);
-    const drift = parseFloat(document.getElementById('roi-drift').value)/100;
-    const acc = parseFloat(document.getElementById('roi-acc').value)/100;
-    document.getElementById('roi-cost-val').innerText = costM;
-    document.getElementById('roi-drift-val').innerText = drift*100;
-    document.getElementById('roi-acc-val').innerText = acc*100;
-    const biasRed = drift * acc * 0.82;
-    const qualityGain = biasRed * 0.35;
-    const errorSaving = costM * 1e6 * 0.08 * qualityGain;
-    document.getElementById('roi-saving').innerText = Math.round(errorSaving/1000);
-    document.getElementById('roi-12').innerText = Math.round((errorSaving - 50000)/50000 * 100);
-    document.getElementById('roi-36').innerText = Math.round((errorSaving*3 - 50000*1.5)/50000 * 100);
-  }
+  <div class="tc res-tc" id="res-2"><div class="wrap">
+    <div class="card">
+      <div class="lbl">Research roadmap — H1 to H5</div>
+      <div style="position:relative;padding-left:30px">
+        ${[
+          {h:'H1',name:'Proxy validity',status:'active',cost:'$10–50K',time:'30–90 days',stmt:'Coherence proxies predict annotation session quality above domain expertise.',delta:'r > 0.25 partial correlation (ICC × c)',why:'This is the minimum viable proof. Every other hypothesis depends on this correlation existing.'},
+          {h:'H2',name:'Adversarial robustness',status:'next',cost:'$50–100K',time:'4–6 months',stmt:'CWHF-trained reward models are more robust to adversarial prompting.',delta:'Δ robustness score on adversarial benchmark',why:'If H1 holds, H2 tests whether it actually improves downstream model quality.'},
+          {h:'H3',name:'Equity guarantee',status:'planned',cost:'$60–80K',time:'6 months',stmt:'CWHF with intra-personal calibration does not disadvantage protected groups.',delta:'Non-significant group coefficient after calibration',why:'Without this, CWHF could encode structural inequality. H3 closes the equity gap.'},
+          {h:'H4',name:'Coherent preference',status:'planned',cost:'$80–150K',time:'6–9 months',stmt:'CWHF-trained model is preferred by coherent-state evaluators.',delta:'Preference margin in blind coherent-state evaluation',why:'H4 closes the loop — showing CWHF actually produces models that humans in their best states prefer.'},
+          {h:'H5',name:'V6 behavioral signals',status:'future',cost:'$40–70K',time:'4–6 months',stmt:'Source-level behavioral signals predict session coherence above demographics.',delta:'R² increment from behavioral signal component',why:'H5 enables V6 — tagging coherence at moment of production, not just annotation.'}
+        ].map((h,i)=>`
+          <div style="position:relative;padding:0 0 28px 20px;border-left:2px solid ${h.status==='active'?'var(--t)':h.status==='next'?'var(--a)':h.status==='planned'?'var(--b)':'var(--g)'}">
+            <div style="position:absolute;left:-9px;top:2px;width:16px;height:16px;border-radius:50%;background:${h.status==='active'?'var(--t)':h.status==='next'?'var(--a)':h.status==='planned'?'var(--b)':'var(--g)'};border:2px solid var(--card)"></div>
+            <div class="card-sm" style="border-left:3px solid ${h.status==='active'?'var(--t)':h.status==='next'?'var(--a)':h.status==='planned'?'var(--b)':'var(--g)'}">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;margin-bottom:8px">
+                <div><span style="font-weight:700">${h.h}: ${h.name}</span> <span class="bx" style="background:${h.status==='active'?'var(--t)':h.status==='next'?'var(--al)':'var(--gl)'};color:${h.status==='active'?'white':h.status==='next'?'var(--ad)':'var(--gd)'}">${h.status}</span></div>
+                <div style="display:flex;gap:5px"><span class="bx" style="background:var(--al);color:var(--ad)">${h.cost}</span><span class="bx" style="background:var(--bl);color:var(--bd)">${h.time}</span></div>
+              </div>
+              <div style="font-size:12px;color:var(--t2);margin-bottom:6px">${h.stmt}</div>
+              <div style="font-size:11px;font-weight:600;color:var(--td)">Delta: ${h.delta}</div>
+              <div style="font-size:11px;color:var(--t3);margin-top:3px">Why: ${h.why}</div>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>
+  </div></div>
 
-  // ###########################################################
-  // 5. ACT / PARTICIPATE TAB (with Supabase waitlist)
-  // ###########################################################
-  // Replace these with your actual Supabase credentials
-  const SUPABASE_URL = 'postgresql://postgres:[Venki@CWHF@2026]@db.ziirxlakoppxlntvkgbz.supabase.co:5432/postgres';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppaXJ4bGFrb3BweGxudHZrZ2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NTg3NzMsImV4cCI6MjA5MDAzNDc3M30.7bwjzKfinohlbOtAnHG30ArQ-azA6Y3y_WkE5Spv_44';
-  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  <div class="tc res-tc" id="res-3"><div class="wrap">
+    <div class="card">
+      <div style="font-size:15px;font-weight:700;margin-bottom:8px">Your local research data</div>
+      <div id="res-my-data"></div>
+    </div>
+    <div class="card">
+      <div style="font-size:14px;font-weight:700;margin-bottom:10px">Export options</div>
+      <div class="g3">
+        <div class="card-sm"><div style="font-weight:600;font-size:12px;margin-bottom:4px">Signal packet only</div><div style="font-size:11px;color:var(--t2);margin-bottom:8px">c_weight + Δc + Merkle root. Nothing personal.</div><button class="btn-sec" style="width:100%;font-size:12px" onclick="dlAllPackets()">↓ Export packets</button></div>
+        <div class="card-sm"><div style="font-weight:600;font-size:12px;margin-bottom:4px">Full local data</div><div style="font-size:11px;color:var(--t2);margin-bottom:8px">All sessions with responses. Stays local, for your reference.</div><button class="btn-sec" style="width:100%;font-size:12px" onclick="dlFullData()">↓ Export full JSON</button></div>
+        <div class="card-sm"><div style="font-weight:600;font-size:12px;margin-bottom:4px">H1 contribution</div><div style="font-size:11px;color:var(--t2);margin-bottom:8px">Mock send your packets to the H1 pool. Only aggregated scores.</div><button class="btn-prim" style="width:100%;font-size:12px" onclick="mockH1Contribute()">🔬 Contribute to H1</button></div>
+      </div>
+    </div>
+  </div></div>`;
 
-  async function loadWaitlistCount() {
-    const { count, error } = await supabase
-      .from('waitlist')
-      .select('*', { count: 'exact', head: true });
-    if (!error && count !== null) {
-      document.getElementById('waitlist-count').innerText = count;
-    } else {
-      document.getElementById('waitlist-count').innerText = '?';
-    }
+  buildResearchCharts();
+  buildHypCards();
+  loadMyData();
+}
+
+function buildResearchCharts(){
+  setTimeout(()=>{
+    kc('resCorr');
+    const ctx=document.getElementById('res-corr-chart');
+    if(!ctx)return;
+    // Seeded mock data showing emerging correlation
+    const seed=[{x:.72,y:.80},{x:.55,y:.60},{x:.88,y:.90},{x:.42,y:.35},{x:.65,y:.70},
+                {x:.30,y:.20},{x:.78,y:.85},{x:.50,y:.55},{x:.90,y:.88},{x:.35,y:.30},{x:.68,y:.75},{x:.45,y:.40}];
+    charts.resCorr=new Chart(ctx,{type:'scatter',data:{datasets:[{
+      label:'Sessions (mock seeded)',
+      data:seed,
+      backgroundColor:'rgba(29,158,117,.5)',
+      borderColor:'#1D9E75',
+      pointRadius:6
+    }]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:8,font:{size:10}}}},
+      scales:{x:{min:0,max:1,title:{display:true,text:'ICC proxy (c)',font:{size:9}},ticks:{font:{size:9}}},
+              y:{min:0,max:1,title:{display:true,text:'Gold accuracy',font:{size:9}},ticks:{font:{size:9}}}}}});
+    loadResLiveSessions();
+  },100);
+}
+
+async function loadResLiveSessions(){
+  const el=document.getElementById('res-live-sessions');
+  if(!el)return;
+  const sessions=await getSessions();
+  if(sessions.length===0){
+    el.innerHTML=`<div style="text-align:center;color:var(--t3);font-size:12px;padding:20px">No live sessions yet.<br><button class="btn-sec" style="margin-top:8px;font-size:11px" onclick="nav(2)">Run H1 session →</button></div>`;
+    return;
   }
+  el.innerHTML=`<table class="dt">
+    <thead><tr><th>Session</th><th>c_weight</th><th>Δc</th><th>Gold</th><th>ICC</th></tr></thead>
+    <tbody>${sessions.map((s,i)=>`<tr>
+      <td>S${i+1} <span style="font-size:10px;color:var(--t3)">${new Date(s.ts).toLocaleDateString()}</span></td>
+      <td style="font-weight:700;color:${cc(s.metrics.c)}">${s.metrics.c.toFixed(2)}</td>
+      <td class="${s.deltaC>0?'delta-pos':s.deltaC<0?'delta-neg':'delta-neu'}" style="font-weight:600">${s.deltaC!==null?(s.deltaC>=0?'+':'')+s.deltaC.toFixed(2):'—'}</td>
+      <td>${s.metrics.goldScore.toFixed(2)}</td>
+      <td>${s.metrics.iccProxy.toFixed(2)}</td>
+    </tr>`).join('')}</tbody>
+  </table>`;
+}
 
-  async function submitWaitlist(event) {
-    event.preventDefault();
-    const email = document.getElementById('waitlist-email').value;
-    const consent = document.getElementById('waitlist-consent').checked;
-    if (!email || !consent) {
-      alert('Please provide a valid email and consent to join the research waitlist.');
-      return;
-    }
-    const { error } = await supabase
-      .from('waitlist')
-      .insert([{ email, consent }]);
-    if (error) {
-      if (error.code === '23505') {
-        alert('You are already on the waitlist. Thank you!');
-      } else {
-        alert('Something went wrong. Please try again later.');
-        console.error(error);
-      }
-    } else {
-      alert('Thank you! You have been added to the CWHF research waitlist.');
-      document.getElementById('waitlist-email').value = '';
-      document.getElementById('waitlist-consent').checked = false;
-      loadWaitlistCount();
-    }
-  }
-
-  function renderAct() {
-    const root = document.getElementById('act-root');
-    root.innerHTML = `
-      <div class="card" style="border-left:3px solid var(--t)">
-        <div class="lbl">Join the H1 Research Waitlist</div>
-        <p>Be among the first to participate in the live H1 validation study. Your email will only be used to notify you when the study opens. We respect your privacy.</p>
-        <form id="waitlist-form" onsubmit="submitWaitlist(event)">
-          <div class="form-row">
-            <label>Email</label>
-            <input type="email" id="waitlist-email" placeholder="your@email.com" required>
-          </div>
-          <div class="form-row">
-            <label>
-              <input type="checkbox" id="waitlist-consent" required>
-              I consent to receive updates about the CWHF H1 study and related research.
-            </label>
-          </div>
-          <button type="submit" class="btn-primary">Join Waitlist →</button>
-        </form>
-        <div style="margin-top:12px; font-size:11px; color:var(--t3)">
-          👥 <span id="waitlist-count">...</span> researchers and participants already on the waitlist.
+function buildHypCards(){
+  const el=document.getElementById('res-hyp-content');
+  if(!el)return;
+  el.innerHTML=`<div class="callout" style="background:var(--tl);border-color:var(--t);color:var(--td)"><strong>H1 is the critical path.</strong> Pre-register on OSF before collecting any data. This timestamps the hypothesis, prevents post-hoc adjustment, and establishes prior art. Protocol: N=50, Prolific, 3 sessions, $10K, 30 days.</div>
+  ${[
+    {id:'H1',name:'Proxy validity',crit:true,status:'Design ready',cost:'$10–50K',time:'30–90 days',
+     stmt:'Within-session rating consistency correlates with coherence proxies above domain expertise.',
+     falsify:'No significant R² increment at p<0.05, power ≥0.80.',
+     action:'Prolific · N=50 · 3 sessions · Pre-register on OSF first.',
+     delta:'r > 0.25 ICC × c_weight partial correlation'},
+    {id:'H2',name:'Adversarial robustness',crit:false,status:'Planned post-H1',cost:'$50–100K',time:'4–6 months',
+     stmt:'CWHF-trained reward models exhibit greater adversarial robustness.',
+     falsify:'No significant robustness difference.',
+     action:'Pre-registered head-to-head. Two reward models. Adversarial battery.',
+     delta:'Δ robustness score on paraphrase/framing/suffix perturbations'},
+    {id:'H3',name:'Equity guarantee',crit:false,status:'Planned',cost:'$60–80K',time:'6 months',
+     stmt:'CWHF with intra-personal calibration does not disadvantage protected demographic groups.',
+     falsify:'Significant negative demographic coefficient after controlling for baseline.',
+     action:'N≥1,000 · consented demographics · hierarchical regression.',
+     delta:'Non-significant group coefficient post-calibration'},
+    {id:'H4',name:'Coherent preference',crit:false,status:'Post-H2',cost:'$80–150K',time:'6–9 months',
+     stmt:'A CWHF-trained model is preferred by coherent-state evaluators over a uniformly-trained model.',
+     falsify:'No significant preference difference.',
+     action:'Two fine-tuned models · blind coherent-state panel · Prolific.',
+     delta:'Preference margin in coherent-state blind evaluation'},
+    {id:'H5',name:'V6 behavioral signals',crit:false,status:'Future',cost:'$40–70K',time:'4–6 months',
+     stmt:'Source-level behavioral signals predict session coherence above demographics.',
+     falsify:'No significant R² increment from behavioral signals.',
+     action:'Platform instrumentation · pre-registered regression.',
+     delta:'R² increment: behavioral signal component contribution'}
+  ].map(h=>`
+    <div class="hyp-card" style="background:var(--card);border-color:${h.crit?'var(--t)':'var(--a)'}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+        <div><span style="font-size:14px;font-weight:700">${h.id}: ${h.name}</span> ${h.crit?'⭐':''}</div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap">
+          ${h.crit?`<span class="bx" style="background:var(--t);color:white">Critical path</span>`:''}
+          <span class="bx" style="background:var(--gl);color:var(--gd)">${h.status}</span>
+          <span class="bx" style="background:var(--al);color:var(--ad)">${h.cost}</span>
+          <span class="bx" style="background:var(--bl);color:var(--bd)">${h.time}</span>
         </div>
       </div>
-      <div class="card">
-        <div class="lbl">AI Lab Integration</div>
-        <div class="code-box">V1 implementation: Add 2‑item anchor (attention, emotion) + modify loss function: L = (1/Σwᵢ) Σᵢ wᵢ(r_θ − h)² where w = 0.1 + 0.9·c^1.5. One sprint.</div>
-        <button class="btn-outline" onclick="alert('Contact venkat@twopointsingularity.com for integration guide')">Contact for Integration</button>
+      <div style="font-size:12px;color:var(--t2);margin-bottom:8px">${h.stmt}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+        <div style="background:#f8f7f4;border-radius:6px;padding:8px"><div class="lbl">Falsification</div><div style="font-size:11px;color:var(--cd);line-height:1.5">${h.falsify}</div></div>
+        <div style="background:var(--tl);border-radius:6px;padding:8px"><div class="lbl">Action</div><div style="font-size:11px;color:var(--td);line-height:1.5">${h.action}</div></div>
+        <div style="background:var(--al);border-radius:6px;padding:8px"><div class="lbl">One delta</div><div style="font-size:11px;color:var(--ad);line-height:1.5">${h.delta}</div></div>
       </div>
-      <div class="card">
-        <div class="lbl">Research Collaboration</div>
-        <p>Run H1, H2, or other hypotheses. Pre‑registration on OSF. We provide full protocol, code, and support.</p>
-        <button class="btn-outline" onclick="alert('Collaboration request: email venkat@twopointsingularity.com')">Request Collaboration</button>
-      </div>
-      <div class="card">
-        <div class="lbl">Policy Engagement</div>
-        <p>CWHF satisfies EU AI Act Article 10 training data governance requirements. Coherence distribution reporting is ready for regulatory adoption.</p>
-        <button class="btn-outline" onclick="alert('Policy briefing: email venkat@twopointsingularity.com')">Request Briefing</button>
-      </div>
-    `;
-    loadWaitlistCount();
-  }
+    </div>`).join('')}`;
+}
 
-  // ###########################################################
-  // 6. TAB SWITCHING & INIT
-  // ###########################################################
-  let activeTab = 'framework';
-  function switchTab(tab) {
-    activeTab = tab;
-    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.toggle('on', btn.dataset.tab === tab));
-    document.querySelectorAll('.tab-content').forEach(div => div.classList.toggle('active', div.id === tab));
-    if (tab === 'framework') initFramework();
-    else if (tab === 'matrix') renderMatrix();
-    else if (tab === 'analysis') renderAnalysis();
-    else if (tab === 'act') renderAct();
+async function loadMyData(){
+  const el=document.getElementById('res-my-data');
+  if(!el)return;
+  const sessions=await getSessions();
+  if(sessions.length===0){
+    el.innerHTML=`<div style="text-align:center;color:var(--t3);font-size:12px;padding:16px">No sessions yet. <button class="btn-sec" style="font-size:11px" onclick="nav(2)">Run live H1 →</button></div>`;return;
   }
+  const avgC=(sessions.reduce((a,s)=>a+s.metrics.c,0)/sessions.length);
+  el.innerHTML=`<div class="g4" style="margin-bottom:10px">
+    <div class="met"><div class="lbl">Sessions</div><div class="mv" style="font-size:20px">${sessions.length}</div></div>
+    <div class="met"><div class="lbl">Mean c_weight</div><div class="mv" style="font-size:20px;color:${cc(avgC)}">${avgC.toFixed(2)}</div></div>
+    <div class="met"><div class="lbl">Trend</div><div class="mv" style="font-size:20px">${sessions.length>=2?(sessions[sessions.length-1].metrics.c-sessions[0].metrics.c>0?'↑':'↓'):'—'}</div></div>
+    <div class="met"><div class="lbl">Merkle sessions</div><div class="mv" style="font-size:20px">${sessions.length}</div></div>
+  </div>
+  <table class="dt">
+    <thead><tr><th>#</th><th>Date</th><th>c_weight</th><th>Δc</th><th>CWHF weight</th><th>Merkle leaf</th></tr></thead>
+    <tbody>${sessions.map((s,i)=>`<tr>
+      <td>S${i+1}</td>
+      <td>${new Date(s.ts).toLocaleDateString()}</td>
+      <td style="font-weight:700;color:${cc(s.metrics.c)}">${s.metrics.c.toFixed(3)}</td>
+      <td class="${s.deltaC>0?'delta-pos':s.deltaC<0?'delta-neg':'delta-neu'};font-weight:600">${s.deltaC!==null?(s.deltaC>=0?'+':'')+s.deltaC.toFixed(3):'—'}</td>
+      <td>${s.metrics.w.toFixed(3)}</td>
+      <td style="font-family:monospace;font-size:10px;color:var(--t3)">${s.merkleRoot?.slice(0,12)||'—'}...</td>
+    </tr>`).join('')}</tbody>
+  </table>`;
+}
 
-  document.querySelectorAll('.nav-btn').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
-  switchTab('framework');
+async function dlAllPackets(){
+  const sessions=await getSessions();
+  const packets=[];
+  for(let i=0;i<sessions.length;i++){
+    const prev=i>0?sessions[i-1].metrics.c:null;
+    const p=await generateSignalPacket(sessions[i],prev,sessions[i].merkleRoot);
+    packets.push(p);
+  }
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([JSON.stringify({schema:'cwhf/1.0',packets},null,2)],{type:'application/json'}));
+  a.download=`cwhf_signal_packets_${Date.now()}.json`;a.click();
+  notify('Signal packets exported. Raw data stayed on your device.');
+}
+
+async function dlFullData(){
+  const sessions=await getSessions();
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([JSON.stringify({warning:'FULL LOCAL DATA — do not share. Contains raw responses.',sessions},null,2)],{type:'application/json'}));
+  a.download=`cwhf_full_local_${Date.now()}.json`;a.click();
+}
+
+async function mockH1Contribute(){
+  const sessions=await getSessions();
+  if(sessions.length===0){alert('Run at least one live session first.');return;}
+  const packets=[];
+  for(let i=0;i<sessions.length;i++){
+    const prev=i>0?sessions[i-1].metrics.c:null;
+    packets.push(await generateSignalPacket(sessions[i],prev,sessions[i].merkleRoot));
+  }
+  const merkle=await buildMerkleTree(sessions);
+  notify(`✅ Mock H1 contribution: ${sessions.length} packet(s) with Merkle root ${merkle.root.slice(0,12)}... — No raw data sent.`, 5000);
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PAGE 4 — SIGNAL ARCHITECTURE
+// ═══════════════════════════════════════════════════════════════════
+function renderSignal(){
+  document.getElementById('pg4').innerHTML=`
+  <div class="tbar"><div class="tbar-inner">
+    <button class="tb sig-tb on" onclick="showTab('sig',0)">Architecture</button>
+    <button class="tb sig-tb"    onclick="showTab('sig',1)">Interop Schema</button>
+    <button class="tb sig-tb"    onclick="showTab('sig',2)">Merkle Demo</button>
+    <button class="tb sig-tb"    onclick="showTab('sig',3)">Roadmap V1→V6</button>
+  </div></div>
+
+  <div class="tc sig-tc on" id="sig-0"><div class="wrap">
+    <div class="card">
+      <div class="lbl">What travels vs. what stays — the privacy architecture</div>
+      <div class="g2">
+        <div>
+          <div style="font-weight:600;margin-bottom:8px;color:var(--cd)">❌ What does NOT travel</div>
+          ${['Your annotation text or ratings','Your response times','Your demographic information','Your name or identity','Your device information','Raw cognitive state responses'].map(x=>`<div style="display:flex;gap:8px;padding:5px 0;border-bottom:.5px solid var(--br);font-size:12px"><span style="color:var(--cd)">✗</span><span style="color:var(--t2)">${x}</span></div>`).join('')}
+        </div>
+        <div>
+          <div style="font-weight:600;margin-bottom:8px;color:var(--td)">✅ What MAY travel (with consent)</div>
+          ${[['c_weight','0.64 — your coherence score'],['delta_c','0.08 — change from last session'],['session_n','3 — session number'],['confidence','0.71 — reliability estimate'],['merkle_root','a3f9... — integrity proof'],['timestamp','2026-03-26... — when (no location)']].map(([k,v])=>`<div style="display:flex;gap:8px;padding:5px 0;border-bottom:.5px solid var(--br);font-size:12px"><span style="color:var(--td);font-family:monospace">${k}</span><span style="color:var(--t3)">${v}</span></div>`).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="lbl">Interoperability — who can use this data</div>
+      <table class="dt">
+        <thead><tr><th>Consumer</th><th>What they get</th><th>Use case</th><th>Status</th></tr></thead>
+        <tbody>
+          ${[
+            ['AI labs (Anthropic, OpenAI, etc.)','c_weight per annotator session','Weight RLHF training signals by coherence','Proposed standard'],
+            ['Annotation platforms (Scale, Surge)','Session coherence distribution','Workforce quality monitoring + equity reporting','API spec ready'],
+            ['Academic researchers (H1-H6)','Aggregated delta packets + Merkle root','Validate proxy mechanism','Prototype active'],
+            ['Regulatory bodies (EU AI Act)','Coherence distribution model card','Article 10 compliance documentation','Mapped'],
+            ['Standards bodies (ISO/IEC JTC1)','cwhf/1.0 schema specification','Open standard adoption','Proposed'],
+            ['Startups (CaaS providers)','V1 classifier API + seed set scoring','Commercial coherence-as-a-service','Opportunity'],
+          ].map(([c,w,u,s])=>`<tr><td style="font-weight:500">${c}</td><td style="font-family:monospace;font-size:10px;color:var(--td)">${w}</td><td style="font-size:11px">${u}</td><td><span class="bx" style="background:var(--tl);color:var(--td)">${s}</span></td></tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div></div>
+
+  <div class="tc sig-tc" id="sig-1"><div class="wrap">
+    <div class="card">
+      <div class="lbl">cwhf/1.0 — the only packet that travels</div>
+      <div class="packet">${formatPacket({schema:"cwhf/1.0",c_weight:0.64,delta_c:0.08,confidence:0.71,session_n:3,gold_accuracy:0.75,merkle_root:"a3f9b2d1e4c8f7a1b2c3d4e5f6a7b8c9",context:"rlhf_annotation",lang:"en-IN",timestamp:"2026-03-26T09:14:22Z",raw_data:null,privacy:"local_only"})}</div>
+      <div style="margin-top:10px">
+        <div class="lbl">Schema fields</div>
+        <table class="dt">
+          ${[['schema','string','Protocol version — cwhf/1.0'],['c_weight','float [0,1]','Coherence score for this session'],['delta_c','float [-1,1]','Change from previous session'],['confidence','float [0,1]','Reliability based on session count'],['session_n','int','Session number (not linked to identity)'],['gold_accuracy','float [0,1]','Fraction of gold tasks answered correctly'],['merkle_root','hex string','Root of session hash chain'],['context','enum','rlhf_annotation | creative | decision'],['lang','BCP 47','Language tag for multilingual interop'],['timestamp','ISO 8601','When (no location data)'],['raw_data','null','Always null — stays on device'],['privacy','string','Always local_only in V1']].map(([f,t,d])=>`<tr><td style="font-family:monospace;color:var(--td);font-size:11px">${f}</td><td style="font-size:10px;color:var(--t3)">${t}</td><td style="font-size:11px">${d}</td></tr>`).join('')}
+        </table>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="tc sig-tc" id="sig-2"><div class="wrap">
+    <div class="card">
+      <div style="font-size:15px;font-weight:700;margin-bottom:8px">Live Merkle tree — your session chain</div>
+      <p style="font-size:13px;color:var(--t2);line-height:1.65;margin-bottom:14px">Each session is hashed with SHA-256 using Web Crypto API. Hashes are chained into a Merkle tree. The root proves that the chain hasn't been tampered with, without revealing any session content.</p>
+      <div id="live-merkle-demo"></div>
+      <div style="margin-top:12px">
+        <div class="code">// The hash function (real — runs in your browser):
+async function sha256(data) {
+  const buf = await crypto.subtle.digest(
+    'SHA-256', 
+    new TextEncoder().encode(JSON.stringify(data))
+  );
+  return Array.from(new Uint8Array(buf))
+    .map(b => b.toString(16).padStart(2,'0'))
+    .join('');
+}
+
+// Leaf: hash(session_id + timestamp + c_weight)
+// Root: hash(leaf[0] + leaf[1] + ... leaf[n])
+// Packet: { merkle_root: root } — nothing else</div>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="tc sig-tc" id="sig-3"><div class="wrap">
+    <div class="card">
+      <div class="lbl">Coherence score versioning — V1 to V6</div>
+      <table class="dt">
+        <thead><tr><th>Version</th><th>Signals used</th><th>Accuracy</th><th>Available</th><th>Marginal cost</th></tr></thead>
+        <tbody>
+          ${[
+            ['V1','State anchor (2 items) + rating variance + RT variance + gold tasks','60–70%','Today','~$0 marginal — all signals already collected'],
+            ['V2','V1 + session cadence (inter-session timing, consistency across sessions)','70–78%','Near-term','Session metadata only'],
+            ['V3','V2 + multi-mirror (peer assessment, Johari BLIND/HIDDEN correction)','78–84%','Medium-term','Peer rating infrastructure'],
+            ['V4','V3 + contextual signals (global stress events, platform load, time-of-day)','84–90%','Longer-term','World-state API integration'],
+            ['V5','V4 + direct substrate assessment (4-16-64 coherence profile, opt-in)','90–95%','Opt-in now','Deep assessment protocol'],
+            ['V6','Source-level: dwell time, navigation entropy, typing dynamics at moment of production','75–85%','12-month horizon','Platform SDK instrumentation'],
+          ].map(([v,s,a,av,c])=>`<tr><td style="font-weight:700;color:var(--t)">${v}</td><td style="font-size:11px">${s}</td><td><span class="bx" style="background:var(--tl);color:var(--td)">${a}</span></td><td style="font-size:11px">${av}</td><td style="font-size:11px;color:var(--t3)">${c}</td></tr>`).join('')}
+        </tbody>
+      </table>
+      <div class="callout" style="background:var(--tl);border-color:var(--t);color:var(--td);margin-top:8px">The interface (c ∈ [0,1]) never changes across versions. Every downstream system always reads the same field. Computation improves. Interface stays fixed. Same design philosophy as Google PageRank.</div>
+    </div>
+    <div class="card">
+      <div class="lbl">Multilingual context-awareness (roadmap)</div>
+      <div class="g3">
+        ${[['Multilingual validation','V1 proxies (propositional density, hedging markers, logical connectors) are validated in English. V2+ requires cross-cultural seed sets in Hindi, Arabic, Spanish, Mandarin, French minimum.','⚠ Required before global deployment'],['Context awareness','The annotation context (rlhf_annotation, creative_work, policy_review) modulates score interpretation. A journalist in investigative mode has different coherence signatures than the same person in casual reading.','Planned for V2'],['Cultural calibration','Johari quadrant prevalence differs across cultures. HIDDEN quadrant is more common in cultures with high social desirability pressure. Multi-mirror assessment must be culturally calibrated.','Required for equity guarantee (H3)']].map(([t,d,s])=>`<div class="card-sm"><div style="font-weight:600;font-size:12px;margin-bottom:4px">${t}</div><div style="font-size:11px;color:var(--t2);line-height:1.5;margin-bottom:6px">${d}</div><div class="bx" style="background:var(--al);color:var(--ad);font-size:10px">${s}</div></div>`).join('')}
+      </div>
+    </div>
+  </div></div>`;
+
+  loadLiveMerkleDemo();
+}
+
+async function loadLiveMerkleDemo(){
+  const el=document.getElementById('live-merkle-demo');
+  if(!el)return;
+  const sessions=await getSessions();
+  if(sessions.length===0){
+    el.innerHTML=`<div style="text-align:center;padding:20px;color:var(--t3);font-size:12px">No live sessions yet. <button class="btn-sec" style="font-size:11px" onclick="nav(2)">Run session →</button></div>`;
+    return;
+  }
+  const merkle=await buildMerkleTree(sessions);
+  el.innerHTML=`
+    <div style="text-align:center;margin-bottom:12px">
+      <div class="lbl">Root (only this travels)</div>
+      <div class="merkle-node merkle-root-node" style="display:inline-block">ROOT: ${merkle.root}</div>
+    </div>
+    <div style="text-align:center;margin-bottom:8px">
+      <div class="lbl">Leaves (stay on device)</div>
+      <div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap">
+        ${merkle.leaves.map((l,i)=>`<div class="merkle-node" title="${l}">S${i+1}: ${l.slice(0,16)}...</div>`).join('')}
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--t3);text-align:center">SHA-256 chain of ${merkle.leaves.length} session(s) → 1 root → 1 integrity proof</div>`;
+}
+
+// ─── UTILS ────────────────────────────────────────────────────────
+function kc(key){if(charts[key])try{charts[key].destroy();}catch(e){}delete charts[key];}
+
+// ─── INIT ─────────────────────────────────────────────────────────
+async function boot(){
+  try{ await initDB(); }catch(e){ console.warn('IndexedDB unavailable, running without persistence:',e); }
+  renderFramework();
+}
+boot();
 </script>
 </body>
 </html>
