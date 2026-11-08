@@ -1366,7 +1366,7 @@ a.essay:hover{background:var(--bg2)}
         <p style="margin-top:14px;max-width:44ch">It opens with an in-depth coherence audit. Not therapy and not a personality test. It shows, in your own answers, that people need people in different ways.</p>
         <p class="fine" style="margin-top:12px">Your answers stay on your phone. Ten layers deep; most people stop at three to six.</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px">
-          <a class="btn primary mag" href="https://neev.twopointsingularity.com/" target="_blank" rel="noopener">Open Neev full screen ↗</a>
+          <a class="btn primary mag" id="neevOpen" href="https://neev.twopointsingularity.com/" target="_blank" rel="noopener" hidden>Open Neev full screen ↗</a>
         </div>
       </div>
       <div class="phone" id="phone" aria-label="Neev app preview">
@@ -2051,10 +2051,17 @@ $('#phOpts').addEventListener('click',e=>{
 renderPhone();
 
 /* ---------------- live embeds (real domain only, mounted once, lazily) ---------------- */
+/* ---------------- site settings: fill these at launch ---------------- */
+/* SUBSCRIBE_URL: your Substack address, e.g. 'https://neevletter.substack.com'. Empty = sign-ups arrive by email. */
+var SUBSCRIBE_URL = '';
+var CONTACT = 'venkat@twopointsingularity.com';
+/* NEEV_LIVE: set to true once the Neev app is uploaded to neev.twopointsingularity.com */
+var NEEV_LIVE = false;
+if(NEEV_LIVE){ const n=document.getElementById('neevOpen'); if(n) n.hidden=false; }
 const LIVE = /(^|\.)twopointsingularity\.com$|hostingersite\.com$/.test(location.hostname);
 if(LIVE){
   const lazy=(el,html)=>{ if(!el||el._mounted) return; el._mounted=true; const io=new IntersectionObserver(es=>{ if(es.some(x=>x.isIntersecting)){ el.insertAdjacentHTML('beforeend',html); io.disconnect(); } },{rootMargin:'300px'}); io.observe(el); };
-  lazy($('#phone'),'<iframe src="https://neev.twopointsingularity.com/" title="Neev app" allow="clipboard-write"></iframe>');
+  if(NEEV_LIVE){ lazy($('#phone'),'<iframe src="https://neev.twopointsingularity.com/" title="Neev app" allow="clipboard-write"></iframe>'); }
   const ce=$('#cwhfEmbed'); ce.hidden=false; lazy(ce,'<iframe src="https://cwhf.vercel.app/" title="CWHF research site" loading="lazy"></iframe>');
 }
 
@@ -2566,10 +2573,6 @@ $('#subForm').addEventListener('submit', e=>{
   e.target.reset();
 });
 
-/* ---------------- site settings: fill these at launch ---------------- */
-/* SUBSCRIBE_URL: your Substack address, e.g. 'https://neevletter.substack.com'. Empty = sign-ups arrive by email. */
-var SUBSCRIBE_URL = '';
-var CONTACT = 'venkat@twopointsingularity.com';
 
 /* ---------------- countdown ---------------- */
 const premiere = new Date('2027-01-08T19:00:00+05:30').getTime();
