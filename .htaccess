@@ -5,8 +5,7 @@ RedirectMatch 404 /\.git
 DirectoryIndex index.html
 ErrorDocument 404 /404.html
 RewriteEngine On
-# HTTPS and no www
-RewriteCond %{HTTPS} off [OR]
+# www goes to the plain domain; HTTPS is enforced by the Hostinger CDN (avoids a redirect loop)
 RewriteCond %{HTTP_HOST} ^www\. [NC]
 RewriteRule ^ https://twopointsingularity.com%{REQUEST_URI} [L,R=301]
 # Security headers
