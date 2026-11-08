@@ -1,0 +1,25 @@
+# Two Point Singularity
+
+> If genes are why humans exist, and stories are how humans scaled to civilisations, then coherence is why humans believe in stories. Two Point Singularity, by Venkat Rao, proposes two thresholds: the technological singularity (machine intelligence passing ours) and the coherence singularity (humans becoming coherent enough to direct it). The second singularity has to come first.
+
+## The idea
+- [What is Two Point Singularity?](https://twopointsingularity.com/what-is-two-point-singularity/): the canonical explanation at four depths, for different readers, with origin, objections and how to cite.
+- [Glossary](https://twopointsingularity.com/glossary/): one-line definitions of every term.
+
+## Research
+- [Coherence Intelligence: the signal is not the value](https://twopointsingularity.com/research/coherence-intelligence/): white paper v2.2; a framework for measuring the state behind human feedback. Theoretical; pre-registered; untested.
+- [CWHF: Coherence-Weighted Human Feedback](https://twopointsingularity.com/research/cwhf/): h = v + ε(state). Pre-registered at OSF.IO/W7NYH; not yet tested.
+
+## Books
+- [The Village Came First](https://twopointsingularity.com/books/village-came-first/): The village was the first story everyone believed. (Coming to Kindle)
+- [COHERENCE](https://twopointsingularity.com/books/coherence-what-holds-us-together/): The first telling: what holds us together, and why it comes first. (Kindle · ₹249)
+- [Two Doors, One Room](https://twopointsingularity.com/books/two-doors-one-room/): God is the story that let strangers trust each other. (Finalising)
+- [The Last Human Question](https://twopointsingularity.com/books/last-human-question/): What do we still believe when the person who held us is gone? (In edit)
+- [No One Has to Stay](https://twopointsingularity.com/books/no-one-has-to-stay/): Build places where people believe in each other again. (Paperback next)
+- [Two Point Singularity](https://twopointsingularity.com/books/two-point-singularity/): Machines learn our stories. Coherence decides which ones we believe. (Kindle · ₹599)
+- [The Lines of Thrones](https://twopointsingularity.com/books/lines-of-thrones/): The invisible stories that decide who is heard. (Kindle · ₹249)
+- [The River and the Salt](https://twopointsingularity.com/books/river-and-the-salt/): A grandmother teaches a child which stories to trust. (Manuscript)
+- [The Mirror and the Fog](https://twopointsingularity.com/books/mirror-and-the-fog/): How the fog sells us stories we never chose. (Manuscript)
+
+## Author
+- [Venkat Rao](https://twopointsingularity.com/about/): ORCID 0009-0003-3477-1225.
