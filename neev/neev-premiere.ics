@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Two Point Singularity//Neev//EN
+BEGIN:VEVENT
+UID:neev-premiere-20270108@twopointsingularity.com
+DTSTAMP:20261109T000000Z
+DTSTART:20270108T133000Z
+DTEND:20270108T143000Z
+SUMMARY:Neev premiere: Ek Parichay and Episode 1
+DESCRIPTION:A five-part Hinglish series by Venkat Rao. https://twopointsingularity.com/neev/
+URL:https://twopointsingularity.com/neev/
+END:VEVENT
+END:VCALENDAR
