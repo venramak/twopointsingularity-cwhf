@@ -1,6 +1,6 @@
 # Signal ≠ Value
 
-**Does pressure bend the human feedback that trains AI?** Paper, technical supplement and companion lab (Venkat Rao, 2026). Preprint, not peer reviewed.
+**Does pressure bend the human feedback that trains AI?** Paper (version 1.1), technical supplement and companion lab (Venkat Rao, 2026). Preprint, not peer reviewed.
 
 - **Paper (web):** https://cwhf.vercel.app/paper/
 - **Paper (PDF):** [`paper/Signal-not-Value_Rao_2026.pdf`](paper/Signal-not-Value_Rao_2026.pdf)
@@ -20,8 +20,9 @@ The study tests condition-dependent preferences over answers. It does not identi
 | Path | Contents |
 | --- | --- |
 | `paper/` | The paper (web page and A4 PDF) and the technical supplement (PDF). |
-| `index.html` | The lab, v2.1: evidence base (71 cases), the Reach room on every digital signal, a flip-test demonstration (not research participation), the design simulation with a reproducibility receipt, the CWHF v2 proposal, method and the claims ledger. One static page; no cookies, storage or analytics; readable without JavaScript. |
-| `simulation/` | Code and result files behind every simulated number in the lab and the paper. |
+| `index.html` | The lab, v2.2: evidence base (71 cases), the Reach room on every digital signal, a flip-test demonstration (not research participation), the design simulation with a reproducibility receipt, the CWHF v2 proposal, method and the claims ledger. One static page; no cookies, storage or analytics; readable without JavaScript. |
+| `simulation/` | Code and result files behind every simulated number in the lab and the paper. `sensitivity.py` adds power by spread, a check of the blinded sample-size rule, a side-bias check and the sensitivity of the source-fix result. |
+| `schema/` | The step 1 conditions record as JSON Schema, with an example (paper, Appendix C). |
 | `archive/` | Retired material kept for the record: whitepaper v2.0 and the CWHF Coherence Lab v0.4. Their claims are superseded. |
 
 ## Reproduce the simulation
@@ -34,6 +35,7 @@ python3 run_h1_grid.py . h1_results.json
 python3 persontest.py . h1_person_test.json
 python3 h2sim.py 80 h2_results.json
 python3 power_sd.py
+python3 sensitivity.py sensitivity_results.json   # about 3 minutes
 ```
 
 Seeds are fixed by setting index, so reruns match. Every simulated result describes the study design under stated assumptions. None of it is evidence about how real people behave.
