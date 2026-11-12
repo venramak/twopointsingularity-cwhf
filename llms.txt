@@ -6,10 +6,13 @@
 - [What is Two Point Singularity?](https://twopointsingularity.com/what-is-two-point-singularity/): the canonical explanation at four depths, for different readers, with origin, objections and how to cite.
 - [Glossary](https://twopointsingularity.com/glossary/): one-line definitions of every term.
 
-## Neev, the series
+## Neev, the series and the app
+- [The Neev app](https://twopointsingularity.com/neev-app/): a free coherence audit that shows who holds you; answers stay on your phone.
 - [Neev](https://twopointsingularity.com/neev/): a five-part Hinglish series on why humans believe in stories; premieres Friday 8 January 2027, 7 pm IST.
 
 ## Research
+- [Signal ≠ Value Lab](https://twopointsingularity.com/lab/): an interactive lab on why a feedback signal is not the value behind it, h = v + ε(state); pre-registered, untested.
+- [Corrections and changes](https://twopointsingularity.com/corrections/): a public log.
 - [Coherence Intelligence: the signal is not the value](https://twopointsingularity.com/research/coherence-intelligence/): white paper v2.2; a framework for measuring the state behind human feedback. Theoretical; pre-registered; untested.
 - [CWHF: Coherence-Weighted Human Feedback](https://twopointsingularity.com/research/cwhf/): h = v + ε(state). Pre-registered at OSF.IO/W7NYH; not yet tested.
 

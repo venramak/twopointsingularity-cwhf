@@ -879,6 +879,58 @@ a.essay:hover{background:var(--bg2)}
 
 h1.hh-wrap{margin:0;font:inherit;letter-spacing:inherit;line-height:inherit}
 h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
+
+#neevRemind,#neevOpen{white-space:normal;text-align:center;max-width:100%}
+.tool-hero>*{min-width:0}
+.idstrip a{display:inline-flex;align-items:center;min-height:24px}
+/* ===== v14: instruments (Lab + Neev app) ===== */
+.instr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,3vw,32px);margin-top:28px}
+.instr a{display:flex;flex-direction:column;gap:12px;padding:clamp(22px,3vw,36px);border:1px solid var(--line);background:var(--bg2);text-decoration:none;color:inherit;min-height:280px;transition:border-color .3s,transform .3s}
+.instr a:hover,.instr a:focus-visible{border-color:var(--gold);transform:translateY(-2px)}
+.instr .rl,.ways .rl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.instr h3{font-size:clamp(26px,3vw,38px);font-weight:300;margin:0;letter-spacing:-.01em}
+.instr p{font-family:var(--ui);font-size:16px;color:var(--mute);margin:0;max-width:40ch}
+.instr .go{margin-top:auto;font-family:var(--ui);font-size:15px;color:var(--fg);border-bottom:1px solid var(--gold);align-self:flex-start;padding-bottom:2px}
+.instr svg{width:100%;max-width:220px;height:64px;color:var(--mute)}
+.ways{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,3vw,32px);margin-top:56px}
+.ways>div{display:flex;flex-direction:column;gap:8px;padding-top:18px;border-top:1px solid var(--line)}
+.ways b{font-size:22px;font-weight:400}
+.ways p{font-family:var(--ui);font-size:15px;color:var(--mute);margin:0}
+@media (max-width:760px){.instr,.ways{grid-template-columns:1fr}.instr a{min-height:0}}
+/* embed bench */
+.bench{border:1px solid var(--line);background:var(--bg2);margin-top:32px}
+.bench-bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px 18px;padding:10px 14px;border-bottom:1px solid var(--line)}
+.bench-tabs{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.bench-tabs button{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:0 12px;min-height:44px;background:none;border:1px solid var(--line);color:var(--mute);cursor:pointer}
+.bench-tabs button[aria-pressed="true"]{color:var(--fg);border-color:var(--gold)}
+.bench-name{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.bench-act{display:flex;gap:16px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.bench-act a{color:var(--gold);text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+.bench-stage{position:relative;height:min(78vh,860px);min-height:440px;display:grid;place-items:center;text-align:center;padding:24px}
+.bench-stage .poster{display:flex;flex-direction:column;align-items:center;gap:14px;max-width:46ch}
+.bench-stage.on .poster{display:none}
+.bench-stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--bg)}
+.bench-fall{padding:12px 14px;border-top:1px solid var(--line);font-family:var(--ui);font-size:13px;color:var(--mute)}
+.bench-fall a{color:var(--gold)}
+/* signal vs value demo */
+.sig{border:1px solid var(--line);background:var(--bg2);padding:clamp(20px,3vw,36px);display:grid;gap:22px;margin-top:28px}
+.sig label{font-family:var(--ui);font-size:15px;display:flex;justify-content:space-between;gap:12px}
+.sig input[type=range]{width:100%;accent-color:var(--gold);min-height:44px}
+.sig-row{display:grid;grid-template-columns:110px 1fr 48px;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.sig-bar{height:14px;background:var(--line);position:relative}
+.sig-bar i{position:absolute;left:0;top:0;bottom:0;background:var(--gold);transition:width .25s}
+.sig-bar i.v{background:var(--mute)}
+.sig-out{font-family:var(--ui);font-size:17px;line-height:1.5;max-width:60ch}
+.sig-out b{color:var(--gold);font-weight:500}
+@media (max-width:520px){.sig-row{grid-template-columns:78px 1fr 40px;font-size:11px}}
+/* evidence ladder */
+.evl{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0;border-top:1px solid var(--line)}
+.evl li{display:grid;grid-template-columns:140px 1fr auto;gap:8px 20px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--line);font-family:var(--ui)}
+.evl b{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:400;color:var(--mute)}
+.evl span.t{font-size:16px}
+.evl .st{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border:1px solid currentColor;border-radius:var(--r);color:var(--mute)}
+.evl .st.done{color:var(--gold)}.evl .st.now{color:var(--neev)}
+@media (max-width:620px){.evl li{grid-template-columns:1fr}}
 </style>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} body{margin:0} img{max-width:100%} [hidden]{display:none!important}</style>
 </head>
@@ -894,10 +946,10 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
     </a>
     <nav class="main" aria-label="Main">
       <a href="/what-is-two-point-singularity/">Understand</a>
-      <a href="#tools">Reflect</a>
+      <a href="/neev-app/">Reflect</a>
       <a href="/neev/">Watch<i class="dot-new" aria-label="new"></i></a>
       <a href="/books/">Read</a>
-      <a href="/research/cwhf/">Verify</a>
+      <a href="/lab/">Verify</a>
     </nav>
     <div class="hdr-actions">
       <a class="btn pill primary mag" id="pill" href="#home" data-journey>Draw your map</a>
@@ -915,8 +967,8 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
 <div class="sheet" id="sheet" role="dialog" aria-label="Menu">
   <div class="eyebrow">Menu</div>
   <nav aria-label="Mobile">
-    <a href="/what-is-two-point-singularity/">Understand</a><a href="#tools">Reflect</a><a href="/neev/">Watch</a>
-    <a href="/books/">Read</a><a href="/research/cwhf/">Verify</a><a href="#retreat">The retreat</a>
+    <a href="/what-is-two-point-singularity/">Understand</a><a href="/neev-app/">Reflect</a><a href="/neev/">Watch</a>
+    <a href="/books/">Read</a><a href="/lab/">Verify</a><a href="#retreat">The retreat</a>
     <a href="#writing">Writing</a><a href="#start">Start here</a><a href="#learn">Learn</a><a href="/about/">About</a>
   </nav>
   <a class="btn primary" id="pill2" href="#home" data-journey style="margin-top:18px;width:100%;justify-content:center">Draw your map</a>
@@ -967,6 +1019,27 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
     </div>
   </div></section>
 
+  <section class="block" id="instruments"><div class="wrap">
+    <div class="eyebrow">Two instruments</div>
+    <h2 style="font-size:clamp(34px,4.4vw,58px);font-weight:300;margin-top:14px;letter-spacing:-.02em;max-width:20ch">Feel it. Then test it.</h2>
+    <p class="mute" style="font-family:var(--ui);font-size:17px;max-width:52ch;margin-top:14px">The idea has two halves. One can be felt: who holds you. One can be tested: whether the state of a person changes what their feedback means.</p>
+    <div class="instr">
+      <a href="/neev-app/" data-evt="home_neev_app">
+        <span class="rl">Feel it · Neev app</span>
+        <svg viewBox="0 0 220 64" aria-hidden="true" fill="none" stroke="currentColor"><circle cx="32" cy="32" r="6" fill="var(--gold)" stroke="none"/><circle cx="32" cy="32" r="15"/><circle cx="32" cy="32" r="25" stroke-dasharray="2 4"/><circle cx="32" cy="32" r="31" stroke-opacity=".4" stroke-dasharray="1 5"/></svg>
+        <h3>Draw who holds you.</h3>
+        <p>A short audit in your own answers. Free, private, no login. See that people need people in different ways.</p>
+        <span class="go">Open the Neev app</span>
+      </a>
+      <a href="/lab/" data-evt="home_lab">
+        <span class="rl">Test it · Signal ≠ Value Lab</span>
+        <svg viewBox="0 0 220 64" aria-hidden="true"><rect x="0" y="10" width="150" height="10" fill="var(--gold)"/><rect x="0" y="34" width="100" height="10" fill="currentColor" opacity=".55"/><text x="158" y="19" font-size="11" fill="currentColor" font-family="monospace">signal</text><text x="108" y="43" font-size="11" fill="currentColor" font-family="monospace">value</text></svg>
+        <h3>A thumbs-up is not the value.</h3>
+        <p>The same person gives different feedback when they feel held and when they do not. Move the slider, then open the full lab.</p>
+        <span class="go">Open the lab</span>
+      </a>
+    </div>
+  </div></section>
   <section class="block" id="oneminute">
     <div class="wrap">
       <div class="eyebrow">The idea in one minute</div>
@@ -1069,7 +1142,7 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
           <p style="font-family:var(--ui);font-size:17px;color:var(--mute);margin-top:14px">It starts with two questions. Who holds you? And whom do you hold?</p>
           <div class="row">
             <a class="btn primary mag" href="#home" data-journey>See who holds you</a>
-            <a class="btn mag" href="#tools">Take the audit in Neev</a>
+            <a class="btn mag" href="/neev-app/">Take the audit in Neev</a>
           </div>
         </div>
       </div>
@@ -1247,7 +1320,7 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
     <div class="eyebrow">Research</div>
     <h2 data-h1>What we claim, and how sure we are.</h2>
     <p class="lede">If coherence comes before intelligence, it should show up in data: in resilience, and in the feedback we use to train machines. Here is how we test it, and how sure we are.</p>
-    <div class="idstrip"><span>OSF.IO/W7NYH</span><span>ORCID 0009-0003-3477-1225</span><span>CC BY 4.0</span><span>Corrections in public</span></div>
+    <div class="idstrip"><span>OSF.IO/W7NYH</span><span>ORCID 0009-0003-3477-1225</span><span>CC BY 4.0</span><span><a href="/corrections/">Corrections in public</a></span></div>
   </div></div>
   <section class="block"><div class="wrap">
     <div class="eyebrow" style="margin-bottom:14px">Three papers, one programme</div>
@@ -1266,7 +1339,7 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
         <div class="formula">h = v + ε(state)</div>
         <div class="tags" style="margin-top:20px" data-rings="1,∞"></div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:26px">
-          <a class="btn mag" data-cwhf href="https://cwhf.vercel.app/" target="_blank" rel="noopener">Open the CWHF research site ↗</a>
+          <a class="btn primary mag" href="/lab/">Open the Signal ≠ Value Lab</a><a class="btn" href="https://cwhf.vercel.app/" target="_blank" rel="noopener">CWHF site ↗</a>
         </div>
       </div>
       <aside class="prov" aria-label="Provenance">
@@ -1281,9 +1354,6 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
         </dl>
         <div class="row"><button class="btn sm mag" data-cite="cwhf">Copy citation</button><a class="btn sm" href="/research/cwhf/">Changelog</a></div>
       </aside>
-    </div>
-    <div class="embed" id="cwhfEmbed" hidden>
-      <div class="bar2"><span>cwhf.vercel.app · live interactive derivation</span><a href="https://cwhf.vercel.app/" target="_blank" rel="noopener" style="color:var(--gold)">Full screen ↗</a></div>
     </div>
     <div class="research-item" style="margin-top:48px">
       <div>
@@ -1366,6 +1436,65 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
 </section>
 
 <!-- ================= TOOLS ================= -->
+<!-- ================= LAB ================= -->
+<section class="view" data-view="lab" aria-label="Signal and Value Lab">
+  <div class="phero"><div class="layers" data-par></div><div class="wrap">
+    <div class="eyebrow">The lab · Signal ≠ Value</div>
+    <h2 data-h1>A thumbs-up is a signal. It is not the value.</h2>
+    <p class="lede">The same person gives different feedback when they feel held and when they do not, so a signal carries an error that depends on their state. This lab lets you see that gap, and lets you test the claim.</p>
+    <div class="idstrip"><span>h = v + ε(state)</span><span>OSF.IO/W7NYH</span><span>CC BY 4.0</span><span><a href="/corrections/">Corrections in public</a></span></div>
+  </div></div>
+  <section class="block"><div class="wrap" style="max-width:860px">
+    <div class="eyebrow" style="margin-bottom:10px">See the gap</div>
+    <h3 style="font-size:clamp(26px,3vw,38px);font-weight:300">Same person. Same answer. Different state.</h3>
+    <div class="sig" id="sigDemo">
+      <label for="sigState"><span>State when answering</span><span id="sigStateLbl" aria-hidden="true">held</span></label>
+      <input type="range" id="sigState" min="0" max="100" value="100" aria-describedby="sigOut">
+      <div class="sig-row"><span>Signal h</span><div class="sig-bar"><i id="sigH" style="width:80%"></i></div><span id="sigHn">0.80</span></div>
+      <div class="sig-row"><span>Value v</span><div class="sig-bar"><i class="v" id="sigV" style="width:80%"></i></div><span id="sigVn">0.80</span></div>
+      <p class="sig-out" id="sigOut" aria-live="polite"></p>
+      <p class="fine">An illustration of h = v + ε(state) with arbitrary numbers. It is not data, and the direction of the error varies by person and situation.</p>
+    </div>
+  </div></section>
+  <section class="block"><div class="wrap">
+    <div class="eyebrow" style="margin-bottom:10px">The full lab</div>
+    <h3 style="font-size:clamp(26px,3vw,38px);font-weight:300">Derivation, simulation and the pre-registered test.</h3>
+    <p class="mute" style="font-family:var(--ui);font-size:17px;max-width:60ch;margin-top:12px">Inside: the derivation of h = v + ε(state), the five-layer contamination model, an interactive persona and state simulation, and the pre-registered hypothesis H1 with its falsification criteria.</p>
+    <div class="bench" id="labBench">
+      <div class="bench-bar">
+        <div class="bench-tabs" id="labTabs"></div>
+        <div class="bench-act"><a id="labFull" href="https://cwhf.vercel.app/" target="_blank" rel="noopener">Full screen ↗</a></div>
+      </div>
+      <div class="bench-stage" id="labStage">
+        <div class="poster">
+          <div class="eyebrow" id="labPosterTitle">CWHF derivation</div>
+          <p style="font-size:20px;line-height:1.4;margin:0">Open the interactive lab inside this page.</p>
+          <button class="btn primary mag" type="button" id="labOpen">Open the lab here</button>
+          <p class="fine" style="margin:0">It loads from a separate address and keeps no account of you.</p>
+        </div>
+      </div>
+      <div class="bench-fall">Not loading? <a id="labFall" href="https://cwhf.vercel.app/" target="_blank" rel="noopener">Open the lab in its own tab ↗</a></div>
+    </div>
+  </div></section>
+  <section class="block"><div class="wrap" style="max-width:860px">
+    <div class="eyebrow" style="margin-bottom:10px">How sure are we</div>
+    <h3 style="font-size:clamp(26px,3vw,38px);font-weight:300">What is argued, what is registered, what is tested.</h3>
+    <ol class="evl">
+      <li><b>Concept</b><span class="t">The signal is not the value.</span><span class="st done">Argued</span></li>
+      <li><b>Framework</b><span class="t">CWHF: weight feedback by the state of the person who gave it. Whitepaper v1.0, March 2026; v2 in revision.</span><span class="st done">Written</span></li>
+      <li><b>Method</b><span class="t">Hypothesis H1, pre-registered at OSF.IO/W7NYH with stated falsification criteria.</span><span class="st done">Registered</span></li>
+      <li><b>Pilot data</b><span class="t">None collected yet.</span><span class="st now">Next</span></li>
+      <li><b>Validated result</b><span class="t">None yet. If H1 finds no meaningful link, the framework is revised and the null result is published.</span><span class="st">Open</span></li>
+    </ol>
+    <p class="fine" style="margin-top:18px">The CWHF and Coherence Intelligence labs are being merged into one. The author has a commercial interest and will not serve as principal investigator. Drafted with AI assistance; claims and errors are the author’s.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px">
+      <a class="btn" href="/research/coherence-intelligence/">The white paper</a>
+      <a class="btn" href="/research/cwhf/">The research programme</a>
+      <a class="btn" href="https://osf.io/w7nyh" target="_blank" rel="noopener">The pre-registration ↗</a>
+    </div>
+  </div></section>
+</section>
+
 <section class="view" data-view="tools" aria-label="Tools">
   <div class="phero"><div class="layers" data-par></div><div class="wrap">
     <div class="eyebrow">The diagnostic · Neev app</div>
@@ -1375,12 +1504,12 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
   <section class="block"><div class="wrap">
     <div class="tool-hero">
       <div>
-        <span class="status live">Free · no login · works offline</span>
+        <span class="status live" id="neevChip">Free · no login · works offline</span>
         <h2 style="font-size:clamp(40px,5vw,68px);font-weight:300;margin-top:16px">Neev app</h2>
         <p style="margin-top:14px;max-width:44ch">It opens with an in-depth coherence audit. Not therapy and not a personality test. It shows, in your own answers, that people need people in different ways.</p>
         <p class="fine" style="margin-top:12px">Your answers stay on your phone. Ten layers deep; most people stop at three to six.</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px">
-          <a class="btn primary mag" id="neevOpen" href="https://neev.twopointsingularity.com/" target="_blank" rel="noopener" hidden>Open Neev full screen ↗</a>
+          <a class="btn primary mag" id="neevOpen" href="https://neev.twopointsingularity.com/?src=site" target="_blank" rel="noopener" data-evt="neev_open" hidden>Open Neev full screen ↗</a><a class="btn mag" id="neevRemind" href="/neev/neev-premiere.ics" download data-evt="neev_remind">Add the premiere to your calendar</a>
         </div>
       </div>
       <div class="phone" id="phone" aria-label="Neev app preview">
@@ -1391,6 +1520,11 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
         <div id="phOpts" style="display:flex;flex-direction:column;gap:8px"></div>
         <p class="fine" style="margin-top:auto;font-size:11px">Sample questions for the prototype.</p>
       </div>
+    </div>
+    <div class="ways">
+      <div><span class="rl">1 · Watch</span><b>The series</b><p>Five Hinglish episodes tell the story of why humans believe.</p><a class="quiet" href="/neev/">Neev, premieres 8 January</a></div>
+      <div><span class="rl">2 · Draw</span><b>The app</b><p>Answer a few questions and see who holds you, in your own words. Your answers stay on your phone.</p></div>
+      <div><span class="rl">3 · Test</span><b>The lab</b><p>See why a signal is not the value, and what a test of the claim would look like.</p><a class="quiet" href="/lab/">Signal ≠ Value Lab</a></div>
     </div>
   </div></section>
 </section>
@@ -1568,9 +1702,9 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
       <p class="fine" style="max-width:38ch">Two Point Singularity Press, an imprint of Kirti Enterprises. Thane, Maharashtra.</p>
       <p class="fine" style="max-width:38ch;margin-top:10px">Pre-registered at OSF.IO/W7NYH · ORCID 0009-0003-3477-1225 · Corrections in public</p>
     </div>
-    <div><h4>Explore</h4><ul><li><a href="/what-is-two-point-singularity/">Understand</a></li><li><a href="#ideas">The Coherence Wheel</a></li><li><a href="/glossary/">Glossary</a></li><li><a href="#tools">Reflect</a></li><li><a href="/neev/">Watch</a></li><li><a href="/books/">Read</a></li><li><a href="/research/cwhf/">Verify</a></li></ul></div>
+    <div><h4>Explore</h4><ul><li><a href="/what-is-two-point-singularity/">Understand</a></li><li><a href="#ideas">The Coherence Wheel</a></li><li><a href="/neev-app/">Neev app</a></li><li><a href="/lab/">Signal ≠ Value Lab</a></li><li><a href="/glossary/">Glossary</a></li><li><a href="/neev-app/">Reflect</a></li><li><a href="/neev/">Watch</a></li><li><a href="/books/">Read</a></li><li><a href="/lab/">Verify</a></li></ul></div>
     <div><h4>Take part</h4><ul><li><a href="#start">Start here</a></li><li><a href="#learn">Learn the Lens</a></li><li><a href="#retreat">The visual retreat</a></li><li><a href="#writing">Letters and essays</a></li><li><a href="#immerse">The full descent</a></li><li><a href="/about/">About</a></li><li><a href="/privacy/">Privacy</a></li><li><a href="https://twopointsingularity.com/terms/">Terms</a></li></ul></div>
-    <div><h4>Read without the journey</h4><ul><li><a href="/what-is-two-point-singularity/">What is Two Point Singularity?</a></li><li><a href="/glossary/">Glossary</a></li><li><a href="/books/">All books</a></li><li><a href="/research/cwhf/">CWHF research</a></li><li><a href="/neev/">Neev series</a></li></ul><h4 style="margin-top:20px">Elsewhere</h4><ul><li><a href="https://www.amazon.in/dp/B0HJWLJ9CB" target="_blank" rel="noopener">Amazon.in</a></li><li><a href="https://orcid.org/0009-0003-3477-1225" target="_blank" rel="noopener">ORCID</a></li><li><a href="https://osf.io/w7nyh" target="_blank" rel="noopener">OSF</a></li><li><a href="https://cwhf.vercel.app/" target="_blank" rel="noopener">CWHF</a></li></ul>
+    <div><h4>Read without the journey</h4><ul><li><a href="/what-is-two-point-singularity/">What is Two Point Singularity?</a></li><li><a href="/glossary/">Glossary</a></li><li><a href="/lab/">Signal ≠ Value Lab</a></li><li><a href="/neev-app/">Neev app</a></li><li><a href="/corrections/">Corrections</a></li><li><a href="/books/">All books</a></li><li><a href="/research/cwhf/">CWHF research</a></li><li><a href="/neev/">Neev series</a></li></ul><h4 style="margin-top:20px">Elsewhere</h4><ul><li><a href="https://www.amazon.in/dp/B0HJWLJ9CB" target="_blank" rel="noopener">Amazon.in</a></li><li><a href="https://orcid.org/0009-0003-3477-1225" target="_blank" rel="noopener">ORCID</a></li><li><a href="https://osf.io/w7nyh" target="_blank" rel="noopener">OSF</a></li><li><a href="https://cwhf.vercel.app/" target="_blank" rel="noopener">CWHF</a></li></ul>
     </div>
   </div>
 </footer>
@@ -2069,19 +2203,72 @@ renderPhone();
 /* SUBSCRIBE_URL: your Substack address, e.g. 'https://neevletter.substack.com'. Empty = sign-ups arrive by email. */
 var SUBSCRIBE_URL = '';
 var CONTACT = 'venkat@twopointsingularity.com';
+/* LAB_SOURCES: the interactive labs shown on /lab/. When the CWHF and Coherence Intelligence labs are merged,
+   leave ONE entry here and the tabs disappear. Each lab must allow framing from https://twopointsingularity.com. */
+var LAB_SOURCES = [
+  {label:'CWHF derivation', url:'https://cwhf.vercel.app/'},
+  {label:'Coherence Intelligence lab', url:'https://ci-labs.vercel.app/'}
+];
+/* Cookieless analytics: events queue until the Plausible (or compatible) snippet is added to <head>. */
+window.plausible = window.plausible || function(){ (window.plausible.q = window.plausible.q || []).push(arguments); };
+function track(n){ try{ window.plausible(n); }catch(_){} }
+document.addEventListener('click', e=>{
+  const a = e.target.closest('a,button'); if(!a) return;
+  if(a.matches('[data-journey]')) track('journey_start');
+  else if(a.matches('a[href*="amazon."]')) track('amazon_click');
+  else if(a.dataset && a.dataset.evt) track(a.dataset.evt);
+});
 /* NEEV_LIVE: set to true once the Neev app is uploaded to neev.twopointsingularity.com */
 var NEEV_LIVE = false;
-if(NEEV_LIVE){ const n=document.getElementById('neevOpen'); if(n) n.hidden=false; }
+if(NEEV_LIVE){ const n=document.getElementById('neevOpen'); if(n) n.hidden=false; const r=document.getElementById('neevRemind'); if(r) r.hidden=true; }
+else { const c=document.getElementById('neevChip'); if(c){ c.textContent='Preview · opens with the series'; c.className='status soon'; } }
 const LIVE = /(^|\.)twopointsingularity\.com$|hostingersite\.com$/.test(location.hostname);
 if(LIVE){
   const lazy=(el,html)=>{ if(!el||el._mounted) return; el._mounted=true; const io=new IntersectionObserver(es=>{ if(es.some(x=>x.isIntersecting)){ el.insertAdjacentHTML('beforeend',html); io.disconnect(); } },{rootMargin:'300px'}); io.observe(el); };
-  if(NEEV_LIVE){ lazy($('#phone'),'<iframe src="https://neev.twopointsingularity.com/" title="Neev app" allow="clipboard-write"></iframe>'); }
-  const ce=$('#cwhfEmbed'); ce.hidden=false; lazy(ce,'<iframe src="https://cwhf.vercel.app/" title="CWHF research site" loading="lazy"></iframe>');
+  if(NEEV_LIVE){ lazy($('#phone'),'<iframe src="https://neev.twopointsingularity.com/?embed=1&src=site" title="Neev app" allow="clipboard-write" referrerpolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads"></iframe>'); }
 }
 
 /* ---------------- shared map state ---------------- */
 const esc = v => String(v).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function lsGet(k,f){ try{ const v=localStorage.getItem(k); return v===null?f:JSON.parse(v); }catch(_){ return f; } }
+/* ---------------- Signal vs Value demo + lab bench ---------------- */
+(function(){
+  const r=$('#sigState'); if(!r) return;
+  const V=0.8;
+  const draw=()=>{
+    const st=+r.value/100, eps=-(1-st)*0.5, h=Math.max(0,V+eps);
+    $('#sigH').style.width=(h*100)+'%'; $('#sigV').style.width=(V*100)+'%';
+    $('#sigHn').textContent=h.toFixed(2); $('#sigVn').textContent=V.toFixed(2);
+    $('#sigStateLbl').textContent = st>.75?'held': st>.35?'stretched':'alone, 2:40 at night';
+    $('#sigOut').innerHTML = st>.95
+      ? 'When she feels held, the signal matches the value. <b>The error is about zero.</b>'
+      : `The signal says <b>${h.toFixed(2)}</b>. What she values is still <b>${V.toFixed(2)}</b>. The gap, <b>ε = ${eps.toFixed(2)}</b>, is invisible to a model that only sees the signal.`;
+  };
+  r.addEventListener('input',draw); draw();
+})();
+(function(){
+  const bench=$('#labBench'); if(!bench) return;
+  const tabs=$('#labTabs'), stage=$('#labStage'), full=$('#labFull'), fall=$('#labFall'), title=$('#labPosterTitle');
+  const fu=(u)=>u+(u.indexOf('?')<0?'?':'&')+'embed=1&src=site';
+  let cur=0;
+  const set=i=>{ cur=i; const s0=LAB_SOURCES[i]; full.href=fall.href=s0.url; title.textContent=s0.label;
+    tabs.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-pressed', j===i?'true':'false'));
+    const f=stage.querySelector('iframe'); if(f){ f.src=fu(s0.url); f.title=s0.label; } };
+  const mk=document.createElement.bind(document);
+  if(LAB_SOURCES.length>1){ LAB_SOURCES.forEach((s0,i)=>{ const b=mk('button'); b.type='button'; b.dataset.i=i; b.textContent=s0.label; b.setAttribute('aria-pressed', i===0?'true':'false'); tabs.appendChild(b); }); }
+  else { const n=mk('span'); n.className='bench-name'; n.textContent=LAB_SOURCES[0].label; tabs.appendChild(n); }
+  tabs.addEventListener('click', e=>{ const b=e.target.closest('button'); if(b) set(+b.dataset.i); });
+  $('#labOpen').addEventListener('click', ()=>{
+    const s0=LAB_SOURCES[cur];
+    if(!LIVE){ window.open(s0.url,'_blank','noopener'); return; }
+    track('lab_open'); stage.classList.add('on');
+    const f=mk('iframe'); f.src=fu(s0.url); f.title=s0.label; f.setAttribute('allow','clipboard-write'); f.referrerPolicy='strict-origin-when-cross-origin';
+    f.setAttribute('sandbox','allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads');
+    stage.appendChild(f);
+  });
+  set(0);
+})();
+
 function lsSet(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(_){} }
 function lsDel(k){ try{ localStorage.removeItem(k); }catch(_){} }
 let MAP = lsGet('tps-map', null);
@@ -2303,7 +2490,7 @@ function renderMap(){
     ${m.four.length===0?'<p class="fine" style="margin-top:12px">If tonight is hard, Tele-MANAS (India) is free and open day and night: 14416.</p>':''}
     <div class="tonight" style="margin-top:28px"><div class="eyebrow gold">One thing to do tonight</div><p>${m.four[0] ? 'Send one message to '+esc(m.four[0])+'. Not to ask for anything. Just: I thought of you.' : 'Reply to one message you have been meaning to answer. That is how a Four begins.'}</p></div>
     <div class="eyebrow" style="margin-top:36px;margin-bottom:14px">Your next door</div>
-    <div class="row"><a class="btn primary" href="/books/${d.slug}/">${d.cta}</a><a class="btn" href="/neev/">Watch Neev</a><a class="btn" href="#tools">Go deeper in the Neev app</a></div>
+    <div class="row"><a class="btn primary" href="/books/${d.slug}/">${d.cta}</a><a class="btn" href="/neev/">Watch Neev</a><a class="btn" href="/neev-app/">Go deeper in the Neev app</a></div>
     <p class="fine" style="margin-top:14px;max-width:52ch">${d.why}</p>
     <p class="fine" style="margin-top:20px">Rooms opened: ${v} of ${BOOKS.length}.</p>
     <div class="row" style="margin-top:20px;gap:22px"><button class="linkbtn" data-journey>Redraw my map</button><button class="linkbtn" id="copyMap">Copy my map</button><button class="linkbtn" id="forgetMap">Forget my map</button></div>`;
@@ -2421,7 +2608,7 @@ function route(){
   if(view==='writing') renderWriting();
   document.body.classList.add('routed');
   $$('[data-h1]').forEach(h=>{ h.removeAttribute('role'); h.removeAttribute('aria-level'); }); const vh=$('.view.active [data-h1]'); if(vh){ vh.setAttribute('role','heading'); vh.setAttribute('aria-level','1'); }
-  $$('nav.main a').forEach(a=>{ if(toHash(a.getAttribute('href'))===(view==='book'?'read':view)) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+  $$('nav.main a').forEach(a=>{ if(toHash(a.getAttribute('href'))===(NAVMAP[view]||view)) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
   closeSheet();
   window.scrollTo({top:0, behavior:'auto'});
   document.title = view==='book' && bySlug(h.slice(5)) ? bySlug(h.slice(5)).t+' · Two Point Singularity' : (TITLES[view]||TITLES.home);
@@ -2436,7 +2623,7 @@ function route(){
 const TITLES = {
   home:'Two Point Singularity · Coherence precedes intelligence', 'two-point-singularity':'What is Two Point Singularity?', glossary:'Glossary · Two Point Singularity',
   'coherence-intelligence':'Coherence Intelligence · The signal is not the value', research:'Research · Two Point Singularity', read:'Books · Two Point Singularity',
-  watch:'Neev · Two Point Singularity', tools:'The Neev app · Two Point Singularity', learn:'Learn · Two Point Singularity', about:'About Venkat Rao · Two Point Singularity',
+  watch:'Neev · Two Point Singularity', tools:'The Neev app · Two Point Singularity', lab:'Signal ≠ Value Lab · Two Point Singularity', learn:'Learn · Two Point Singularity', about:'About Venkat Rao · Two Point Singularity',
   ideas:'The Coherence Wheel · Two Point Singularity', retreat:'The visual retreat · Two Point Singularity', writing:'Letters and essays · Two Point Singularity', privacy:'Privacy · Two Point Singularity', map:'Your coherence map', start:'Start here · Two Point Singularity', immerse:'The descent · Two Point Singularity'
 };
 const NEXT = {
@@ -2449,7 +2636,8 @@ const NEXT = {
   ideas:['watch','Watch Neev','Seventy thousand years of why we believe, in five episodes.'],
   watch:['read','Read the books','Nine rooms of life, one idea.'],
   read:['tools','Reflect in the Neev app','See who holds you, in your own answers.'],
-  tools:['research','Verify the claims','Pre-registered, openly licensed, corrected in public.'],
+  tools:['lab','Test the idea in the lab','See why a signal is not the value, then open the full lab.'],
+  lab:['research','Read the research','The papers, the pre-registration and the corrections log.'],
   research:['learn','Learn the Lens','Learn to see who holds you. Then teach it.'],
   learn:['about','Why this exists','The origin of Two Point Singularity.'],
   retreat:['about','Who made this','A barren patch of land, a bat, and a question.'],
@@ -2551,7 +2739,8 @@ function renderWriting(){
 
 
 /* ---------------- real paths <-> in-page views ---------------- */
-const PATHS = {'/':'home','/what-is-two-point-singularity/':'two-point-singularity','/glossary/':'glossary','/books/':'read','/research/cwhf/':'research','/research/coherence-intelligence/':'coherence-intelligence','/about/':'about','/privacy/':'privacy','/neev/':'watch'};
+const NAVMAP = {book:'read', research:'lab', 'coherence-intelligence':'lab'};
+const PATHS = {'/':'home','/what-is-two-point-singularity/':'two-point-singularity','/glossary/':'glossary','/books/':'read','/research/cwhf/':'research','/research/coherence-intelligence/':'coherence-intelligence','/about/':'about','/privacy/':'privacy','/neev/':'watch','/lab/':'lab','/neev-app/':'tools'};
 function toHash(href){ if(!href) return null; if(href[0]==='#') return href.slice(1); const u = href.replace(/^https:\/\/twopointsingularity\.com/,''); if(PATHS[u]) return PATHS[u]; const m = u.match(/^\/books\/([a-z0-9-]+)\/$/); return m ? 'book-'+m[1] : null; }
 document.addEventListener('click', e=>{
   if(e.defaultPrevented || e.button!==0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -2605,7 +2794,7 @@ $('#subForm').addEventListener('submit', e=>{
   const em = $('#sub-email').value.trim();
   if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ toast('Enter an email address like name@example.com'); $('#sub-email').focus(); return; }
   if(!$('#sub-consent').checked){ toast('Tick the box to agree to receive the letter'); return; }
-  const nm = $('#sub-name').value.trim();
+  const nm = $('#sub-name').value.trim(); track('letter_subscribe');
   if(SUBSCRIBE_URL){ window.open(SUBSCRIBE_URL.replace(/\/$/,'') + '/subscribe?email=' + encodeURIComponent(em), '_blank', 'noopener'); toast('Opening the Neev Letter to confirm your subscription.'); }
   else { location.href = 'mailto:' + CONTACT + '?subject=' + encodeURIComponent('Subscribe me to the Neev Letter') + '&body=' + encodeURIComponent('Please add ' + em + (nm ? ' (' + nm + ')' : '') + ' to the Neev Letter.'); toast('Your email app will open with the request ready to send.'); }
   e.target.reset();
