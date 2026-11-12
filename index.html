@@ -158,6 +158,9 @@ table.t td.num,table.t th.num{text-align:right;font-variant-numeric:tabular-nums
 .hbar.good i{background:var(--value)}
 .flag{color:var(--warn);font-weight:600}
 .reachnote{border-left:4px solid var(--signal)}
+.starthere{border-left:4px solid var(--value)}
+.steps-inline{margin:6px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.receipt code{font-family:var(--f-mono);font-size:.82em;background:var(--sunk);padding:1px 4px;border-radius:3px;overflow-wrap:anywhere}
 .linkish{background:none;border:0;padding:0;font:inherit;color:var(--value);text-decoration:underline;cursor:pointer}
 
 /* charts */
@@ -175,9 +178,9 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
 @media (max-width:760px){.hero,.two,.opts{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:560px){.grid,.mechs,.doors,.steps{grid-template-columns:minmax(0,1fr)}.row .lbl{min-width:100%}.bar{position:static}.brand{width:100%}}
 </style>
-<link rel="canonical" href="https://cwhf.vercel.app/">
+<link rel="canonical" href="https://twopointsingularity.com/lab/">
 <meta name="author" content="Venkat Rao">
-<meta name="citation_title" content="Signal ≠ Value Lab v2.0: companion to Coherence-Weighted Human Feedback (CWHF), whitepaper v2.0">
+<meta name="citation_title" content="Signal ≠ Value Lab v2.1: companion to Signal ≠ Value: Does Pressure Bend the Human Feedback That Trains AI? (Rao, 2026)">
 <meta name="citation_author" content="Rao, Venkat">
 <meta name="citation_author_orcid" content="0009-0003-3477-1225">
 <meta name="citation_publication_date" content="2026/11">
@@ -190,7 +193,7 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
 
 <div class="wrap">
 <nav class="bar" aria-label="Rooms">
-  <span class="brand">Signal ≠ Value Lab<small>v2.0 · Nov 2026</small></span>
+  <span class="brand">Signal ≠ Value Lab<small>v2.1 · Nov 2026</small></span>
   <div class="rooms">
     <button class="room" type="button" data-view="overview" id="r-overview">Overview</button>
     <button class="room" type="button" data-view="evidence" id="r-evidence"><span class="dot d-est"></span>Evidence</button>
@@ -208,7 +211,7 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
 <section class="view" id="v-overview" aria-labelledby="h-ov">
   <div class="hero">
     <div>
-      <p class="eyebrow">Two Point Singularity · Companion to the CWHF whitepaper v2.0</p>
+      <p class="eyebrow">Two Point Singularity · Companion to <i>Signal ≠ Value</i> (Rao, 2026)</p>
       <h1 id="h-ov">What people <span class="sig">signal</span> is not always what they <span class="val">value</span>.</h1>
       <p class="lede">AI systems learn from clicks, ratings and preferences as if each were a direct readout of what a person wants. This lab separates what is known about that gap, what is being tested, what a full simulation of the test shows, and what is only proposed.</p>
       <div class="question"><span class="eyebrow">The one open question</span>When people judge under pressure, do their choices drift away from what they themselves choose on reflection, in a consistent direction rather than at random?</div>
@@ -247,6 +250,16 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
     </figure>
   </div>
 
+  <div class="panel starthere">
+    <p class="eyebrow">Start here</p>
+    <ol class="steps-inline">
+      <li><a href="https://cwhf.vercel.app/paper/Signal-not-Value_Rao_2026.pdf" target="_blank" rel="noopener">Read the paper (PDF)</a>: the question, the design and what would prove it wrong.</li>
+      <li><button class="linkish" type="button" data-view="test">Take the flip test</button>: a five-minute demonstration, not research participation.</li>
+      <li><a href="https://github.com/venramak/twopointsingularity-cwhf" target="_blank" rel="noopener">Rerun the simulation</a>: open code and seeds behind every simulated number.</li>
+      <li><button class="linkish" type="button" data-view="reach">See the six tests</button>: Study 3 on public data needs no new participants and can start now.</li>
+    </ol>
+  </div>
+
   <div class="doors">
     <button class="door" type="button" data-view="evidence"><span class="tier t-est">Established</span><h3>Evidence</h3><p>71 studies, patterns and thought experiments, each tagged by the cause of the gap.</p><span class="go">Open the evidence →</span></button>
     <button class="door" type="button" data-view="test"><span class="tier t-hyp">Hypothesis</span><h3>Flip test</h3><p>Answer 12 questions twice, rushed and at your own pace, and see which way you drift.</p><span class="go">Take the test →</span></button>
@@ -257,8 +270,8 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
   <div class="kill" aria-labelledby="h-kill">
     <h3 id="h-kill">What would show this is wrong</h3>
     <ol>
-      <li><strong>H1 fails</strong> if, in the registered study of about 60 people, the average change in attractor choice is not reliably above zero, or is below 3 percentage points. That would mean pressure adds noise, not direction, and averaging already handles it.</li>
-      <li><strong>H2 fails</strong> if no state signal collected in ordinary sessions reduces the lean of the training signal by at least a quarter, beyond what existing rater-quality methods achieve, without harming any group.</li>
+      <li><strong>H1 is not supported</strong> if, in the registered study of about 60 people, the average shift toward the attractor is not reliably above zero. If its confidence interval lies below 3 percentage points, any effect is too small to matter by the study's own standard. Either result is published.</li>
+      <li><strong>H2 fails</strong> if no state signal collected in ordinary sessions reduces the lean of the training signal by at least a quarter, beyond what existing rater-quality methods achieve, while meeting prespecified criteria for every group.</li>
       <li><strong>The proposal fails</strong> if improving working conditions alone does as well as weighting. The simulation suggests this is a live possibility, and the proposal has been changed to put it first.</li>
     </ol>
   </div>
@@ -289,7 +302,7 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
 </section>
 
 <!-- EVIDENCE -->
-<section class="view" id="v-evidence" aria-labelledby="h-ev" hidden>
+<section class="view" id="v-evidence" aria-labelledby="h-ev">
   <div class="prose">
     <span class="tier t-est">Established</span>
     <h2 id="h-ev">The evidence: eight reasons a signal departs from a value</h2>
@@ -318,7 +331,7 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
 </section>
 
 <!-- REACH -->
-<section class="view" id="v-reach" aria-labelledby="h-re" hidden>
+<section class="view" id="v-reach" aria-labelledby="h-re">
   <div class="prose">
     <span class="tier t-est">Established · with the hypotheses marked</span>
     <h2 id="h-re">Every digital action is a signal</h2>
@@ -342,7 +355,7 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
         <li><strong>The general claim is established.</strong> Every recorded action is a signal produced under conditions, not a readout of value. It covers every channel above.</li>
         <li><strong>State is one cause of eight,</strong> and in the wild rarely the largest. Defaults, design and incentives dominate several channels.</li>
         <li><strong>A fortiori, not proof.</strong> The study tests the most favourable conditions: paid, attentive adults with a correct answer available. Wild signals come from phones, multitasking, late nights and interfaces built to get a click. If a lean appears in the favourable case, the assumption that it is absent in worse ones loses its basis.</li>
-        <li><strong>The asymmetry.</strong> A positive H1 widens the case for recording and auditing every human signal used in training. A null H1 clears nothing: the other seven causes remain.</li>
+        <li><strong>The asymmetry.</strong> A positive H1 widens the case for recording and auditing every human signal used in training. A precise null would constrain this mechanism in this setting, but would not settle the other seven causes.</li>
       </ol>
     </div>
     <div class="panel">
@@ -355,7 +368,7 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
     <div class="tablebox"><table class="t"><thead><tr><th>Link</th><th>Question</th><th>Data</th><th>Who can run it</th></tr></thead><tbody>
       <tr><td class="mono">H1</td><td>Does pressure shift paid raters' choices toward a pre-named style, within person?</td><td>Study 1</td><td>This programme</td></tr>
       <tr><td class="mono">H2</td><td>Can recording, prevention or weighting reduce that lean?</td><td>Study 2</td><td>This programme</td></tr>
-      <tr><td class="mono">H3</td><td>Do public Arena votes lean more toward confident, agreeable or longer answers as a voter's sitting wears on?</td><td>Public votes with user ID and timestamp</td><td>Anyone, at no cost, now</td></tr>
+      <tr><td class="mono">H3</td><td>Do public Arena votes lean more toward confident, agreeable or longer answers as a voter's sitting wears on?</td><td>Public votes with user ID and timestamp</td><td>Anyone, now; no recruitment</td></tr>
       <tr><td class="mono">H4</td><td>Does the lean appear in end-user thumbs data?</td><td>Session metadata held by developers</td><td>AI developers</td></tr>
       <tr><td class="mono">H5</td><td>Does it appear in engagement signals?</td><td>Platform logs</td><td>Platforms</td></tr>
       <tr><td class="mono">H6</td><td>Does reducing the lean change model behaviour, for example on sycophancy evaluations?</td><td>Reward models trained with and without correction</td><td>AI labs, academic groups</td></tr>
@@ -369,12 +382,12 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
 </section>
 
 <!-- FLIP TEST -->
-<section class="view" id="v-test" aria-labelledby="h-ft" hidden>
+<section class="view" id="v-test" aria-labelledby="h-ft">
   <div class="prose">
     <span class="tier t-hyp">Hypothesis · demonstration</span>
     <h2 id="h-ft">The flip test</h2>
     <p>You answer 12 questions twice: once under pressure, with a timer set to your own reading speed while you hold a number in mind, and once at your own pace. Each question has two answers, one more confident or more agreeable than the other. The lab measures one thing: did pressure shift your choices toward that style?</p>
-    <p class="muted">A demonstration of the method, not research data. Nothing you do here leaves your browser. The order of the two rounds is chosen at random, as in the real study.</p>
+    <p class="muted">A demonstration of the method, not research participation and not research data. It says nothing about your values, health or abilities. Nothing you do here leaves your browser. The order of the two rounds is chosen at random, as in the real study.</p>
   </div>
   <div class="stage" id="stage" aria-live="polite"></div>
   <div class="two">
@@ -397,18 +410,28 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
 </section>
 
 <!-- SIMULATION -->
-<section class="view" id="v-simulation" aria-labelledby="h-si" hidden>
+<section class="view" id="v-simulation" aria-labelledby="h-si">
   <div class="prose">
     <span class="tier t-sim">Simulated · about the design, not about people</span>
     <h2 id="h-si">The study, run on simulated participants</h2>
     <p>Before any real person takes part, the full H1 and H2 studies were run thousands of times on simulated people whose true behaviour was set in advance: sometimes with no drift at all, sometimes with small, moderate or very small drift. That shows whether the design finds drift when it is there and stays quiet when it is not.</p>
-    <p><strong>What it cannot show:</strong> whether real people drift. Every result here follows from assumptions about how people behave. Those assumptions are listed in the whitepaper's simulation appendix, and the code is open.</p>
+    <p><strong>What it cannot show:</strong> whether real people drift. Every result here follows from assumptions about how people behave. Those assumptions are listed in the paper and its technical supplement, and the code is open.</p>
   </div>
 
   <div class="three">
-    <div class="panel"><p class="eyebrow">Minimum viable study</p><h3>60 people, 48 questions, two sessions a week apart</h3><p class="muted">Detects a 5–6 point drift with at least 99% probability, and a 3.5-point drift with about 80%, if the spread of D across people is near the simulated 8.5 points (see Method). At 40 people, the 5–6 point detection rate is still about 97%.</p></div>
+    <div class="panel"><p class="eyebrow">Minimum viable study</p><h3>60 people, 48 questions, two sessions a week apart</h3><p class="muted">Significant for a 5–6 point drift in at least 99% of simulated studies, and for a 3.5-point drift in about 80%; significant <em>and</em> at least 3 points in 96% and 48% respectively. Assumes the spread of D across people is near the simulated 8.5 points (see Method). At 40 people, the 5–6 point detection rate is still about 97%.</p></div>
     <div class="panel"><p class="eyebrow">False alarms</p><h3>5.3% when there is no drift</h3><p class="muted">Across 2,000 simulated studies with no drift, the pre-registered test fired 5.3% of the time, matching its 5% design. With the 3-point minimum added, false confirmations fall to 0.4%.</p></div>
     <div class="panel"><p class="eyebrow">Design flaws found</p><h3>Four, all fixed</h3><p class="muted">The 0.60 threshold, the timed length questions, same-sitting rounds and a slightly over-eager statistical test. Details below.</p></div>
+  </div>
+
+  <div class="panel receipt">
+    <p class="eyebrow">Reproducibility receipt · everything in this room is synthetic</p>
+    <ul>
+      <li><strong>Code:</strong> <a href="https://github.com/venramak/twopointsingularity-cwhf/tree/main/simulation" target="_blank" rel="noopener">simulation/</a> on GitHub (Apache-2.0): <code>h1sim.py</code>, <code>persontest.py</code>, <code>run_h1_grid.py</code>, <code>h2sim.py</code>, <code>power_sd.py</code>.</li>
+      <li><strong>Replications:</strong> H1, 400–2,000 simulated studies per setting; H2, 80 per scenario. Seeds are fixed by setting index, so reruns match.</li>
+      <li><strong>Reproduce:</strong> <code>python3 run_h1_grid.py . h1_results.json</code>, <code>python3 persontest.py . h1_person_test.json</code>, <code>python3 h2sim.py 80 h2_results.json</code>.</li>
+      <li><strong>Assumptions:</strong> eight invented personas; a logistic choice model; the prevention scenario improves average state by 0.15 SD. Each is a scenario, not an estimate, and the paper's Section 8 shows a scenario where the recommended remedy loses.</li>
+    </ul>
   </div>
 
   <figure class="chart" style="margin:0">
@@ -470,7 +493,7 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
 </section>
 
 <!-- PROPOSAL -->
-<section class="view" id="v-proposal" aria-labelledby="h-pr" hidden>
+<section class="view" id="v-proposal" aria-labelledby="h-pr">
   <div class="prose">
     <span class="tier t-pro">Proposed · depends on H1 passing</span>
     <h2 id="h-pr">CWHF v2: record, prevent, weight, audit</h2>
@@ -478,7 +501,7 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
   </div>
   <div class="steps">
     <div class="step"><span class="n">1 · Record</span><h3>Log the conditions</h3><p>A 30-second check-in, session length, time of day and position in the session, stored next to each label. Cheap, and useful even if nothing else is adopted.</p></div>
-    <div class="step"><span class="n">2 · Prevent</span><h3>Fix conditions at source</h3><p>Session caps, breaks, scheduling and per-hour rather than per-item pay. In simulation, this removed about 30% of the lean with no data lost.</p></div>
+    <div class="step"><span class="n">2 · Prevent</span><h3>Fix conditions at source</h3><p>Session caps, breaks, scheduling and per-hour rather than per-item pay. In simulation, under its stated assumptions, this removed about 30% of the lean with no data lost.</p></div>
     <div class="step"><span class="n">3 · Weight</span><h3>Down-weight only clear cases</h3><p>Within-person scores only. The weight function is chosen in H2, where it must beat existing methods.</p></div>
     <div class="step"><span class="n">4 · Audit</span><h3>Publish the effects</h3><p>Report the lean, the data kept and every group's average weight, before and after.</p></div>
   </div>
@@ -537,7 +560,7 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
 </section>
 
 <!-- METHOD -->
-<section class="view" id="v-method" aria-labelledby="h-me" hidden>
+<section class="view" id="v-method" aria-labelledby="h-me">
   <div class="prose">
     <h2 id="h-me">Method, definitions and limits</h2>
     <p>Terms are used in one sense only, everywhere in this lab and in the whitepaper.</p>
@@ -545,12 +568,13 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
   <div class="panel">
     <div class="tablebox"><table class="t"><thead><tr><th>Term</th><th>Meaning here</th></tr></thead><tbody>
       <tr><td><strong>Signal</strong></td><td>A recorded human output: a choice, rating, click or label.</td></tr>
-      <tr><td><strong>Value (v)</strong></td><td>Operationally, the choice the same person makes on the same item with no time limit and no distraction, after time to reflect. A convention chosen so the claim can be tested, not a claim about a "true self".</td></tr>
+      <tr><td><strong>Reflective reference choice</strong><br><span class="muted">the "value" of the title</span></td><td>The choice the same person makes on the same item with no time limit and no distraction, after time to reflect. The study tests condition-dependent preferences over answers; it does not identify moral values, authentic identity or anyone's correct preference. A convention chosen so the claim can be tested, not a claim about a "true self".</td></tr>
       <tr><td><strong>State</strong></td><td>The person's condition at the time of the signal: time pressure, divided attention, fatigue, time of day. Manipulated in H1, measured in H2.</td></tr>
       <tr><td><strong>Attractor</strong></td><td>A pre-named answer style hypothesised to gain under pressure: more confident, or more agreeable with the asker.</td></tr>
-      <tr><td><strong>D</strong></td><td>Within-person change in attractor choice rate, pressured minus reflective, over a set where the attractor is correct exactly half the time.</td></tr>
+      <tr><td><strong>D</strong> · primary</td><td>The reflective–pressured choice gap: attractor choice rate under pressure minus on reflection, over a set where the attractor is correct exactly half the time. Signed, so it measures direction.</td></tr>
+      <tr><td><strong>M</strong> · secondary</td><td>Mismatch: the share of items where a person's two choices differ, in either direction. Five switches toward the attractor and five away give D = 0 but M &gt; 0.</td></tr>
       <tr><td><strong>π</strong></td><td>Share of changed answers that moved toward the attractor. Descriptive only.</td></tr>
-      <tr><td><strong>Coherence</strong></td><td>How closely a person's choices in a session agree with that same person's reflective choices. D is a coherence gap under controlled pressure. No further meaning is intended.</td></tr>
+      <tr><td><strong>Coherence</strong></td><td>The programme's interpretation, not a measure: how closely a session's choices agree with the same person's reflective choices. The study measures D and M.</td></tr>
       <tr><td><strong>c</strong></td><td>A session score from a two-item check-in and response-time variability, centred on the person's own average; or, as a candidate, agreement on anchor items the person answered reflectively before. Unvalidated.</td></tr>
       <tr><td><strong>Lean</strong></td><td>How far a set of labels sits from the reflective population's choices, toward the attractor.</td></tr>
     </tbody></table></div>
@@ -593,22 +617,22 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
     <div class="panel">
       <p class="eyebrow">Open materials</p>
       <ul>
-        <li><a href="https://cwhf.vercel.app/whitepaper/CWHF-Whitepaper-v2.0.pdf" target="_blank" rel="noopener">Whitepaper v2.0 (PDF)</a>, including the item specification and the pre-registration text for H1, H2 and H3.</li>
+        <li><a href="https://cwhf.vercel.app/paper/Signal-not-Value_Rao_2026.pdf" target="_blank" rel="noopener">The paper (PDF)</a>; the full protocol, item specification and pre-registration text are in the technical supplement on GitHub.</li>
         <li><a href="https://github.com/venramak/twopointsingularity-cwhf" target="_blank" rel="noopener">Source on GitHub</a>: this lab, the simulation code for H1 and H2 with every assumption in one file, and the result files.</li>
       </ul>
-      <p class="muted">Published with the whitepaper v2.0. The registered study will run on a research participant platform under independent ethics review; this page collects no data.</p>
+      <p class="muted">Published with <i>Signal ≠ Value</i> (Rao, 2026), with the H1 to H3 pre-registration to follow. The registered study will run on a research participant platform under independent ethics review; this page collects no data.</p>
     </div>
     <div class="panel">
       <p class="eyebrow">Authorship, conflicts and citation</p>
       <p>Venkat Rao, independent researcher, Two Point Singularity. ORCID 0009-0003-3477-1225. Analysis and drafting were carried out with AI assistance, and all claims were checked by the author.</p>
       <p>Conflict of interest: the author publishes books on related themes. No funding was received.</p>
-      <p class="mono">Rao, V. (2026). Signal ≠ Value Lab, v2.0. Companion to Coherence-Weighted Human Feedback, whitepaper v2.0. Two Point Singularity. CC BY 4.0.</p>
+      <p class="mono">Rao, V. (2026). Signal ≠ Value Lab, v2.1. Companion to Signal ≠ Value: Does Pressure Bend the Human Feedback That Trains AI? Two Point Singularity. CC BY 4.0.</p>
     </div>
   </div>
 </section>
 
 <!-- CLAIMS -->
-<section class="view" id="v-claims" aria-labelledby="h-cl" hidden>
+<section class="view" id="v-claims" aria-labelledby="h-cl">
   <div class="prose">
     <h2 id="h-cl">Claims and status</h2>
     <p>Every claim in the programme, its tier and its basis. Retired items appeared in earlier labs or in whitepaper v1.0 and are no longer made.</p>
@@ -618,6 +642,7 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
   <div class="panel">
     <p class="eyebrow">Version history</p>
     <ul>
+      <li><strong>v2.1 (Nov 2026):</strong> aligned with the paper <i>Signal ≠ Value</i>; start-here strip; reflective reference choice, D and M defined; interval-based decision language; reproducibility receipt; every room readable without JavaScript; privacy statement made specific.</li>
       <li><strong>v2.0, final review (Nov 2026):</strong> Reach room on every digital signal and the H1–H6 cascade; design safeguards and power sensitivity in Method; adopt-now, governance and if-H2-fails in Proposal; ledger updated.</li>
       <li><strong>v2.0 (Nov 2026):</strong> simulation room; flip test redesigned (length removed, personal timer, random order, D as the measure); proposal reordered to record, prevent, weight, audit; method room with definitions, prior work and conflicts.</li>
       <li><strong>v1.0 (Nov 2026):</strong> merged CI Lab v0.4, CWHF Coherence Lab v0.4 and the Signal–Value Atlas; claims tiered; overclaims retired.</li>
@@ -627,9 +652,9 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
 </main>
 
 <footer>
-  <p>Signal ≠ Value Lab v2.0, November 2026. Companion to Coherence-Weighted Human Feedback, whitepaper v2.0. Supersedes CI Lab v0.4 and CWHF Coherence Lab v0.4. Venkat Rao · Two Point Singularity · ORCID 0009-0003-3477-1225 · CC BY 4.0.</p>
-  <p><a href="https://cwhf.vercel.app/whitepaper/CWHF-Whitepaper-v2.0.pdf" target="_blank" rel="noopener">Whitepaper (PDF)</a> · <a href="https://github.com/venramak/twopointsingularity-cwhf" target="_blank" rel="noopener">GitHub</a> · <a href="https://twopointsingularity.com/research/cwhf/" target="_blank" rel="noopener">twopointsingularity.com</a></p>
-  <p>No claim in this lab rests on the flip test or the simulation as evidence about real people. A registration of the revised H1, H2 and H3 is being prepared; an earlier registration exists at OSF W7NYH.</p>
+  <p><strong>Lab v2.1</strong> · paper <i>Signal ≠ Value</i> v1.0 (12 Nov 2026) · protocol: H1–H3 registration pending (earlier H1: OSF W7NYH) · updated 12 Nov 2026. Supersedes CI Lab v0.4 and CWHF Coherence Lab v0.4. Venkat Rao · Two Point Singularity · ORCID 0009-0003-3477-1225 · CC BY 4.0.</p>
+  <p><a href="https://cwhf.vercel.app/paper/Signal-not-Value_Rao_2026.pdf" target="_blank" rel="noopener">Paper (PDF)</a> · <a href="https://github.com/venramak/twopointsingularity-cwhf" target="_blank" rel="noopener">GitHub</a> · <a href="https://twopointsingularity.com/research/cwhf/" target="_blank" rel="noopener">twopointsingularity.com</a></p>
+  <p>No claim in this lab rests on the flip test or the simulation as evidence about real people. Privacy: this page sets no cookies and uses no browser storage or analytics; its only outside request is for web fonts.</p>
 </footer>
 </div>
 
@@ -745,7 +770,7 @@ const CLAIMS = [
  ["Under pressure, people's choices move toward a pre-named style relative to their own reflective choices (D > 0, at least 3 points).","hyp","H1. Untested on real people."],
  ["If D > 0, uniform weighting converges on a leaning target: r̂ ≈ r* + (1 − p)δ.","hyp","Arithmetic, conditional on H1."],
  ["A within-person session signal can reduce the lean of the training signal by a quarter, beyond existing methods, without penalising any group.","hyp","H2. The simulation suggests this is hard."],
- ["60 participants and 48 questions detect a 5–6 point drift with ≥ 99% probability and a 3.5-point drift with about 80%.","sim","Design simulation, 400–2,000 replications per setting; assumes a spread of D near 8.5 points, checked by a pre-registered sample-size rule."],
+ ["60 participants and 48 questions give a significant result for a 5–6 point drift in ≥ 99% of studies and for a 3.5-point drift in about 80% (significant and ≥ 3 points: 96% and 48%).","sim","Design simulation, 400–2,000 replications per setting; assumes a spread of D near 8.5 points, checked by a pre-registered sample-size rule."],
  ["If H1 holds for paid raters, the same lean is plausible for signals given under worse conditions.","hyp","An a fortiori argument, not a proof. A null H1 would not clear those signals."],
  ["In public Arena votes, choices lean more toward confident, agreeable or longer answers later in a voter's sitting.","hyp","H3, exploratory and observational. Can run now on public data."],
  ["The pre-registered test fires about 5% of the time when there is no drift.","sim","5.3% across 2,000 simulated null studies."],

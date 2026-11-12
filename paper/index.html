@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signal ≠ Value: Does Pressure Bend the Human Feedback That Trains AI?</title>
+<meta name="author" content="Venkat Rao">
+<link rel="canonical" href="https://cwhf.vercel.app/paper/">
+<meta name="citation_title" content="Signal ≠ Value: Does Pressure Bend the Human Feedback That Trains AI?">
+<meta name="citation_author" content="Rao, Venkat">
+<meta name="citation_publication_date" content="2026/11/12">
+<meta name="citation_pdf_url" content="https://cwhf.vercel.app/paper/Signal-not-Value_Rao_2026.pdf">
+<meta name="description" content="A testable question, a simulated study and a revised programme for Coherence-Weighted Human Feedback (CWHF). Preprint, CC BY 4.0.">
+<style>
+@font-face{font-family:"Fraunces";src:url(fonts/fraunces.woff2) format("woff2");font-weight:100 900;font-style:normal}
+@font-face{font-family:"Fraunces";src:url(fonts/fraunces-italic.woff2) format("woff2");font-weight:100 900;font-style:italic}
+@font-face{font-family:"Source Serif 4";src:url(fonts/source-serif-4.woff2) format("woff2");font-weight:200 900;font-style:normal}
+@font-face{font-family:"Source Serif 4";src:url(fonts/source-serif-4-italic.woff2) format("woff2");font-weight:200 900;font-style:italic}
+@font-face{font-family:"Hanken Grotesk";src:url(fonts/hanken-grotesk.woff2) format("woff2");font-weight:100 900}
+@font-face{font-family:"JetBrains Mono";src:url(fonts/jetbrains-mono.woff2) format("woff2");font-weight:400 500}
+:root{--ink:#14161B;--mute:#5B6270;--line:#E3DDD1;--gold:#94661A;--gold-s:#F7EEDC;--teal:#0F766E;--teal-s:#E3F3EF;--red:#9F1239;--paper:#FFFFFF;
+ --serif:"Source Serif 4",Georgia,serif;--display:"Fraunces",Georgia,serif;--sans:"Hanken Grotesk",Inter,system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+@page{size:A4;margin:20mm 19mm 22mm 19mm}
+@page :first{margin:0}
+*{box-sizing:border-box}
+html{background:var(--paper)}
+body{margin:0;color:var(--ink);background:var(--paper);font:10.6pt/1.58 var(--serif);font-feature-settings:"onum" 1;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+main{max-width:172mm;margin:0 auto}
+@media screen{body{background:#F4F1EA}main{background:#fff;padding:18mm 19mm;margin:24px auto;box-shadow:0 1px 3px rgba(0,0,0,.08)}.cover{margin:24px auto 0;max-width:210mm}}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;color:var(--ink);font-feature-settings:normal}
+h2{font-size:21pt;margin:0 0 3mm;letter-spacing:-.01em}
+h2 .num{font-family:var(--mono);font-size:9pt;color:var(--gold);letter-spacing:.12em;display:block;margin-bottom:2mm;font-weight:500}
+h3{font-size:13pt;margin:6mm 0 2mm}
+p{margin:0 0 3mm}
+a{color:var(--teal);text-decoration:none}
+.sec{break-before:auto;margin-top:11mm;padding-top:6mm;border-top:1px solid var(--line)}
+h2,h3,.lede{break-after:avoid}
+h2{break-inside:avoid}
+.pull{break-before:avoid}
+.sec.newpage{break-before:page;border-top:0;margin-top:0;padding-top:0}
+.sec.flow{break-before:auto;margin-top:9mm}
+.lede{font-size:12.2pt;line-height:1.5;color:#2A2E36;margin-bottom:5mm}
+.k{font:600 8pt/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.small,.cap{font:8.8pt/1.45 var(--sans);color:var(--mute)}
+figure{margin:5mm 0 6mm;break-inside:avoid}
+figure svg{width:100%;height:auto;max-height:80mm;display:block}
+figcaption{font:8.8pt/1.45 var(--sans);color:var(--mute);margin-top:2.5mm;border-top:1px solid var(--line);padding-top:2mm}
+figcaption b{color:var(--ink);font-weight:600}
+.callouts{display:grid;grid-template-columns:1fr 1fr;gap:4mm;margin:5mm 0 2mm;break-inside:avoid}
+.box{border-radius:3mm;padding:4mm 4.5mm;break-inside:avoid}
+.box .k{display:block;margin-bottom:1.5mm}
+.box p{margin:0;font-size:10.2pt;line-height:1.5}
+.means{background:var(--teal-s);border-left:3px solid var(--teal)}
+.means .k{color:var(--teal)}
+.sowhat{background:var(--gold-s);border-left:3px solid var(--gold)}
+.callouts.one{grid-template-columns:1fr}
+.pull{font-family:var(--display);font-size:17pt;line-height:1.3;color:var(--gold);margin:5mm 0;font-style:italic}
+table{width:100%;border-collapse:collapse;font:9pt/1.45 var(--sans);margin:3mm 0 5mm;break-inside:auto}
+th{text-align:left;font-weight:600;font-size:7.8pt;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);border-bottom:1.5px solid var(--ink);padding:2mm 2mm 1.5mm}
+td{border-bottom:1px solid var(--line);padding:2mm;vertical-align:top}
+tr{break-inside:avoid}
+td.n,th.n{text-align:right;font-family:var(--mono);font-size:8.6pt;white-space:nowrap}
+.tier{display:inline-block;font:600 7pt/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;padding:1.2mm 1.8mm;border-radius:1mm;white-space:nowrap}
+.t-est{background:var(--teal-s);color:var(--teal)}.t-hyp{background:#E9E8FB;color:#4338CA}.t-sim{background:#F0E7FB;color:#6D28D9}.t-pro{background:var(--gold-s);color:var(--gold)}.t-ret{background:#F6E1E6;color:var(--red)}
+.hyp{border:1.5px solid var(--ink);border-radius:3mm;padding:4mm 5mm;margin:4mm 0;break-inside:avoid}
+.hyp .k{color:var(--ink)}
+.hyp p{font-size:11pt;margin:1.5mm 0 0}
+.eq{font-family:var(--display);font-size:15pt;text-align:center;margin:4mm 0}
+ul,ol{margin:0 0 3mm;padding-left:5.5mm}
+li{margin:0 0 1.3mm}
+.glance{display:grid;grid-template-columns:1fr 1fr;gap:3.5mm 6mm}
+.glance div{border-top:1.5px solid var(--ink);padding-top:2mm;break-inside:avoid}
+.glance h3{font-size:11.5pt;margin:0 0 1mm}
+.glance p{font-size:9.8pt;line-height:1.48;margin:0}
+.refs{font:8.6pt/1.45 var(--sans);padding-left:0;list-style:none}
+.refs li{padding-left:5mm;text-indent:-5mm;margin-bottom:1.6mm}
+/* cover */
+.cover{height:297mm;background:#0F1117;color:#ECE6DA;position:relative;overflow:hidden;break-after:page;padding:24mm 22mm}
+.cover .k{color:#D9A441}
+.cover h1{font-size:54pt;line-height:1;margin:22mm 0 6mm;color:#fff;letter-spacing:-.02em}
+.cover h1 .ne{color:#D9A441}
+.cover .sub{font-family:var(--display);font-size:20pt;line-height:1.25;color:#ECE6DA;max-width:140mm;font-style:italic;font-weight:300}
+.cover .sub2{font:11pt/1.5 var(--sans);color:#A0A7B3;max-width:130mm;margin-top:7mm}
+.cover .meta{position:absolute;left:22mm;right:22mm;bottom:22mm;font:9pt/1.6 var(--sans);color:#A0A7B3;border-top:1px solid rgba(236,230,218,.18);padding-top:5mm;display:grid;grid-template-columns:1.3fr 1fr;gap:6mm}
+.cover .meta b{color:#ECE6DA;font-weight:600}
+.cover svg.art{position:absolute;right:-30mm;top:92mm;width:150mm;opacity:.9}
+.toc{columns:2;column-gap:8mm;font:9.6pt/1.9 var(--sans);padding-left:0;list-style:none;margin-top:4mm}
+.toc span{font-family:var(--mono);color:var(--gold);font-size:8.4pt;margin-right:2mm}
+.note{border:1px solid var(--line);border-radius:3mm;padding:3.5mm 4.5mm;font:9.2pt/1.5 var(--sans);color:#3A3F48;margin:4mm 0;break-inside:avoid}
+</style>
+</head>
+<body>
+<nav class="webbar" aria-label="Paper links"><a href="Signal-not-Value_Rao_2026.pdf">Download PDF</a> · <a href="Signal-not-Value_Technical-Supplement.pdf">Technical supplement</a> · <a href="/">Companion lab</a> · <a href="https://github.com/venramak/twopointsingularity-cwhf">Code</a></nav>
+<style>.webbar{font-family:var(--sans);font-size:14px;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--gold-s);text-align:center}.webbar a{color:var(--ink)}@media print{.webbar{display:none}}</style>
+
+<section class="cover">
+ <div class="k">Two Point Singularity · Research paper · November 2026</div>
+ <h1>Signal <span class="ne">≠</span> Value</h1>
+ <div class="sub">Does pressure bend the human feedback that trains AI?</div>
+ <div class="sub2">A testable question, a study design simulated before any data, and a revised programme for Coherence-Weighted Human Feedback (CWHF).</div>
+ <svg class="art" viewBox="0 0 400 400" aria-hidden="true">
+  <circle cx="200" cy="200" r="190" fill="none" stroke="#D9A441" stroke-opacity=".25" stroke-dasharray="2 6"/>
+  <circle cx="200" cy="200" r="140" fill="none" stroke="#ECE6DA" stroke-opacity=".18"/>
+  <circle cx="200" cy="200" r="90" fill="none" stroke="#ECE6DA" stroke-opacity=".25"/>
+  <circle cx="200" cy="200" r="40" fill="#0F766E" fill-opacity=".55"/>
+  <circle cx="246" cy="182" r="40" fill="none" stroke="#D9A441" stroke-width="2"/>
+  <line x1="200" y1="200" x2="246" y2="182" stroke="#D9A441" stroke-width="1.5"/>
+ </svg>
+ <div class="meta">
+  <div><b>Venkat Rao</b> · Independent researcher · ORCID 0009-0003-3477-1225<br>Version 1.0 · Preprint, not peer reviewed · 12 November 2026 · CC BY 4.0<br>Follows <i>The Coherence-Weighted Human Feedback (CWHF)</i>, March 2026, doi:10.5281/zenodo.19235970</div>
+  <div><b>Companion lab</b> twopointsingularity.com/lab (mirror: cwhf.vercel.app)<br><b>Code and simulation</b> github.com/venramak/twopointsingularity-cwhf<br><b>Website</b> twopointsingularity.com/research/cwhf</div>
+ </div>
+</section>
+
+<main>
+
+<section>
+ <div class="k">At a glance</div>
+ <h2 style="margin-top:2mm">The whole paper on one page</h2>
+ <div class="glance">
+  <div><h3>The question</h3><p>When people judge under pressure, do their choices drift away from what they themselves choose on reflection, in a <i>consistent direction</i> rather than at random?</p></div>
+  <div><h3>Why it matters</h3><p>Random error cancels as more feedback is collected. A consistent lean does not: more data teaches an AI system the lean more firmly.</p></div>
+  <div><h3>What is known</h3><p>Judgments shift with fatigue and time pressure. Raters of AI output favour agreeable, assertive and longer answers. User thumbs data has already pushed one deployed model toward sycophancy.</p></div>
+  <div><h3>What is not known</h3><p>Whether the lean grows when the <i>same person</i> is under pressure. We have not found a study that tests this within-person contrast directly. Kopteva and Hlynianyi-Zhuk (2026) propose rater state as a structured bias, with an observational audit; this paper adds a pre-registered manipulation that can show whether the bias has a direction.</p></div>
+  <div><h3>The test</h3><p>Sixty people answer 48 questions twice, a week apart: once rushed, once at their own pace. One measure, D, says whether pressure moved them toward a pre-named style.</p></div>
+  <div><h3>What the simulation found</h3><p>Under its stated assumptions, the design catches a 6-point drift 99.7% of the time and raises a false alarm 5.3% of the time. It also exposed four flaws in the first paper's design, now fixed.</p></div>
+  <div><h3>What we propose</h3><p>Record the conditions of every label, prevent drift at source, weight only where it demonstrably helps, audit always. In simulation, fixing conditions beat every weighting formula.</p></div>
+  <div><h3>What would prove us wrong</h3><p>If the average shift is not reliably above zero, H1 is not supported; if its confidence interval lies below 3 points, any effect is too small to matter by our own standard. Either result is published.</p></div>
+ </div>
+ <div class="note" style="margin-top:6mm"><b>How to read the claims.</b> Every claim carries one of five labels, and no lower tier is used to prop up a higher one: <span class="tier t-est">Established</span> published evidence; <span class="tier t-hyp">Hypothesis</span> precise and testable, not yet tested; <span class="tier t-sim">Simulated</span> a property of the study design, shown on simulated people; <span class="tier t-pro">Proposed</span> depends on the hypotheses passing; <span class="tier t-ret">Retired</span> claimed in the first paper and withdrawn.<br><b>What this paper does not claim.</b> It does not identify anyone's true values. It tests whether the conditions under which feedback is given shift the choices people make.</div>
+ <div class="k" style="margin-top:6mm">Contents</div>
+ <ol class="toc">
+  <li><span>01</span>A thumbs-up is not the value</li>
+  <li><span>02</span>Every digital action is a signal</li>
+  <li><span>03</span>Noise averages out. Direction does not.</li>
+  <li><span>04</span>What we already know</li>
+  <li><span>05</span>The question, stated so it can fail</li>
+  <li><span>06</span>The flip test</li>
+  <li><span>07</span>Testing the test</li>
+  <li><span>08</span>What to do about it</li>
+  <li><span>09</span>How far one result travels</li>
+  <li><span>10</span>The strongest objections</li>
+  <li><span>11</span>Ethics and equity</li>
+  <li><span>12</span>What changed since the first paper</li>
+  <li><span>13</span>What happens next</li>
+  <li><span>—</span>Declarations and references</li>
+ </ol>
+</section>
+
+<section class="sec newpage">
+ <h2><span class="num">01</span>A thumbs-up is not the value</h2>
+ <p class="lede">Every science records the conditions of a measurement, because the instrument's state affects the reading. Human feedback to AI is the exception: a rating is stored as if it were a fact about the world, not an observation made by a particular person, at a particular moment, in a particular state.</p>
+ <p>A tired annotator at the end of a long queue, a parent tapping a thumbs-up at 2 a.m., a voter on a leaderboard between meetings: each produces a signal. Each signal passes through filters before it is recorded. The person's momentary state is one filter. Interface design, incentives, missing information, social pressure and the limits of the measurement itself are others.</p>
+ <figure><svg viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A value passes through eight filters before it becomes a recorded signal, which a system then interprets"><defs><marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="#8A8F99"/></marker></defs><rect x="20" y="120" width="140" height="90" rx="12" fill="#D5EEE9" stroke="#0F766E" stroke-width="1.5"/><text x="90" y="160" font-family="Fraunces, Georgia, serif" font-size="22" fill="#0F766E" text-anchor="middle" font-weight="400">Value</text><text x="90" y="184" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400">what the person</text><text x="90" y="198" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400">endorses on reflection</text><rect x="250" y="14" width="230" height="28" rx="6" fill="#F3E6CC" stroke="#94661A" stroke-width="1.5"/><text x="365" y="32.5" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#94661A" text-anchor="middle" font-weight="600">State: pressure, load, fatigue</text><path d="M160,165 C205,165 205,28 248,28" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><path d="M480,28 C525,28 525,165 568,165" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><rect x="250" y="52" width="230" height="28" rx="6" fill="#F1EEE8" stroke="#D8D2C6" stroke-width="1"/><text x="365" y="70.5" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">Choice architecture</text><path d="M160,165 C205,165 205,66 248,66" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><path d="M480,66 C525,66 525,165 568,165" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><rect x="250" y="90" width="230" height="28" rx="6" fill="#F1EEE8" stroke="#D8D2C6" stroke-width="1"/><text x="365" y="108.5" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">Incentives</text><path d="M160,165 C205,165 205,104 248,104" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><path d="M480,104 C525,104 525,165 568,165" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><rect x="250" y="128" width="230" height="28" rx="6" fill="#F1EEE8" stroke="#D8D2C6" stroke-width="1"/><text x="365" y="146.5" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">Information gap</text><path d="M160,165 C205,165 205,142 248,142" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><path d="M480,142 C525,142 525,165 568,165" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><rect x="250" y="166" width="230" height="28" rx="6" fill="#F1EEE8" stroke="#D8D2C6" stroke-width="1"/><text x="365" y="184.5" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">Time inconsistency</text><path d="M160,165 C205,165 205,180 248,180" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><path d="M480,180 C525,180 525,165 568,165" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><rect x="250" y="204" width="230" height="28" rx="6" fill="#F1EEE8" stroke="#D8D2C6" stroke-width="1"/><text x="365" y="222.5" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">Social pressure</text><path d="M160,165 C205,165 205,218 248,218" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><path d="M480,218 C525,218 525,165 568,165" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><rect x="250" y="242" width="230" height="28" rx="6" fill="#F1EEE8" stroke="#D8D2C6" stroke-width="1"/><text x="365" y="260.5" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">Preference construction</text><path d="M160,165 C205,165 205,256 248,256" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><path d="M480,256 C525,256 525,165 568,165" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><rect x="250" y="280" width="230" height="28" rx="6" fill="#F1EEE8" stroke="#D8D2C6" stroke-width="1"/><text x="365" y="298.5" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">Proxy and measurement</text><path d="M160,165 C205,165 205,294 248,294" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><path d="M480,294 C525,294 525,165 568,165" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><text x="365" y="326" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400" font-style="italic">eight reasons a signal can depart from a value</text><rect x="570" y="120" width="88" height="90" rx="12" fill="#F3E6CC" stroke="#94661A" stroke-width="1.5"/><text x="614" y="160" font-family="Fraunces, Georgia, serif" font-size="20" fill="#94661A" text-anchor="middle" font-weight="400">Signal</text><text x="614" y="184" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">the click, vote</text><text x="614" y="198" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">or label</text><line x1="660" y1="165" x2="682" y2="165" stroke="#8A8F99" stroke-width="1.5" marker-end="url(#a1)"/><rect x="684" y="120" width="70" height="90" rx="12" fill="#fff" stroke="#D8D2C6"/><text x="719" y="158" font-family="Fraunces, Georgia, serif" font-size="15" fill="#14161B" text-anchor="middle" font-weight="400">Model</text><text x="719" y="180" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">learns</text><text x="719" y="194" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">from it</text></svg>
+  <figcaption><b>Figure 1. The anatomy of a signal.</b> A value reaches a learning system only after passing through eight filters. This paper concerns the first: the state of the person at the moment of the signal. The other seven need different remedies, and the companion lab catalogues 71 cases across all eight.</figcaption></figure>
+ <p>The broader gap is long established. Behavioural economics stopped treating every choice as a revealed preference decades ago (Bernheim and Rangel, 2009). Engagement data diverges from what users say they want (Milli et al., 2023), and optimising for engagement under inconsistent preferences can leave people worse off (Kleinberg et al., 2022).</p>
+ <p>State is singled out here not because it is the largest filter. It usually is not. It is singled out because it varies within the same person, can be manipulated ethically in a study, and is cheap to record.</p>
+ <div class="callouts">
+  <div class="box means"><span class="k">That means</span><p>A label is a measurement with a hidden condition attached. Today that condition is thrown away before training begins.</p></div>
+  <div class="box sowhat"><span class="k">So what</span><p>If the hidden condition pushes labels one way, no amount of extra data will reveal it, because nobody recorded it.</p></div>
+ </div>
+</section>
+
+<section class="sec">
+ <h2><span class="num">02</span>Every digital action is a signal</h2>
+ <p class="lede">Paid annotators are only one source. Some everyday digital actions are already collected and used to train or evaluate AI systems; many more could be. The table lists channels where that use is documented, and one where practice is undisclosed.</p>
+ <table>
+  <thead><tr><th>Channel</th><th>Examples</th><th>How it reaches AI systems</th><th>Status</th></tr></thead>
+  <tbody>
+   <tr><td><b>Product feedback</b></td><td>Thumbs up or down</td><td>OpenAI reported that an April 2025 GPT-4o update added a reward signal from ChatGPT thumbs data, that this weakened the signal holding sycophancy in check, and that user feedback "can sometimes favor more agreeable responses" (OpenAI, 2025)</td><td><span class="tier t-est">Established</span></td></tr>
+   <tr><td><b>Crowd votes</b></td><td>Chatbot Arena</td><td>Leaderboards developers optimise against; released as preference data with anonymised user IDs and timestamps (LMSYS, 2023)</td><td><span class="tier t-est">Established</span></td></tr>
+   <tr><td><b>Community scores</b></td><td>Reddit karma, upvotes</td><td>GPT-2's training text kept only links with at least 3 karma (Radford et al., 2019); the Stanford Human Preferences dataset turns upvotes into preference labels (Ethayarajh et al., 2022)</td><td><span class="tier t-est">Established</span></td></tr>
+   <tr><td><b>Engagement</b></td><td>Clicks, watch time, scroll</td><td>Training targets for the recommender systems that increasingly serve AI-generated content</td><td><span class="tier t-est">Established</span></td></tr>
+   <tr><td><b>Consent</b></td><td>"Accept all" cookies</td><td>Decide which data may be collected at all; shaped mainly by interface design (Utz et al., 2019)</td><td><span class="tier t-est">Established</span></td></tr>
+   <tr><td><b>Interaction traces</b></td><td>Accept, regenerate, copy, edit</td><td>Product metrics and, at some developers, training or evaluation signals</td><td class="small">Varies; often undisclosed</td></tr>
+  </tbody>
+ </table>
+ <p><b>The general claim is established:</b> every recorded action is a signal produced under conditions. <b>The state-specific claim is not.</b> In the wild, defaults, design and incentives often dominate, and a claim that "state explains the gap everywhere" would overreach.</p>
+ <p>What links the two is an argument <i>a fortiori</i>. The study in this paper tests the most favourable conditions: paid, instructed, attentive adults choosing between two short answers, one of them correct. Signals in the wild come from phones, multitasking, late nights and interfaces built to obtain a click. If a lean appears under favourable conditions, the default assumption that it is absent under worse ones loses its basis. That is plausibility, not proof. The opposite is also possible: in the wild, design and incentives may swamp state altogether. That is why each channel needs its own test (Section 9).</p>
+ <div class="callouts">
+  <div class="box means"><span class="k">That means</span><p>The question reaches every person whose clicks, votes and ratings feed an AI system, not only the people paid to label data.</p></div>
+  <div class="box sowhat"><span class="k">So what</span><p>A positive result widens the case for recording conditions everywhere. A precise null would constrain this mechanism in this setting, but would not settle the other seven sources of divergence.</p></div>
+ </div>
+</section>
+
+<section class="sec">
+ <h2><span class="num">03</span>Noise averages out. Direction does not.</h2>
+ <p class="lede">The whole argument turns on one distinction. If pressure only adds random error, collecting more feedback cancels it. If pressure pushes choices consistently toward one style, more feedback teaches that style more firmly.</p>
+ <figure><svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Random error shrinks toward zero as data grow; a consistent lean levels off at a fixed error"><line x1="70" y1="240.0" x2="730" y2="240.0" stroke="#ECE7DD"/><text x="62" y="244.0" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="end" font-weight="400">0</text><line x1="70" y1="198.0" x2="730" y2="198.0" stroke="#ECE7DD"/><text x="62" y="202.0" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="end" font-weight="400">2</text><line x1="70" y1="156.0" x2="730" y2="156.0" stroke="#ECE7DD"/><text x="62" y="160.0" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="end" font-weight="400">4</text><line x1="70" y1="114.0" x2="730" y2="114.0" stroke="#ECE7DD"/><text x="62" y="118.0" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="end" font-weight="400">6</text><line x1="70" y1="72.0" x2="730" y2="72.0" stroke="#ECE7DD"/><text x="62" y="76.0" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="end" font-weight="400">8</text><line x1="70" y1="30.0" x2="730" y2="30.0" stroke="#ECE7DD"/><text x="62" y="34.0" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="end" font-weight="400">10</text><text x="70.0" y="258" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400">10</text><text x="235.0" y="258" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400">100</text><text x="400.0" y="258" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400">1k</text><text x="565.0" y="258" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400">10k</text><text x="730.0" y="258" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400">100k</text><text x="400.0" y="280" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#5B6270" text-anchor="middle" font-weight="400">number of human labels (log scale)</text><text transform="translate(18,135.0) rotate(-90)" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#5B6270" text-anchor="middle">error of what the model learns (points)</text><polyline points="70.0,40.8 73.3,45.3 76.6,49.7 79.9,54.1 83.2,58.3 86.5,62.4 89.8,66.5 93.1,70.4 96.4,74.3 99.7,78.1 103.0,81.8 106.3,85.4 109.6,88.9 112.9,92.3 116.2,95.7 119.5,99.0 122.8,102.2 126.1,105.3 129.4,108.4 132.7,111.4 136.0,114.3 139.3,117.2 142.6,120.0 145.9,122.7 149.2,125.4 152.5,128.0 155.8,130.5 159.1,133.0 162.4,135.4 165.7,137.8 169.0,140.2 172.3,142.4 175.6,144.6 178.9,146.8 182.2,148.9 185.5,151.0 188.8,153.0 192.1,155.0 195.4,156.9 198.7,158.8 202.0,160.7 205.3,162.5 208.6,164.3 211.9,166.0 215.2,167.7 218.5,169.3 221.8,170.9 225.1,172.5 228.4,174.0 231.7,175.5 235.0,177.0 238.3,178.4 241.6,179.8 244.9,181.2 248.2,182.5 251.5,183.9 254.8,185.1 258.1,186.4 261.4,187.6 264.7,188.8 268.0,190.0 271.3,191.1 274.6,192.2 277.9,193.3 281.2,194.4 284.5,195.4 287.8,196.4 291.1,197.4 294.4,198.4 297.7,199.3 301.0,200.2 304.3,201.2 307.6,202.0 310.9,202.9 314.2,203.7 317.5,204.6 320.8,205.4 324.1,206.2 327.4,206.9 330.7,207.7 334.0,208.4 337.3,209.1 340.6,209.8 343.9,210.5 347.2,211.2 350.5,211.9 353.8,212.5 357.1,213.1 360.4,213.7 363.7,214.3 367.0,214.9 370.3,215.5 373.6,216.0 376.9,216.6 380.2,217.1 383.5,217.6 386.8,218.2 390.1,218.7 393.4,219.1 396.7,219.6 400.0,220.1 403.3,220.5 406.6,221.0 409.9,221.4 413.2,221.8 416.5,222.2 419.8,222.6 423.1,223.0 426.4,223.4 429.7,223.8 433.0,224.2 436.3,224.5 439.6,224.9 442.9,225.2 446.2,225.6 449.5,225.9 452.8,226.2 456.1,226.5 459.4,226.8 462.7,227.1 466.0,227.4 469.3,227.7 472.6,228.0 475.9,228.3 479.2,228.5 482.5,228.8 485.8,229.1 489.1,229.3 492.4,229.5 495.7,229.8 499.0,230.0 502.3,230.2 505.6,230.5 508.9,230.7 512.2,230.9 515.5,231.1 518.8,231.3 522.1,231.5 525.4,231.7 528.7,231.9 532.0,232.1 535.3,232.2 538.6,232.4 541.9,232.6 545.2,232.8 548.5,232.9 551.8,233.1 555.1,233.2 558.4,233.4 561.7,233.6 565.0,233.7 568.3,233.8 571.6,234.0 574.9,234.1 578.2,234.3 581.5,234.4 584.8,234.5 588.1,234.6 591.4,234.8 594.7,234.9 598.0,235.0 601.3,235.1 604.6,235.2 607.9,235.3 611.2,235.4 614.5,235.5 617.8,235.6 621.1,235.7 624.4,235.8 627.7,235.9 631.0,236.0 634.3,236.1 637.6,236.2 640.9,236.3 644.2,236.4 647.5,236.5 650.8,236.5 654.1,236.6 657.4,236.7 660.7,236.8 664.0,236.8 667.3,236.9 670.6,237.0 673.9,237.1 677.2,237.1 680.5,237.2 683.8,237.2 687.1,237.3 690.4,237.4 693.7,237.4 697.0,237.5 700.3,237.5 703.6,237.6 706.9,237.7 710.2,237.7 713.5,237.8 716.8,237.8 720.1,237.9 723.4,237.9 726.7,238.0 730.0,238.0" fill="none" stroke="#0F766E" stroke-width="2.6"/><polyline points="70.0,31.1 73.3,35.4 76.6,39.6 79.9,43.7 83.2,47.7 86.5,51.6 89.8,55.4 93.1,59.1 96.4,62.7 99.7,66.2 103.0,69.7 106.3,73.0 109.6,76.3 112.9,79.4 116.2,82.5 119.5,85.5 122.8,88.5 126.1,91.3 129.4,94.1 132.7,96.8 136.0,99.4 139.3,101.9 142.6,104.4 145.9,106.8 149.2,109.2 152.5,111.5 155.8,113.7 159.1,115.8 162.4,117.9 165.7,120.0 169.0,121.9 172.3,123.9 175.6,125.7 178.9,127.5 182.2,129.3 185.5,131.0 188.8,132.6 192.1,134.2 195.4,135.8 198.7,137.3 202.0,138.7 205.3,140.1 208.6,141.5 211.9,142.8 215.2,144.1 218.5,145.3 221.8,146.5 225.1,147.7 228.4,148.8 231.7,149.9 235.0,150.9 238.3,151.9 241.6,152.9 244.9,153.8 248.2,154.7 251.5,155.6 254.8,156.5 258.1,157.3 261.4,158.1 264.7,158.8 268.0,159.5 271.3,160.2 274.6,160.9 277.9,161.6 281.2,162.2 284.5,162.8 287.8,163.4 291.1,164.0 294.4,164.5 297.7,165.0 301.0,165.5 304.3,166.0 307.6,166.4 310.9,166.9 314.2,167.3 317.5,167.7 320.8,168.1 324.1,168.5 327.4,168.9 330.7,169.2 334.0,169.5 337.3,169.8 340.6,170.2 343.9,170.4 347.2,170.7 350.5,171.0 353.8,171.3 357.1,171.5 360.4,171.7 363.7,172.0 367.0,172.2 370.3,172.4 373.6,172.6 376.9,172.8 380.2,173.0 383.5,173.2 386.8,173.3 390.1,173.5 393.4,173.6 396.7,173.8 400.0,173.9 403.3,174.1 406.6,174.2 409.9,174.3 413.2,174.4 416.5,174.5 419.8,174.7 423.1,174.8 426.4,174.9 429.7,175.0 433.0,175.0 436.3,175.1 439.6,175.2 442.9,175.3 446.2,175.4 449.5,175.4 452.8,175.5 456.1,175.6 459.4,175.6 462.7,175.7 466.0,175.8 469.3,175.8 472.6,175.9 475.9,175.9 479.2,176.0 482.5,176.0 485.8,176.1 489.1,176.1 492.4,176.1 495.7,176.2 499.0,176.2 502.3,176.2 505.6,176.3 508.9,176.3 512.2,176.3 515.5,176.4 518.8,176.4 522.1,176.4 525.4,176.5 528.7,176.5 532.0,176.5 535.3,176.5 538.6,176.5 541.9,176.6 545.2,176.6 548.5,176.6 551.8,176.6 555.1,176.6 558.4,176.7 561.7,176.7 565.0,176.7 568.3,176.7 571.6,176.7 574.9,176.7 578.2,176.7 581.5,176.8 584.8,176.8 588.1,176.8 591.4,176.8 594.7,176.8 598.0,176.8 601.3,176.8 604.6,176.8 607.9,176.8 611.2,176.8 614.5,176.8 617.8,176.8 621.1,176.9 624.4,176.9 627.7,176.9 631.0,176.9 634.3,176.9 637.6,176.9 640.9,176.9 644.2,176.9 647.5,176.9 650.8,176.9 654.1,176.9 657.4,176.9 660.7,176.9 664.0,176.9 667.3,176.9 670.6,176.9 673.9,176.9 677.2,176.9 680.5,176.9 683.8,176.9 687.1,176.9 690.4,176.9 693.7,176.9 697.0,177.0 700.3,177.0 703.6,177.0 706.9,177.0 710.2,177.0 713.5,177.0 716.8,177.0 720.1,177.0 723.4,177.0 726.7,177.0 730.0,177.0" fill="none" stroke="#94661A" stroke-width="2.6"/><line x1="70" y1="177.0" x2="730" y2="177.0" stroke="#94661A" stroke-dasharray="4 4" opacity=".7"/><text x="726" y="169.0" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#94661A" text-anchor="end" font-weight="600">a 3-point lean never washes out</text><text x="726" y="225.7" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#0F766E" text-anchor="end" font-weight="600">random noise shrinks toward zero</text></svg>
+  <figcaption><b>Figure 2. Why direction matters.</b> Illustration with arbitrary units. Random rater error (teal) shrinks as labels accumulate. A consistent 3-point lean (gold) levels off and stays, however much data is added.</figcaption></figure>
+ <p>Suppose a share <i>p</i> of labelling sessions is effectively reflective and the rest carry an average lean δ toward a particular style. A reward model trained with equal weights learns, to a first approximation:</p>
+ <div class="eq">r̂ ≈ r* + (1 − p) · δ</div>
+ <p>Here r* is what it would learn from reflective labels alone. This is arithmetic conditional on the hypothesis, not a theorem about the world. The first paper called it the "Bias Theorem"; that name is retired.</p>
+ <h3>What a 3-point lean means in practice</h3>
+ <p>In pairwise data, 53 choices in 100 instead of 50 is a learned reward difference of about 0.12 on the logit scale used by most reward models, applied wherever the style appears. Across a million comparisons it is about 30,000 extra choices in one direction. Optimising a model against a learned reward is known to amplify systematic errors in that reward (Gao et al., 2023). Whether a lean of this size changes behaviour enough to matter is itself untested.</p>
+ <h3>Why three points</h3>
+ <p>The threshold is a practical convention, fixed before any data. It is roughly the smallest shift that is a stable reward difference of about 0.12 logits, adds up to tens of thousands of one-directional labels in a typical preference dataset, and can be detected with about 80% power at a feasible sample size. It can be challenged. The full confidence interval will be reported, so readers can apply their own threshold.</p>
+ <div class="callouts">
+  <div class="box means"><span class="k">That means</span><p>The useful question is not "are tired people noisier?" (they are) but "does tiredness have a direction?"</p></div>
+  <div class="box sowhat"><span class="k">So what</span><p>If it does, scale stops being a cure and becomes an amplifier. That is the cost of not knowing.</p></div>
+ </div>
+</section>
+
+<section class="sec">
+ <h2><span class="num">04</span>What we already know</h2>
+ <p class="lede">Five findings motivate the question. None of them is the question.</p>
+ <table>
+  <thead><tr><th>#</th><th>Finding</th><th>Evidence</th><th>What it does not show</th></tr></thead>
+  <tbody>
+   <tr><td>E1</td><td>Professional judgments shift with state, in one direction</td><td>Antibiotic prescribing rose across clinic sessions, from adjusted odds 1.01 in the second hour to 1.26 in the fourth (Linder et al., 2014). Test scores fall later in the day and recover after breaks (Sievertsen et al., 2016)</td><td>That AI raters behave the same way</td></tr>
+   <tr><td>E2</td><td>Momentary state distorts choices people later reverse</td><td>A 30°F colder order day raised cold-weather catalogue returns by about 3.95 points (Conlin et al., 2007)</td><td>That reversal reflects reflection rather than new information</td></tr>
+   <tr><td>E3</td><td>Raters of AI output favour certain styles</td><td>Sycophantic answers preferred over correct ones a non-negligible share of the time (Sharma et al., 2023); assertiveness hides factual errors (Hosking et al., 2023); much reward gain tracks length (Singhal et al., 2023)</td><td>That these preferences grow with rater state</td></tr>
+   <tr><td>E4</td><td>Public preference data record no rater state</td><td>HH-RLHF, SHP and Chatbot Arena releases include no state field. Internal practice is not public</td><td>That recording state would change outcomes</td></tr>
+   <tr><td>E5</td><td>End-user feedback can move a deployed model</td><td>Thumbs data contributed to the sycophantic GPT-4o update (OpenAI, 2025)</td><td>Why the users leaned</td></tr>
+  </tbody>
+ </table>
+ <p>The closest prior work is Kopteva and Hlynianyi-Zhuk (2026), who propose rater state as a structured bias in preference data, with an observational audit framework for public models. Their focus is sustained stress over time and an output-side signature. This paper works on the input side: it manipulates acute pressure within the same person and measures whether the shift has a direction. The two are complementary, and arrived at the question independently: our first paper (March 2026) and their first version (April 2026) appeared within weeks of each other.</p>
+ <p>One nearby literature urges caution. "Ego depletion", the idea that self-control draws on a limited resource, was not supported by two large pre-registered multi-site replications (Hagger et al., 2016; Vohs et al., 2021). The hypothesis here does not rely on a resource model. It predicts only that pressure changes which answer is chosen, whatever the mechanism, and the study uses direct, reversible manipulations with a check that they worked.</p>
+ <div class="callouts one">
+  <div class="box sowhat"><span class="k">So what</span><p>The ingredients are all documented: state moves judgment, raters have style preferences, pipelines ignore state, and user feedback reaches reward models. What is missing is the one measurement that joins them.</p></div>
+ </div>
+</section>
+
+<section class="sec">
+ <h2><span class="num">05</span>The question, stated so it can fail</h2>
+ <p class="lede">A claim that cannot fail is not a scientific claim. This section fixes the words, the measure and the threshold before any data exist.</p>
+ <div class="hyp"><span class="k">H1 · Hypothesis</span><p>Within the same person, judging under time pressure and divided attention increases the rate at which a pre-named "attractor" style is chosen, relative to that person's reflective choices on the same items, by at least 3 percentage points on average.</p></div>
+ <div class="hyp"><span class="k">H2 · Hypothesis, run only if H1 holds</span><p>In ordinary labelling, a within-person session score reduces the lean of a training set by at least 25%, more than the best existing rater-quality method, while keeping at least 60% of effective data and meeting prespecified non-inferiority criteria for every language, region and shift group, with uncertainty reported.</p></div>
+ <div class="hyp"><span class="k">H3 · Exploratory, observational</span><p>In public Chatbot Arena votes, the same voter's choices lean more toward the confident, agreeable or longer answer as a voting sitting wears on.</p></div>
+ <h3>Five terms, one meaning each</h3>
+ <table>
+  <tbody>
+   <tr><td style="width:24%"><b>Reflective reference choice</b><br><span class="small">the "value" of the title</span></td><td>The choice the same person makes on the same item with no time limit and no distraction, after time to reflect. A convention chosen so the claim can be tested. The study tests condition-dependent preferences over answers; it does not identify moral values, authentic identity or anyone's uniquely correct preference. Reflection is sometimes worse (Wilson and Schooler, 1991).</td></tr>
+   <tr><td><b>Attractor</b></td><td>A pre-named answer style expected to gain under pressure: more confident (unhedged), or more agreeable with the asker. It is the correct answer in exactly half the items, so a shift in accuracy cannot pass for a shift in style.</td></tr>
+   <tr><td><b>D</b> · primary</td><td>The reflective–pressured choice gap: how often a person picks the attractor under pressure, minus how often they pick it on reflection. Signed: it measures direction.</td></tr>
+   <tr><td><b>M</b> · secondary</td><td>Mismatch: the share of items where a person's two choices differ, in either direction. Five switches toward the attractor and five away give D = 0 but M &gt; 0, so the two answer different questions.</td></tr>
+   <tr><td><b>Coherence</b></td><td>The programme's interpretation, not a measure: how closely a session's choices agree with the same person's reflective choices. The study measures D and M; "coherence" names what they are about.</td></tr>
+  </tbody>
+ </table>
+ <div class="callouts">
+  <div class="box means"><span class="k">That means</span><p>"Value" is not a metaphysical claim. It is a reference point anyone can measure and anyone can dispute.</p></div>
+  <div class="box sowhat"><span class="k">So what</span><p>A directional gap biases training data whichever self one prefers, because the data average to neither.</p></div>
+ </div>
+</section>
+
+<section class="sec">
+ <h2><span class="num">06</span>The flip test</h2>
+ <p class="lede">Study 1 compares each person with themselves. Sixty adults on a research platform, paid by the hour, answer the same 48 question pairs twice, at least a week apart, in counterbalanced order.</p>
+ <figure><svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Each person answers the same 48 questions twice, at least seven days apart, once under pressure and once at their own pace; D is the difference"><defs><marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="#8A8F99"/></marker></defs><rect x="20" y="40" width="150" height="190" rx="12" fill="#fff" stroke="#D8D2C6"/><text x="95" y="72" font-family="Fraunces, Georgia, serif" font-size="16" fill="#14161B" text-anchor="middle" font-weight="400">Same person</text><text x="95" y="92" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#5B6270" text-anchor="middle" font-weight="400">same 48 questions</text><rect x="38" y="112" width="114" height="26" rx="5" fill="#F3E6CC"/><text x="95" y="129" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#94661A" text-anchor="middle" font-weight="600">confident vs hedged</text><rect x="38" y="148" width="114" height="26" rx="5" fill="#F3E6CC"/><text x="95" y="165" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#94661A" text-anchor="middle" font-weight="600">agrees vs disagrees</text><text x="95" y="200" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">attractor right in</text><text x="95" y="214" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">exactly half the items</text><rect x="230" y="30" width="240" height="95" rx="12" fill="#F3E6CC" stroke="#94661A"/><text x="350" y="58" font-family="Fraunces, Georgia, serif" font-size="16" fill="#94661A" text-anchor="middle" font-weight="400">Pressured session</text><text x="350" y="80" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">timer set to own reading speed</text><text x="350" y="98" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">+ hold a 5-digit number</text><text x="350" y="116" font-family="JetBrains Mono, monospace" font-size="11.5" fill="#94661A" text-anchor="middle" font-weight="600">→ attractor rate P</text><rect x="230" y="150" width="240" height="95" rx="12" fill="#D5EEE9" stroke="#0F766E"/><text x="350" y="178" font-family="Fraunces, Georgia, serif" font-size="16" fill="#0F766E" text-anchor="middle" font-weight="400">Reflective session</text><text x="350" y="200" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">no timer, no load</text><text x="350" y="218" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">reasons on half the items</text><text x="350" y="236" font-family="JetBrains Mono, monospace" font-size="11.5" fill="#0F766E" text-anchor="middle" font-weight="600">→ attractor rate R</text><path d="M170,120 C200,120 200,78 228,78" fill="none" stroke="#8A8F99" stroke-width="1.4" marker-end="url(#a3)"/><path d="M170,150 C200,150 200,198 228,198" fill="none" stroke="#8A8F99" stroke-width="1.4" marker-end="url(#a3)"/><text x="350" y="140" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400" font-style="italic">≥ 7 days apart · order counterbalanced</text><path d="M470,78 C505,78 505,138 538,138" fill="none" stroke="#8A8F99" stroke-width="1.4" marker-end="url(#a3)"/><path d="M470,198 C505,198 505,142 538,142" fill="none" stroke="#8A8F99" stroke-width="1.4" marker-end="url(#a3)"/><rect x="540" y="85" width="200" height="110" rx="12" fill="#fff" stroke="#14161B" stroke-width="1.4"/><text x="640" y="120" font-family="Fraunces, Georgia, serif" font-size="24" fill="#14161B" text-anchor="middle" font-weight="400">D = P − R</text><text x="640" y="146" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#5B6270" text-anchor="middle" font-weight="400">per person, then averaged</text><text x="640" y="166" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">H1 holds if mean D is reliably</text><text x="640" y="182" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">above 0 and at least 3 points</text><text x="380" y="285" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#5B6270" text-anchor="middle" font-weight="400" font-style="italic">60 people · one-sided t-test on D · decision rule fixed in advance</text></svg>
+  <figcaption><b>Figure 3. The within-person design.</b> In the pressured session a timer is set from each person's own reading speed and they hold a five-digit number in mind. In the reflective session there is no timer, no load, and a written reason on a random half of the items. D is computed per person, then averaged.</figcaption></figure>
+ <h3>Built-in safeguards</h3>
+ <ul>
+  <li><b>Length removed from the timed test.</b> Long answers go unread under a timer, which would fake a result. Length is tested separately, without a timer (Study 3).</li>
+  <li><b>A bundled manipulation, stated as such.</b> The pressured session combines a timer and a memory load, so Study 1 estimates their combined effect. A later 2 × 2 study (timer × load) can separate them.</li>
+  <li><b>Reasons on half the items.</b> Writing a reason can itself shift choices (Shafir et al., 1993). The primary D uses all items; a pre-registered sensitivity analysis uses only items with no written reason.</li>
+  <li><b>Carry-over, measured rather than assumed away.</b> Item order is randomised in each session, and the debrief asks whether people remembered earlier answers. Seven days reduces memory effects but does not remove them; the control arm and an order × condition test estimate what remains.</li>
+  <li><b>Attention checks, a manipulation check and a funnel debrief</b> that flags anyone who guessed the hypothesis.</li>
+  <li><b>A reference control arm:</b> twelve extra people do two reflective sessions, measuring how much the reference itself moves.</li>
+  <li><b>Timeouts reported by first language and age,</b> because second-language readers are most affected by a timer.</li>
+ </ul>
+ <h3>The decision rule, fixed in advance</h3>
+ <p>Significance and size are judged separately, from the mean of D and its 95% confidence interval.</p>
+ <table>
+  <thead><tr><th>Outcome</th><th>Rule</th><th>What it means</th></tr></thead>
+  <tbody>
+   <tr><td><b>Exceeds the threshold</b></td><td>Lower bound above 3 points</td><td>The effect is larger than the practical threshold</td></tr>
+   <tr><td><b>Supported under the prespecified criterion</b></td><td>p &lt; 0.05 and mean D ≥ 3 points; interval includes 3</td><td>A directional effect, plausibly of practical size; proceed to Study 2</td></tr>
+   <tr><td><b>Directional but small</b></td><td>p &lt; 0.05 and mean D &lt; 3 points</td><td>A lean exists; if the upper bound is below 3, it is too small to matter by this standard</td></tr>
+   <tr><td><b>Not supported</b></td><td>p ≥ 0.05</td><td>No reliable direction; if the upper bound is below 3, a precise null that constrains this mechanism</td></tr>
+   <tr><td><b>Uninformative</b></td><td>People did not feel more rushed</td><td>Fix the manipulation and rerun</td></tr>
+  </tbody>
+ </table>
+ <div class="callouts">
+  <div class="box means"><span class="k">That means</span><p>Every person is their own control, so stable differences in skill, language or temperament are controlled. They may still change how strongly pressure acts.</p></div>
+  <div class="box sowhat"><span class="k">So what</span><p>The study costs about $3,000–7,000 and eight to ten weeks, and every possible result is publishable.</p></div>
+ </div>
+</section>
+
+<section class="sec">
+ <h2><span class="num">07</span>Testing the test</h2>
+ <p class="lede">Before spending money on people, the whole study was run thousands of times on simulated participants drawn from eight personas: a rested specialist, a gig annotator paid per item, a night-shift health worker, a second-language reader, a student, a retiree, an overconfident generalist and an anxious perfectionist.</p>
+ <figure><svg viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Simulated chance of detecting a drift, by number of participants"><line x1="70" y1="260" x2="560" y2="260" stroke="#ECE7DD"/><text x="62" y="264" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="end" font-weight="400">0%</text><line x1="70" y1="212.8" x2="560" y2="212.8" stroke="#ECE7DD"/><text x="62" y="216.8" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="end" font-weight="400">20%</text><line x1="70" y1="165.6" x2="560" y2="165.6" stroke="#ECE7DD"/><text x="62" y="169.6" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="end" font-weight="400">40%</text><line x1="70" y1="118.4" x2="560" y2="118.4" stroke="#ECE7DD"/><text x="62" y="122.4" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="end" font-weight="400">60%</text><line x1="70" y1="71.19999999999999" x2="560" y2="71.19999999999999" stroke="#ECE7DD"/><text x="62" y="75.19999999999999" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="end" font-weight="400">80%</text><line x1="70" y1="24" x2="560" y2="24" stroke="#ECE7DD"/><text x="62" y="28" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="end" font-weight="400">100%</text><text x="70.0" y="278" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400">20</text><text x="119.0" y="278" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400">30</text><text x="168.0" y="278" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400">40</text><text x="266.0" y="278" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400">60</text><text x="364.0" y="278" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400">80</text><text x="560.0" y="278" font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400">120</text><text x="315.0" y="300" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#5B6270" text-anchor="middle" font-weight="400">participants</text><line x1="70" y1="71.19999999999999" x2="560" y2="71.19999999999999" stroke="#14161B" stroke-dasharray="3 4" opacity=".35"/><line x1="70" y1="248.2" x2="560" y2="248.2" stroke="#9F1239" stroke-dasharray="3 4" opacity=".35"/><line x1="266.0" y1="24" x2="266.0" y2="260" stroke="#94661A" stroke-width="1" opacity=".5"/><text x="271.0" y="36" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#94661A" text-anchor="start" font-weight="600">planned: 60</text><polyline points="70.0,79.5 119.0,38.2 168.0,31.1 266.0,24.7 364.0,24.0 560.0,24.0" fill="none" stroke="#14161B" stroke-width="2.4"/><circle cx="70.0" cy="79.5" r="3.2" fill="#14161B"/><circle cx="119.0" cy="38.2" r="3.2" fill="#14161B"/><circle cx="168.0" cy="31.1" r="3.2" fill="#14161B"/><circle cx="266.0" cy="24.7" r="3.2" fill="#14161B"/><circle cx="364.0" cy="24.0" r="3.2" fill="#14161B"/><circle cx="560.0" cy="24.0" r="3.2" fill="#14161B"/><polyline points="70.0,153.8 119.0,125.5 168.0,102.6 266.0,70.5 364.0,51.8 560.0,29.9" fill="none" stroke="#94661A" stroke-width="2.4"/><circle cx="70.0" cy="153.8" r="3.2" fill="#94661A"/><circle cx="119.0" cy="125.5" r="3.2" fill="#94661A"/><circle cx="168.0" cy="102.6" r="3.2" fill="#94661A"/><circle cx="266.0" cy="70.5" r="3.2" fill="#94661A"/><circle cx="364.0" cy="51.8" r="3.2" fill="#94661A"/><circle cx="560.0" cy="29.9" r="3.2" fill="#94661A"/><polyline points="70.0,208.1 119.0,197.9 168.0,192.7 266.0,174.6 364.0,160.4 560.0,121.2" fill="none" stroke="#9AA0AA" stroke-width="2.4"/><circle cx="70.0" cy="208.1" r="3.2" fill="#9AA0AA"/><circle cx="119.0" cy="197.9" r="3.2" fill="#9AA0AA"/><circle cx="168.0" cy="192.7" r="3.2" fill="#9AA0AA"/><circle cx="266.0" cy="174.6" r="3.2" fill="#9AA0AA"/><circle cx="364.0" cy="160.4" r="3.2" fill="#9AA0AA"/><circle cx="560.0" cy="121.2" r="3.2" fill="#9AA0AA"/><polyline points="70.0,248.2 119.0,250.6 168.0,249.4 266.0,247.5 364.0,245.8 560.0,250.6" fill="none" stroke="#9F1239" stroke-width="2.4"/><circle cx="70.0" cy="248.2" r="3.2" fill="#9F1239"/><circle cx="119.0" cy="250.6" r="3.2" fill="#9F1239"/><circle cx="168.0" cy="249.4" r="3.2" fill="#9F1239"/><circle cx="266.0" cy="247.5" r="3.2" fill="#9F1239"/><circle cx="364.0" cy="245.8" r="3.2" fill="#9F1239"/><circle cx="560.0" cy="250.6" r="3.2" fill="#9F1239"/><line x1="585" y1="60" x2="610" y2="60" stroke="#14161B" stroke-width="3"/><text x="618" y="64" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="start" font-weight="600">Moderate drift</text><text x="618" y="78" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="start" font-weight="400">about 6 points</text><line x1="585" y1="90" x2="610" y2="90" stroke="#94661A" stroke-width="3"/><text x="618" y="94" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="start" font-weight="600">Small drift</text><text x="618" y="108" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="start" font-weight="400">about 3.5 points</text><line x1="585" y1="120" x2="610" y2="120" stroke="#9AA0AA" stroke-width="3"/><text x="618" y="124" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="start" font-weight="600">Tiny drift</text><text x="618" y="138" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="start" font-weight="400">about 1.7 points</text><line x1="585" y1="150" x2="610" y2="150" stroke="#9F1239" stroke-width="3"/><text x="618" y="154" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="start" font-weight="600">No drift</text><text x="618" y="168" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="start" font-weight="400">false alarms</text><text x="585" y="200" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="start" font-weight="400">Dashed lines: 80% detection</text><text x="585" y="215" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="start" font-weight="400">and the 5% false-alarm target.</text></svg>
+  <figcaption><b>Figure 4. How often the planned test detects a drift, by sample size.</b> <span class="tier t-sim">Simulated</span> 400–2,000 simulated studies per point. At 60 people the test detects a 6-point drift 99.7% of the time and a 3.5-point drift 80% of the time, and fires falsely 5.3% of the time when there is no drift. "Detects" here means significant; passing the 3-point criterion as well is rarer (see text). None of this is evidence about real people.</figcaption></figure>
+ <h3>Four flaws the simulation caught in the first paper's design</h3>
+ <table>
+  <thead><tr><th>Flaw</th><th>What the simulation showed</th><th>Fix</th></tr></thead>
+  <tbody>
+   <tr><td>Pass rule "π ≥ 0.60"</td><td>Missed a real 6-point drift in 79% of studies</td><td>Test the average drift D directly</td></tr>
+   <tr><td>Both sessions on one day</td><td>Memory cut the measured drift by more than half</td><td>Sessions at least 7 days apart</td></tr>
+   <tr><td>Fixed 7-second timer with long answers</td><td>Reversed the sign of the result</td><td>Personal timer; length tested untimed</td></tr>
+   <tr><td>Item-level corrected estimator</td><td>False alarms 9.5% of the time</td><td>Simple person-level test: 5.3%</td></tr>
+  </tbody>
+ </table>
+ <p><b>Two chances, reported separately.</b> For a true drift of about 3.5 points, the test is significant in 80% of simulated studies but significant <i>and</i> with a mean of at least 3 points in only 48%, because the measured shift runs below the true one. For about 6 points the figures are 99.7% and 96%; for about 1.7 points, 36% and 12%.</p>
+ <p><b>One honest caveat.</b> Power depends on how much D varies between people. The simulation gave a spread of about 8.5 points. If it is nearer 11, sixty people give only about 69% power for a 3-point drift. The study therefore pre-registers a rule: after the first 20 people, an analyst who cannot see the average computes the standard deviation of D and sets the final sample, between 60 and 100, from a formula fixed in the registration. Every simulated result can be reproduced from the published code and seeds (H1: 400–2,000 replications per setting; H2: 80 per scenario).</p>
+ <div class="callouts">
+  <div class="box means"><span class="k">That means</span><p>The design was broken in four places, and the simulation found all four before a single participant was paid.</p></div>
+  <div class="box sowhat"><span class="k">So what</span><p>Publishing the simulation and its code before the data is what makes the eventual result, whichever way it falls, credible.</p></div>
+ </div>
+</section>
+
+<section class="sec">
+ <h2><span class="num">08</span>What to do about it</h2>
+ <p class="lede">The first paper's answer was a weighting formula. The simulation of Study 2 changed that answer.</p>
+ <figure><svg viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Lean left in the training signal under each remedy; fixing conditions at source removed the most without losing data or penalising any group"><text x="250" y="18" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#5B6270" text-anchor="start" font-weight="400">lean left in the training signal (points)</text><text x="600" y="18" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400">data kept</text><text x="690" y="18" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400">weakest group</text><line x1="250.0" y1="28" x2="250.0" y2="294" stroke="#ECE7DD"/><text x="250.0" y="310" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">0</text><line x1="301.6666666666667" y1="28" x2="301.6666666666667" y2="294" stroke="#ECE7DD"/><text x="301.6666666666667" y="310" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">1</text><line x1="353.3333333333333" y1="28" x2="353.3333333333333" y2="294" stroke="#ECE7DD"/><text x="353.3333333333333" y="310" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">2</text><line x1="405.0" y1="28" x2="405.0" y2="294" stroke="#ECE7DD"/><text x="405.0" y="310" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">3</text><line x1="456.66666666666663" y1="28" x2="456.66666666666663" y2="294" stroke="#ECE7DD"/><text x="456.66666666666663" y="310" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">4</text><line x1="508.33333333333337" y1="28" x2="508.33333333333337" y2="294" stroke="#ECE7DD"/><text x="508.33333333333337" y="310" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">5</text><line x1="560.0" y1="28" x2="560.0" y2="294" stroke="#ECE7DD"/><text x="560.0" y="310" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">6</text><text x="240" y="51" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="end" font-weight="400">Equal weights (today's default)</text><rect x="250" y="38" width="276.9" height="20" rx="3" fill="#9AA0AA" opacity="0.8"/><text x="532.9333333333334" y="52" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="start" font-weight="600">5.4</text><text x="600" y="52" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">100%</text><text x="690" y="52" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">1.00</text><text x="240" y="89" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="end" font-weight="400">Attention-check filter</text><rect x="250" y="76" width="259.9" height="20" rx="3" fill="#94661A" opacity="0.8"/><text x="515.8833333333333" y="90" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="start" font-weight="600">5.0  (−6%)</text><text x="600" y="90" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">83%</text><text x="690" y="90" font-family="JetBrains Mono, monospace" font-size="11" fill="#9F1239" text-anchor="middle" font-weight="400">0.84</text><text x="240" y="127" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="end" font-weight="400">Dawid–Skene rater reliability</text><rect x="250" y="114" width="250.1" height="20" rx="3" fill="#94661A" opacity="0.8"/><text x="506.06666666666666" y="128" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="start" font-weight="600">4.8  (−10%)</text><text x="600" y="128" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">77%</text><text x="690" y="128" font-family="JetBrains Mono, monospace" font-size="11" fill="#9F1239" text-anchor="middle" font-weight="400">0.63</text><text x="240" y="165" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="end" font-weight="400">CWHF v1 formula, within-person</text><rect x="250" y="152" width="256.3" height="20" rx="3" fill="#94661A" opacity="0.8"/><text x="512.2666666666667" y="166" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="start" font-weight="600">5.0  (−7%)</text><text x="600" y="166" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">91%</text><text x="690" y="166" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">1.00</text><text x="240" y="203" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="end" font-weight="400">CWHF sharp, within-person</text><rect x="250" y="190" width="226.8" height="20" rx="3" fill="#94661A" opacity="0.8"/><text x="482.8166666666666" y="204" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="start" font-weight="600">4.4  (−18%)</text><text x="600" y="204" font-family="JetBrains Mono, monospace" font-size="11" fill="#9F1239" text-anchor="middle" font-weight="400">59%</text><text x="690" y="204" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">1.02</text><text x="240" y="241" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="end" font-weight="400">CWHF sharp, raw scores</text><rect x="250" y="228" width="196.3" height="20" rx="3" fill="#9F1239" opacity="1"/><text x="452.3333333333333" y="242" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="start" font-weight="600">3.8  (−29%)</text><text x="600" y="242" font-family="JetBrains Mono, monospace" font-size="11" fill="#9F1239" text-anchor="middle" font-weight="400">53%</text><text x="690" y="242" font-family="JetBrains Mono, monospace" font-size="11" fill="#9F1239" text-anchor="middle" font-weight="400">0.43</text><text x="240" y="279" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="end" font-weight="600">Fix conditions at source</text><rect x="250" y="266" width="194.3" height="20" rx="3" fill="#0F766E" opacity="1"/><text x="450.26666666666665" y="280" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="start" font-weight="600">3.8  (−30%)</text><text x="600" y="280" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">100%</text><text x="690" y="280" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">1.00</text><text x="380" y="322" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400" font-style="italic">Simulation, moderate drift, moderate-quality session score. Red: below the 60% data or 0.90 group-weight limits.</text></svg>
+  <figcaption><b>Figure 5. What each remedy removed.</b> <span class="tier t-sim">Simulated</span> The first paper's formula removed about 7% of the lean. Raw-score weighting reached the target only by cutting night-shift workers' weight to under half. Shorter sessions, breaks and hourly pay removed about 30% with no data lost and no group penalised. All under the simulation's assumptions.</figcaption>
+ <p><b>What the simulation assumed, and where the ranking reverses.</b> The source fix was modelled as improving average state by 0.15 standard deviations: a scenario, not an estimate. In a scenario where drift appears only in badly depleted sessions concentrated in night queues, sharp within-person weighting removed 55% of the lean, more than the source fix, but kept only 47% of the data. The simulation can make the recommendation lose; it won only under the central scenario. Study 2 tests which holds in real work.</p></figure>
+ <p>CWHF now names a programme, not a formula. It runs in four steps, cheapest first:</p>
+ <table>
+  <thead><tr><th>Step</th><th>What it does</th><th>Depends on</th></tr></thead>
+  <tbody>
+   <tr><td><b>1 · Record</b></td><td>Store session length, position, time of day, pay model and a two-item check-in with every label</td><td>Nothing. Useful even if H1 fails</td></tr>
+   <tr><td><b>2 · Prevent</b></td><td>Cap sessions, enforce breaks, pay by the hour, keep hard items away from the end of long queues</td><td>H1, to justify the cost</td></tr>
+   <tr><td><b>3 · Weight</b></td><td>Down-weight a person's own worst sessions, never comparing people with each other</td><td>H2 passing all its conditions</td></tr>
+   <tr><td><b>4 · Audit</b></td><td>Publish the lean, the data kept and every group's weight for each training set</td><td>Steps 1–3</td></tr>
+  </tbody>
+ </table>
+ <p><b>Adopt now, before any result:</b> record conditions with every label, state collection conditions in every dataset card, avoid per-item pay and long unbroken queues, and compare the style of answers that win product feedback early versus late in sessions before training on it.</p>
+ <p><b>What a lab gets in the first quarter.</b> Honestly, nothing measurable until H1 and H2 report. What makes it worth starting anyway: step 1 is a handful of logging fields most platforms already hold, and a retrospective check of existing thumbs data against session position (H4) needs days, not a study. For high-risk systems, Article 10 of the EU AI Act requires data governance that includes examining possible biases; condition records and step-4 audits could support that documentation. That is a possible use, not a compliance claim.</p>
+ <p><b>Rules for step 1.</b> A log of anyone's state is a surveillance risk in its own right. It is kept for data quality only, stored apart from identity, deleted or aggregated within a stated period, accessed by a named few with every access logged, visible to the rater, and reported only in aggregate. It never affects pay, ranking or continued work.</p>
+ <p><b>Two known weak points.</b> If session scores ever influence weights, raters may learn to perform alertness and platforms may build shadow scores; scores are therefore never shown to managers or used per person, anchor items are harder to game than self-reports, and audits look for gaming. And comparing people only with themselves has a blind spot: someone who is always depleted looks normal against their own baseline. Prevention, not weighting, is the remedy for that.</p>
+ <div class="callouts">
+  <div class="box means"><span class="k">That means</span><p>Bad working conditions may be a data-quality problem, not only a welfare problem. In the simulation, the cheapest fix was also the fairest; Study 2 tests whether that holds in practice.</p></div>
+  <div class="box sowhat"><span class="k">So what</span><p>Labs can start with step 1 tomorrow at almost no cost. If H2 fails, the recommendation simply becomes record, prevent and audit.</p></div>
+ </div>
+</section>
+
+<section class="sec">
+ <h2><span class="num">09</span>How far one result travels</h2>
+ <p class="lede">H1 is the first link in a chain of separately testable questions. Each needs its own data.</p>
+ <figure><svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Six linked tests from paid raters to model behaviour; each needs its own data"><defs><marker id="a6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="#8A8F99"/></marker></defs><rect x="20" y="60" width="108" height="110" rx="12" fill="#D5EEE9" stroke="#0F766E"/><text x="74.0" y="92" font-family="Fraunces, Georgia, serif" font-size="20" fill="#0F766E" text-anchor="middle" font-weight="400">H1</text><text x="74.0" y="120" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#14161B" text-anchor="middle" font-weight="600">Paid raters</text><text x="74.0" y="140" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">lab experiment</text><line x1="129" y1="115" x2="143" y2="115" stroke="#8A8F99" stroke-width="1.4" marker-end="url(#a6)"/><rect x="145" y="60" width="108" height="110" rx="12" fill="#D5EEE9" stroke="#0F766E"/><text x="199.0" y="92" font-family="Fraunces, Georgia, serif" font-size="20" fill="#0F766E" text-anchor="middle" font-weight="400">H2</text><text x="199.0" y="120" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#14161B" text-anchor="middle" font-weight="600">Ordinary labelling</text><text x="199.0" y="140" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">remedies compared</text><line x1="254" y1="115" x2="268" y2="115" stroke="#8A8F99" stroke-width="1.4" marker-end="url(#a6)"/><rect x="270" y="60" width="108" height="110" rx="12" fill="#F3E6CC" stroke="#94661A"/><text x="324.0" y="92" font-family="Fraunces, Georgia, serif" font-size="20" fill="#94661A" text-anchor="middle" font-weight="400">H3</text><text x="324.0" y="120" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#14161B" text-anchor="middle" font-weight="600">Public votes</text><text x="324.0" y="140" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">public Arena data</text><line x1="379" y1="115" x2="393" y2="115" stroke="#8A8F99" stroke-width="1.4" marker-end="url(#a6)"/><rect x="395" y="60" width="108" height="110" rx="12" fill="#F3E6CC" stroke="#94661A"/><text x="449.0" y="92" font-family="Fraunces, Georgia, serif" font-size="20" fill="#94661A" text-anchor="middle" font-weight="400">H4</text><text x="449.0" y="120" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#14161B" text-anchor="middle" font-weight="600">Product thumbs</text><text x="449.0" y="140" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">developer data</text><line x1="504" y1="115" x2="518" y2="115" stroke="#8A8F99" stroke-width="1.4" marker-end="url(#a6)"/><rect x="520" y="60" width="108" height="110" rx="12" fill="#F3E6CC" stroke="#94661A"/><text x="574.0" y="92" font-family="Fraunces, Georgia, serif" font-size="20" fill="#94661A" text-anchor="middle" font-weight="400">H5</text><text x="574.0" y="120" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#14161B" text-anchor="middle" font-weight="600">Engagement</text><text x="574.0" y="140" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">platform logs</text><line x1="629" y1="115" x2="643" y2="115" stroke="#8A8F99" stroke-width="1.4" marker-end="url(#a6)"/><rect x="645" y="60" width="108" height="110" rx="12" fill="#EEECE8" stroke="#14161B"/><text x="699.0" y="92" font-family="Fraunces, Georgia, serif" font-size="20" fill="#14161B" text-anchor="middle" font-weight="400">H6</text><text x="699.0" y="120" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#14161B" text-anchor="middle" font-weight="600">Model behaviour</text><text x="699.0" y="140" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">does fixing it help?</text><rect x="20" y="20" width="233" height="24" rx="4" fill="#D5EEE9"/><text x="136" y="36" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#0F766E" text-anchor="middle" font-weight="600">this programme</text><rect x="270" y="20" width="358" height="24" rx="4" fill="#F3E6CC"/><text x="449" y="36" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#94661A" text-anchor="middle" font-weight="600">signals from everyone else</text><text x="380" y="200" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#14161B" text-anchor="middle" font-weight="400" font-style="italic">A positive answer at one link justifies the next test. It does not answer it.</text><text x="380" y="222" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#5B6270" text-anchor="middle" font-weight="400" font-style="italic">A precise null constrains this mechanism here; other sources of divergence remain.</text></svg>
+  <figcaption><b>Figure 6. One result, six tests.</b> H1 and H2 are this programme. H3 can run now on public data. H4 to H6 need data held by AI developers and platforms, and are offered to them as open questions.</figcaption></figure>
+ <h3>Study 3: the same question in public votes</h3>
+ <p>Chatbot Arena's public release records, for each vote, the two models, both answers, the vote, an anonymised user ID and a timestamp. Study 3 groups each user's votes into sittings and asks whether the chance of choosing the more confident, more agreeable or longer answer rises with position in the sitting, comparing each voter only with themselves. It needs no new participants, only research time; it can start now; and it is the one place length can be tested fairly.</p>
+ <p>It is observational. Later votes differ from earlier ones in more ways than fatigue: topics drift within a sitting, model pairs vary in difficulty, and voters learn. The registration will list these confounds and the controls for each. A positive slope is a reason for H4, not evidence of cause. A flat slope in a large sample would count against the wider claim.</p>
+ <div class="callouts">
+  <div class="box means"><span class="k">That means</span><p>The first real data on this question can come from a public dataset, before any lab study is funded.</p></div>
+  <div class="box sowhat"><span class="k">So what</span><p>Developers who hold thumbs data with session metadata can run H4 in an afternoon. This paper is an invitation to do so.</p></div>
+ </div>
+</section>
+
+<section class="sec">
+ <h2><span class="num">10</span>The strongest objections</h2>
+ <p class="lede">Stated as a hostile reviewer would put them, with the answer this paper can give.</p>
+ <table>
+  <thead><tr><th style="width:38%">Objection</th><th>Answer</th></tr></thead>
+  <tbody>
+   <tr><td>"The reflective choice is not the right reference."</td><td>Agreed that it is a convention. The test only asks whether the gap has a direction, and a directional gap biases data whichever reference one prefers.</td></tr>
+   <tr><td>"You are extrapolating from 60 people to billions of users."</td><td>No. The general claim is established separately; the step to wild signals is stated as plausibility, and each channel needs its own test.</td></tr>
+   <tr><td>"A lab task is not real labelling work."</td><td>True. Study 1 tests whether the effect can exist; Study 2 tests whether it appears in ordinary sessions.</td></tr>
+   <tr><td>"Pressure might make people more accurate."</td><td>Then D is near zero or negative and H1 fails. The design allows that outcome.</td></tr>
+   <tr><td>"Three points is too small to matter."</td><td>Across a million labels it is 30,000 choices in one direction. The threshold is fixed in advance so it cannot move after the data.</td></tr>
+   <tr><td>"OpenAI already found and fixed sycophancy."</td><td>That incident shows the pathway exists. It does not show why the signal leaned, or that other signals are free of it.</td></tr>
+   <tr><td>"Raters will game a state score."</td><td>Possibly, if scores ever affect weights. Scores are never used per person or shown to managers, anchor items are harder to game than self-reports, and prevention needs no score at all.</td></tr>
+   <tr><td>"Kopteva and Hlynianyi-Zhuk already proposed this."</td><td>They proposed rater state as a structured bias with an observational audit. This paper adds the experiment that can show whether pressure causes a directional shift. Complementary, and an invitation to collaborate.</td></tr>
+   <tr><td>"The simulation proves nothing."</td><td>Correct. It shows the design works under stated assumptions. The real study will show whether the assumptions hold.</td></tr>
+  </tbody>
+ </table>
+ <p><b>Further limits.</b> Only two attractor styles are tested; the first study runs in one language; the items are constructed rather than real model outputs; and time pressure is not the same as fatigue at the end of a long shift. Each limit is a reason for a follow-up, named in the roadmap.</p>
+</section>
+
+<section class="sec">
+ <h2><span class="num">11</span>Ethics and equity</h2>
+ <p class="lede">The risk is less in the study than in what is done with its results.</p>
+ <p><b>The study.</b> Both experimental studies run only after independent ethics approval. The manipulation is mild and reversible: a timer and a number to remember. Participants know one session will be rushed, are paid the same regardless of speed or accuracy, and can stop at any time.</p>
+ <p><b>Equity.</b> A state score can easily become a proxy for who someone is: shift workers, carers, older people, second-language readers. The simulation showed this happens even with a perfect state measure. Hence three standing rules: compare each person only with themselves; protect every group's weight and outcome; and never let a score affect anyone's pay or work.</p>
+ <p><b>Beyond annotation.</b> For end users, CWHF applies only in aggregate. Inferring an individual's state from their behaviour, and using it to decide what they are shown, is outside CWHF and contrary to its conditions of use. No webcam, wearable or biometric inference, ever.</p>
+ <p><b>Reliability is not goodness.</b> A calm, consistent rater can still endorse a harmful answer. CWHF sits alongside content safety review; it never replaces it.</p>
+ <div class="callouts one">
+  <div class="box sowhat"><span class="k">So what</span><p>The most effective remedy found, better working conditions, is also the one that benefits the people producing the data.</p></div>
+ </div>
+</section>
+
+<section class="sec">
+ <h2><span class="num">12</span>What changed since the first paper</h2>
+ <p class="lede">The first paper, <i>The Coherence-Weighted Human Feedback (CWHF): Correcting the Foundational Flaw in AI Alignment</i> (Rao, March 2026, doi:10.5281/zenodo.19235970), proposed the idea. This paper keeps its question, narrows it, tests the design, and withdraws what the evidence does not support. It is a new paper, not a revision, and where the two disagree this one prevails.</p>
+ <table>
+  <thead><tr><th>First paper claimed</th><th>Why withdrawn</th><th>Now</th></tr></thead>
+  <tbody>
+   <tr><td>A flaw "established by five research programmes"</td><td>The programmes show state affects judgment, not that the lean in AI feedback has a direction</td><td>Stated as the open question H1</td></tr>
+   <tr><td>A permanent bias ("Bias Theorem")</td><td>Arithmetic conditional on H1, not a theorem</td><td>r̂ ≈ r* + (1 − p)δ, labelled conditional</td></tr>
+   <tr><td>Information-theoretically optimal under a 120-bit limit</td><td>The figure is outdated (current estimate about 10 bits/s; Zheng and Meister, 2024) and no derivation supports optimality</td><td>No optimality claim</td></tr>
+   <tr><td>About $50,000, one sprint, permanent gains</td><td>Unmeasured</td><td>Study costs estimated; benefits to be tested</td></tr>
+   <tr><td>A 700-person "coherent nucleus" via a 3.5% tipping point</td><td>Borrowed from an unrelated literature; untestable here</td><td>Withdrawn</td></tr>
+   <tr><td>Recursive state-capture of populations</td><td>Plausible loop, no evidence</td><td>Stated as a hypothesis only</td></tr>
+   <tr><td>Weighting by a coherence score as the fix</td><td>Simulation: about 7% of the lean removed</td><td>Record, prevent, weight, audit</td></tr>
+   <tr><td>The registered H1 design and π ≥ 0.60 rule</td><td>Four design flaws (Section 7)</td><td>Revised H1–H3, to be registered</td></tr>
+  </tbody>
+ </table>
+ <div class="callouts">
+  <div class="box means"><span class="k">That means</span><p>The idea survived its own audit. Most of the scaffolding around it did not.</p></div>
+  <div class="box sowhat"><span class="k">So what</span><p>Retiring claims in public is the price of being taken seriously, and the strongest signal that the remaining ones are meant.</p></div>
+ </div>
+</section>
+
+<section class="sec">
+ <h2><span class="num">13</span>What happens next</h2>
+ <table>
+  <thead><tr><th>Stage</th><th>What</th><th>Status</th></tr></thead>
+  <tbody>
+   <tr><td>0</td><td>This paper, the companion lab and the simulation code, published openly</td><td>Now</td></tr>
+   <tr><td>1</td><td>Register the revised H1, H2 and H3 on OSF</td><td>Next</td></tr>
+   <tr><td>1b</td><td>Study 3 on public Chatbot Arena data</td><td>Can start now; no recruitment</td></tr>
+   <tr><td>2</td><td>Write and pilot the 48-item question bank</td><td>Next</td></tr>
+   <tr><td>3</td><td>Ethics approval through a university partner</td><td>Needs a collaborator</td></tr>
+   <tr><td>4</td><td>Study 1: about 72 recruited for 60 analysable, plus a 12-person control arm</td><td>$3,000–11,000</td></tr>
+   <tr><td>5</td><td>Study 2, if Study 1 is confirmed</td><td>Reuses Study 1</td></tr>
+   <tr><td>6</td><td>H4–H6 with developers and platforms that hold the data</td><td>By invitation</td></tr>
+  </tbody>
+ </table>
+ <h3>How to take part</h3>
+ <ul>
+  <li><b>Take the flip test</b> in the companion lab at twopointsingularity.com/lab. It is a demonstration, not research participation, and says nothing about you.</li>
+  <li><b>Rerun the simulation.</b> Code, seeds and outputs are open at github.com/venramak/twopointsingularity-cwhf. Change the assumptions and see whether the conclusions hold.</li>
+  <li><b>Review the items.</b> Anyone who finds a question with two defensible answers improves the study directly.</li>
+  <li><b>Collaborate.</b> University researchers who can provide ethics review, and teams who could record step 1 in their pipelines or run H4, are invited to write to venkat@twopointsingularity.com.</li>
+ </ul>
+ <p class="pull">The question is small enough to test and large enough to matter. The next step is data.</p>
+</section>
+
+<section class="sec newpage">
+ <h2>Declarations</h2>
+ <p><b>Funding.</b> None.</p>
+ <p><b>Conflicts of interest.</b> The author publishes books on related themes under Two Point Singularity and has a commercial interest in that wider work. He will not serve as principal investigator of the confirmatory studies.</p>
+ <p><b>Use of AI assistance.</b> Literature checks, simulation code, analysis and drafting were carried out with the help of an AI assistant (Claude, Anthropic). The author directed the work and made every decision. Every citation was checked against its original source before release, and the simulation code was reviewed for agreement with the written protocol. The author takes full responsibility for all claims and errors.</p>
+ <p><b>Data and code.</b> No human data were collected for this paper. The simulation code is released under Apache-2.0, and its seeds, outputs, the full protocol and the pre-registration text under CC BY 4.0, at github.com/venramak/twopointsingularity-cwhf. The companion lab sets no cookies and uses no browser storage or analytics; its only outside request is for web fonts.</p>
+ <p><b>Relationship to earlier work.</b> This paper follows and supersedes the claims of Rao (2026a). The earlier H1 registration (OSF W7NYH) remains on record; the revised hypotheses will be registered before any data are collected or opened.</p>
+ <p><b>Suggested citation.</b> Rao, V. (2026). <i>Signal ≠ Value: Does Pressure Bend the Human Feedback That Trains AI?</i> Two Point Singularity. Preprint. CC BY 4.0.</p>
+
+ <h2 style="margin-top:9mm">References</h2>
+ <ul class="refs">
+  <li>Bernheim, B. D., &amp; Rangel, A. (2009). Beyond revealed preference: choice-theoretic foundations for behavioral welfare economics. <i>Quarterly Journal of Economics</i>, 124(1), 51–104.</li>
+  <li>Conlin, M., O'Donoghue, T., &amp; Vogelsang, T. J. (2007). Projection bias in catalog orders. <i>American Economic Review</i>, 97(4), 1217–1249.</li>
+  <li>Dawid, A. P., &amp; Skene, A. M. (1979). Maximum likelihood estimation of observer error-rates using the EM algorithm. <i>Journal of the Royal Statistical Society C</i>, 28(1), 20–28.</li>
+  <li>Ethayarajh, K., Choi, Y., &amp; Swayamdipta, S. (2022). Stanford Human Preferences (SHP) dataset. huggingface.co/datasets/stanfordnlp/SHP.</li>
+  <li>Gao, L., Schulman, J., &amp; Hilton, J. (2023). Scaling laws for reward model overoptimization. <i>ICML 2023</i>. arXiv:2210.10760.</li>
+  <li>Hagger, M. S., Chatzisarantis, N. L. D., Alberts, H., et al. (2016). A multilab preregistered replication of the ego-depletion effect. <i>Perspectives on Psychological Science</i>, 11(4), 546–573.</li>
+  <li>Hosking, T., Blunsom, P., &amp; Bartolo, M. (2023). Human feedback is not gold standard. arXiv:2309.16349.</li>
+  <li>Kleinberg, J., Mullainathan, S., &amp; Raghavan, M. (2022). The challenge of understanding what users want: inconsistent preferences and engagement optimization. arXiv:2202.11776.</li>
+  <li>Kopteva, E., &amp; Hlynianyi-Zhuk, V. (2026). Rater state bias in RLHF preference data: an audit framework. arXiv:2607.16195.</li>
+  <li>Linder, J. A., Doctor, J. N., Friedberg, M. W., et al. (2014). Time of day and the decision to prescribe antibiotics. <i>JAMA Internal Medicine</i>, 174(12), 2029–2031.</li>
+  <li>LMSYS (2023). Chatbot Arena conversation dataset release. lmsys.org/blog/2023-07-20-dataset.</li>
+  <li>Milli, S., Carroll, M., Wang, Y., Pandey, S., Zhao, S., &amp; Dragan, A. D. (2023). Engagement, user satisfaction, and the amplification of divisive content on social media. arXiv:2305.16941.</li>
+  <li>OpenAI (2025, 2 May). Expanding on what we missed with sycophancy. openai.com/index/expanding-on-sycophancy.</li>
+  <li>Radford, A., Wu, J., Child, R., Luan, D., Amodei, D., &amp; Sutskever, I. (2019). Language models are unsupervised multitask learners. OpenAI.</li>
+  <li>Rao, V. (2026a). The Coherence-Weighted Human Feedback (CWHF): correcting the foundational flaw in AI alignment. Zenodo. doi:10.5281/zenodo.19235970.</li>
+    <li>Shafir, E., Simonson, I., &amp; Tversky, A. (1993). Reason-based choice. <i>Cognition</i>, 49(1–2), 11–36.</li>
+  <li>Sharma, M., Tong, M., Korbak, T., et al. (2023). Towards understanding sycophancy in language models. arXiv:2310.13548.</li>
+  <li>Sievertsen, H. H., Gino, F., &amp; Piovesan, M. (2016). Cognitive fatigue influences students' performance on standardized tests. <i>PNAS</i>, 113(10), 2621–2624.</li>
+  <li>Singhal, P., Goyal, T., Xu, J., &amp; Durrett, G. (2023). A long way to go: investigating length correlations in RLHF. arXiv:2310.03716.</li>
+  <li>Regulation (EU) 2024/1689 (Artificial Intelligence Act), Article 10: Data and data governance. <i>Official Journal of the European Union</i>, L, 12 July 2024.</li>
+  <li>Utz, C., Degeling, M., Fahl, S., Schaub, F., &amp; Holz, T. (2019). (Un)informed consent: studying GDPR consent notices in the field. arXiv:1909.02638.</li>
+  <li>Vohs, K. D., Schmeichel, B. J., Lohmann, S., et al. (2021). A multisite preregistered paradigmatic test of the ego-depletion effect. <i>Psychological Science</i>, 32(10), 1566–1581.</li>
+  <li>Wilson, T. D., &amp; Schooler, J. W. (1991). Thinking too much: introspection can reduce the quality of preferences and decisions. <i>Journal of Personality and Social Psychology</i>, 60(2), 181–192.</li>
+  <li>Zheng, J., &amp; Meister, M. (2024). The unbearable slowness of being. arXiv:2408.10234.</li>
+ </ul>
+</section>
+
+</main>
+</body>
+</html>

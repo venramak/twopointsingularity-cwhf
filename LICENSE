@@ -1,9 +1,12 @@
-Signal ≠ Value Lab and CWHF whitepaper v2.0
+Signal ≠ Value: paper, technical supplement and companion lab
 Copyright (c) 2026 Venkat Rao
 
-All content and code in this repository is licensed under the Creative Commons
-Attribution 4.0 International licence (CC BY 4.0):
-https://creativecommons.org/licenses/by/4.0/legalcode
+Text, figures, the paper, the technical supplement, the lab page and data files
+are licensed under the Creative Commons Attribution 4.0 International licence
+(CC BY 4.0): https://creativecommons.org/licenses/by/4.0/legalcode
 
 You may share and adapt the material for any purpose, including commercially,
 provided you give appropriate credit, link to the licence and indicate changes.
+
+The simulation code in simulation/ (*.py) is licensed under the Apache License,
+Version 2.0; see LICENSE-CODE.
