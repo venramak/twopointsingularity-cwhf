@@ -1,12 +1,20 @@
 cff-version: 1.2.0
 message: "If you use this work, please cite it as below."
-title: "Signal ≠ Value: Coherence-Weighted Human Feedback (CWHF), whitepaper v2.0 and companion lab"
-version: "2.0"
+title: "Signal ≠ Value: Does Pressure Bend the Human Feedback That Trains AI?"
+version: "1.0"
 date-released: "2026-11-12"
 license: CC-BY-4.0
-url: "https://cwhf.vercel.app/"
+url: "https://cwhf.vercel.app/paper/"
 repository-code: "https://github.com/venramak/twopointsingularity-cwhf"
+abstract: "Preprint, not peer reviewed. Asks whether pressure moves people's choices away from their own reflective reference choices in a consistent direction, sets out a registered within-person test (H1) and five downstream tests, and revises the Coherence-Weighted Human Feedback (CWHF) proposal. Supersedes the claims of doi:10.5281/zenodo.19235970."
 authors:
   - family-names: Rao
     given-names: Venkat
     orcid: "https://orcid.org/0009-0003-3477-1225"
+references:
+  - type: article
+    title: "Coherence-Weighted Human Feedback (first paper)"
+    doi: "10.5281/zenodo.19235970"
+    authors:
+      - family-names: Rao
+        given-names: Venkat

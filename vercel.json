@@ -4,10 +4,31 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Content-Security-Policy", "value": "frame-ancestors 'self' https://twopointsingularity.com https://*.twopointsingularity.com" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'self' https://twopointsingularity.com https://*.twopointsingularity.com"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/whitepaper/CWHF-Whitepaper-v2.0.pdf",
+      "destination": "/paper/Signal-not-Value_Rao_2026.pdf",
+      "permanent": false
+    },
+    {
+      "source": "/whitepaper",
+      "destination": "/paper",
+      "permanent": false
     }
   ]
 }
