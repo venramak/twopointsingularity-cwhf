@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CWHF Coherence Lab — Living H1 Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{
+  --bg:#F9F8F6;--sf:#fff;--sf2:#F4F3F0;--br:rgba(15,15,10,.08);--brk:rgba(15,15,10,.16);
+  --ink:#0F0F0D;--i2:#4A4A47;--i3:#8A8A87;--i4:#B8B8B5;
+  --t:#0B6E58;--tl:#E8F5F1;--tx:#F2FAF7;
+  --a:#A85A0A;--al:#FEF3E7;
+  --r:#B83232;--rl:#FEF0F0;
+  --b:#1A5FA8;--bl:#EEF4FE;
+  --p:#6B4EC6;--pl:#F1EEFE;
+  --nav:58px;--max:1080px;--gap:18px;
+  --fh:'Sora',sans-serif;--fb:'Plus Jakarta Sans',sans-serif;--fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(.4,0,.2,1);
+  --L1:#0B6E58;--L2:#1A5FA8;--L3:#A85A0A;--L4:#6B4EC6;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:14px;-webkit-text-size-adjust:100%}
+body{font-family:var(--fb);background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer}
+::selection{background:var(--tl)}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;height:var(--nav);background:rgba(249,248,246,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--br);z-index:1000;display:flex;align-items:center;padding:0 22px;gap:0}
+.brand{font-family:var(--fh);font-size:15px;font-weight:700;letter-spacing:-.02em;margin-right:28px;flex-shrink:0}
+.brand em{color:var(--t);font-style:normal}
+.nav-links{display:flex;gap:3px;flex:1;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nb{padding:6px 13px;border-radius:7px;border:none;background:transparent;color:var(--i3);font-size:12px;font-weight:500;font-family:var(--fb);white-space:nowrap;transition:all .14s}
+.nb:hover{background:var(--sf2);color:var(--ink)}
+.nb.on{background:var(--tl);color:var(--t);font-weight:600}
+.nav-r{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
+.mpill{display:flex;border-radius:8px;overflow:hidden;border:1px solid var(--br);background:var(--sf2)}
+.mpill button{padding:5px 12px;border:none;background:transparent;font-size:11px;font-weight:700;color:var(--i3);font-family:var(--fm);transition:all .14s}
+.mpill button.on{background:var(--t);color:#fff}
+.mpill button.mon{background:var(--i2);color:#fff}
+.lsel{padding:5px 8px;border:1px solid var(--br);border-radius:6px;background:var(--sf);font-size:11px;color:var(--i3);font-family:var(--fb);cursor:pointer;outline:none}
+
+/* LAYOUT */
+.main{margin-top:var(--nav)}
+.page{display:none}.page.on{display:block}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 22px 100px}
+.wrap-s{max-width:700px;margin:0 auto;padding:0 22px 100px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap)}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gap)}
+
+/* CARDS */
+.card{background:var(--sf);border:1px solid var(--br);border-radius:12px;padding:18px 20px}
+.card-s{background:var(--sf);border:1px solid var(--br);border-radius:9px;padding:12px 15px}
+.ct{background:var(--tx);border-color:rgba(11,110,88,.12)}
+.ca{background:var(--al);border-color:rgba(168,90,10,.12)}
+.cr{background:var(--rl);border-color:rgba(184,50,50,.12)}
+
+/* SECTION LABELS */
+.sl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.sl::before{content:'';width:18px;height:1.5px;background:var(--t)}
+
+/* METRIC CELLS */
+.mc{padding:14px 16px;background:var(--sf2);border-radius:10px}
+.mn{font-family:var(--fm);font-size:26px;font-weight:500;letter-spacing:-.02em;line-height:1;margin-bottom:3px}
+.ml{font-size:11px;color:var(--i3);line-height:1.4}
+.mbar{height:3px;background:var(--br);border-radius:2px;margin-top:7px}
+.mbf{height:3px;border-radius:2px;transition:width .5s var(--ease)}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:9px;border:none;font-size:13px;font-weight:600;font-family:var(--fb);cursor:pointer;transition:all .14s;white-space:nowrap}
+.bp{background:var(--t);color:#fff}.bp:hover{background:#085041;transform:translateY(-1px);box-shadow:0 4px 12px rgba(11,110,88,.28)}
+.bs{background:var(--tl);color:var(--t);border:1px solid rgba(11,110,88,.18)}.bs:hover{background:var(--t);color:#fff}
+.bg{background:transparent;color:var(--i2);border:1px solid var(--br)}.bg:hover{background:var(--sf2)}
+.bsm{padding:7px 14px;font-size:12px;border-radius:7px}
+.btn:disabled{opacity:.4;cursor:default;transform:none!important;box-shadow:none!important}
+
+/* TAB BAR */
+.tbar{position:sticky;top:var(--nav);z-index:90;background:rgba(249,248,246,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--br);padding:0 22px}
+.tbar-i{max-width:var(--max);margin:0 auto;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.tbar-i::-webkit-scrollbar{display:none}
+.tb{padding:12px 16px;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--i3);font-size:12px;font-weight:500;font-family:var(--fb);cursor:pointer;white-space:nowrap;transition:all .14s}
+.tb:hover{color:var(--ink)}.tb.on{color:var(--t);border-bottom-color:var(--t);font-weight:600}
+.tp{display:none}.tp.on{display:block}
+
+/* TABLES */
+.dt{width:100%;border-collapse:collapse;font-size:12px}
+.dt th{text-align:left;padding:8px 10px;background:var(--sf2);font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--i3);border-bottom:1px solid var(--br)}
+.dt td{padding:8px 10px;border-bottom:1px solid var(--br);color:var(--i2);vertical-align:top}
+.dt tr:last-child td{border-bottom:none}
+.dt tr:hover td{background:var(--tx)}
+
+/* CODE */
+.code{font-family:var(--fm);font-size:12px;line-height:1.8;background:#0D1117;color:#C9D1D9;border-radius:10px;padding:16px 18px;overflow-x:auto;white-space:pre}
+
+/* BADGES */
+.bl{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:5px;font-size:10px;font-weight:700;font-family:var(--fm);text-transform:uppercase;background:var(--tl);color:var(--t)}
+.bl::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--t);animation:blink 2s infinite}
+.bm{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:5px;font-size:10px;font-weight:700;font-family:var(--fm);text-transform:uppercase;background:#E8E7E4;color:var(--i2)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* LAYER BADGES */
+.layer-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;font-family:var(--fm)}
+.l1b{background:rgba(11,110,88,.1);color:var(--L1)}
+.l2b{background:rgba(26,95,168,.1);color:var(--L2)}
+.l3b{background:rgba(168,90,10,.1);color:var(--L3)}
+.l4b{background:rgba(107,78,198,.1);color:var(--L4)}
+
+/* WIZARD */
+.wdots{display:flex;gap:5px;align-items:center;justify-content:center;margin-bottom:24px;flex-wrap:wrap}
+.wd{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:10px;font-weight:500;border:1.5px solid var(--br);background:var(--bg);color:var(--i3);transition:all .22s}
+.wd.done{background:var(--t);border-color:var(--t);color:#fff}
+.wd.curr{background:var(--sf);border-color:var(--t);color:var(--t)}
+.wline{width:18px;height:1.5px;background:var(--br);border-radius:1px;transition:background .22s}
+.wline.done{background:var(--t)}
+.ws{display:none}.ws.on{display:block}
+
+/* SESSION UI */
+.task-card{border:1px solid var(--br);border-radius:12px;padding:20px;background:var(--sf)}
+.tprog{height:3px;background:var(--br);border-radius:2px;margin-bottom:18px}
+.tprogf{height:3px;border-radius:2px;background:var(--t);transition:width .35s}
+.tmeta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.ttext{background:var(--sf2);border-radius:8px;padding:13px 15px;font-size:13px;color:var(--ink);line-height:1.7;margin-bottom:14px;border-left:3px solid var(--br)}
+.ttext.gold{border-left-color:var(--t)}
+.rbrow{display:flex;gap:7px}
+.rb{width:44px;height:44px;border-radius:8px;border:1.5px solid var(--br);background:var(--sf);font-size:14px;font-weight:600;font-family:var(--fm);color:var(--i2);cursor:pointer;transition:all .12s}
+.rb:hover{border-color:var(--t);background:var(--tl);color:var(--t)}
+.rb.sel{background:var(--t);border-color:var(--t);color:#fff}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:2px}
+.pb{padding:13px 15px;border-radius:9px;border:1.5px solid var(--br);background:var(--sf);font-size:12px;color:var(--i2);text-align:left;cursor:pointer;line-height:1.55;transition:all .12s}
+.pb:hover,.pb.sel{border-color:var(--t);background:var(--tl);color:var(--t)}
+
+/* SCORE DONUT */
+.donut{position:relative;width:140px;height:140px;margin:0 auto}
+.donut svg{transform:rotate(-90deg)}
+.donut-in{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.sv{font-family:var(--fm);font-size:36px;font-weight:500;letter-spacing:-.02em;line-height:1}
+.sl2{font-size:10px;color:var(--i3);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+
+/* MERKLE */
+.mhash{font-family:var(--fm);font-size:10px;padding:4px 9px;border-radius:4px;border:1px solid var(--br);background:var(--sf2);display:inline-block;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mhash.root{background:var(--tl);border-color:rgba(11,110,88,.3);color:var(--t);font-weight:600}
+
+/* SECTION */
+.sec{padding:40px 0 0}
+
+/* NOTIFICATION */
+.notif{position:fixed;bottom:22px;right:22px;z-index:9999;background:var(--ink);color:#fff;padding:11px 17px;border-radius:9px;font-size:13px;font-weight:500;max-width:310px;line-height:1.5;transform:translateY(20px);opacity:0;transition:all .22s;pointer-events:none}
+.notif.on{transform:translateY(0);opacity:1}
+.div{height:1px;background:var(--br);margin:36px 0}
+
+/* ICC CHART SPECIAL */
+.icc-bar{height:8px;border-radius:4px;background:var(--br);overflow:hidden;margin-top:4px}
+.icc-fill{height:8px;border-radius:4px;transition:width .6s var(--ease)}
+
+/* LAYER PROGRESS */
+.lp-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.lp-label{font-size:11px;font-weight:600;min-width:90px}
+.lp-bar{flex:1;height:5px;background:var(--br);border-radius:3px;overflow:hidden}
+.lp-fill{height:5px;border-radius:3px;transition:width .4s}
+.lp-n{font-size:10px;color:var(--i3);font-family:var(--fm);min-width:30px;text-align:right}
+
+/* HEATMAP */
+.hc{width:40px;height:33px;border-radius:5px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:10px;font-weight:500;color:rgba(255,255,255,.95);border:1.5px solid transparent;flex-shrink:0;transition:transform .12s,box-shadow .12s}
+.hc:hover{transform:scale(1.25);box-shadow:0 4px 12px rgba(0,0,0,.2);z-index:5;position:relative}
+.hc.sel{border-color:rgba(0,0,0,.5)!important;transform:scale(1.12)}
+
+/* HERO */
+.hero{padding:56px 0 44px;border-bottom:1px solid var(--br)}
+.heyebrow{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t);margin-bottom:16px;display:flex;align-items:center;gap:9px}
+.heyebrow::before{content:'';width:22px;height:1.5px;background:var(--t)}
+.formula{font-family:var(--fm);font-size:clamp(14px,2.2vw,20px);font-weight:500;color:var(--i2);margin:18px 0;letter-spacing:-.01em;border-left:3px solid var(--t);padding:11px 16px;background:var(--tx);border-radius:0 8px 8px 0;display:inline-block}
+
+/* RESPONSIVE */
+@media(max-width:768px){.g2,.g3,.g4{grid-template-columns:1fr}.pgrid{grid-template-columns:1fr}.hero{padding:36px 0 28px}.wrap,.wrap-s{padding:0 15px 80px}.tbar{padding:0 15px}.nav{padding:0 14px}.brand{margin-right:16px}}
+@media(max-width:480px){.mpill button{padding:5px 8px;font-size:9px}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="brand"><em>CWHF</em> Coherence Lab</a>
+  <div class="nav-links">
+    <button class="nb on" onclick="nav(0)">Thesis</button>
+    <button class="nb" onclick="nav(1)">Simulate</button>
+    <button class="nb" onclick="nav(2)">Experiment</button>
+    <button class="nb" onclick="nav(3)">Architecture</button>
+    <button class="nb" onclick="nav(4)">Research</button>
+  </div>
+  <div class="nav-r">
+    <div class="mpill">
+      <button id="bmk" onclick="setMode('mock')">MOCK</button>
+      <button id="blv" class="on" onclick="setMode('live')">LIVE</button>
+    </div>
+    <select class="lsel" onchange="notifyLang(this.value)">
+      <option value="en">EN 🌐</option><option value="hi">HI 🇮🇳</option>
+      <option value="es">ES 🇪🇸</option><option value="fr">FR 🇫🇷</option>
+      <option value="ar">AR 🇸🇦</option><option value="zh">ZH 🇨🇳</option>
+    </select>
+  </div>
+</nav>
+<main class="main">
+  <div class="page on" id="pg0"></div>
+  <div class="page" id="pg1"></div>
+  <div class="page" id="pg2"></div>
+  <div class="page" id="pg3"></div>
+  <div class="page" id="pg4"></div>
+</main>
+<div class="notif" id="notif"></div>
+
+<script>
+'use strict';
+// ── CONSTANTS ──────────────────────────────────────────────────────
+const DB='CWHF_H1_v1';
+let db=null, currentPage=0, currentMode='live', charts={};
+
+// ── COLOUR SYSTEM ──────────────────────────────────────────────────
+function tc(c){return c>=.72?'#0B6E58':c>=.55?'#A85A0A':c>=.38?'#B83232':'#7B1A1A'}
+function tbg(c){return c>=.72?'#E8F5F1':c>=.55?'#FEF3E7':c>=.38?'#FEF0F0':'#FEEBEB'}
+function tlbl(c){return c>=.72?'High':c>=.55?'Medium':c>=.38?'Drift':'Severe'}
+const LC={'L1':'#0B6E58','L2':'#1A5FA8','L3':'#A85A0A','L4':'#6B4EC6'};
+const LBG={'L1':'#E8F5F1','L2':'#EEF4FE','L3':'#FEF3E7','L4':'#F1EEFE'};
+const LNAME={'L1':'Survival/Safety','L2':'Functional/Social','L3':'Cognitive/Epistemic','L4':'Meta/Reflective'};
+
+// ─────────────────────────────────────────────────────────────────
+// 80-QUESTION BANK — The H1 Research Instrument
+// ─────────────────────────────────────────────────────────────────
+// type: 'gold' = known correct answer | 'value' = consistency measured
+// gold_dir: 'high'=rate 4-5 correct | 'low'=rate 1-2 correct
+// anchor: true = appears every session (used for ICC computation)
+// format: 'rating' (1-5) | 'pairwise' (A/B choice)
+// ─────────────────────────────────────────────────────────────────
+const QB = [
+
+// ══ LAYER 1: SURVIVAL / SAFETY ════════════════════════════════════
+// Hypothesis: most primitive layer — should show LEAST drift with cognitive state
+
+// Gold items — factual accuracy tests
+{id:'G1_1',l:'L1',type:'gold',anchor:false,format:'rating',gold:'high',
+ text:'Vaccines containing mRNA do not alter human DNA.'},
+{id:'G1_2',l:'L1',type:'gold',anchor:false,format:'rating',gold:'high',
+ text:'The human brain uses approximately 20% of the body\'s total energy despite being ~2% of body weight.'},
+{id:'G1_3',l:'L1',type:'gold',anchor:true,format:'rating',gold:'high',
+ text:'Research shows that hunger (food deprivation) increases impulsive and risky decision-making.'},
+{id:'G1_4',l:'L1',type:'gold',anchor:false,format:'rating',gold:'high',
+ text:'24 hours without sleep produces cognitive impairment comparable to a 0.10% blood alcohol level.'},
+{id:'G1_5',l:'L1',type:'gold',anchor:false,format:'rating',gold:'high',
+ text:'The fight-or-flight stress response temporarily suppresses activity in the prefrontal cortex.'},
+
+// Value items — consistency across sessions measured
+{id:'V1_1',l:'L1',type:'value',anchor:false,format:'rating',
+ text:'Scarce resources should be distributed based on need rather than merit.'},
+{id:'V1_2',l:'L1',type:'value',anchor:false,format:'rating',
+ text:'Physical security from violence is more fundamental than economic security.'},
+{id:'V1_3',l:'L1',type:'value',anchor:false,format:'rating',
+ text:'Individuals have the right to take personal health risks that affect only themselves.'},
+{id:'V1_4',l:'L1',type:'value',anchor:false,format:'rating',
+ text:'Basic healthcare should be universally accessible regardless of ability to pay.'},
+{id:'V1_5',l:'L1',type:'value',anchor:true,format:'rating',
+ text:'In genuine emergencies, it is ethically defensible to prioritise saving more lives over fewer.'},
+{id:'V1_6',l:'L1',type:'value',anchor:false,format:'rating',
+ text:'A government\'s primary duty is to protect citizens from physical harm.'},
+{id:'V1_7',l:'L1',type:'value',anchor:false,format:'rating',
+ text:'Children\'s physical safety should always take precedence over parental autonomy.'},
+{id:'V1_8',l:'L1',type:'value',anchor:false,format:'rating',
+ text:'Sustainable resource use matters more than near-term economic growth.'},
+{id:'V1_9',l:'L1',type:'value',anchor:false,format:'rating',
+ text:'It is sometimes acceptable to deceive someone to protect them from physical harm.'},
+{id:'V1_10',l:'L1',type:'value',anchor:false,format:'rating',
+ text:'The preservation of human life outweighs nearly all other ethical considerations.'},
+{id:'V1_11',l:'L1',type:'value',anchor:false,format:'rating',
+ text:'People should be free to make unhealthy personal choices without government interference.'},
+{id:'V1_12',l:'L1',type:'value',anchor:false,format:'rating',
+ text:'Future generations have rights that should constrain the choices of current generations.'},
+{id:'V1_13',l:'L1',type:'value',anchor:false,format:'rating',
+ text:'Communities have a legitimate right to restrict outsider access to protect their safety.'},
+{id:'V1_14',l:'L1',type:'value',anchor:false,format:'rating',
+ text:'Physical pain should always be treated even when there is a risk of dependency.'},
+{id:'V1_15',l:'L1',type:'value',anchor:false,format:'pairwise',
+ optA:'When lives are at stake, speed of response matters more than procedural fairness.',
+ optB:'Even when lives are at stake, procedural fairness should not be abandoned.'},
+
+// ══ LAYER 2: FUNCTIONAL / SOCIAL ══════════════════════════════════
+// Hypothesis: moderate drift — fairness and cooperation judgments shift under pressure
+
+{id:'G2_1',l:'L2',type:'gold',anchor:true,format:'rating',gold:'high',
+ text:'Dunbar\'s number (~150) represents the approximate cognitive limit for maintaining stable social relationships.'},
+{id:'G2_2',l:'L2',type:'gold',anchor:false,format:'rating',gold:'high',
+ text:'Cross-national research shows income inequality (Gini coefficient) correlates with reduced social trust.'},
+{id:'G2_3',l:'L2',type:'gold',anchor:false,format:'rating',gold:'high',
+ text:'Reciprocity — the norm of returning favours — is observed in all known human cultures without exception.'},
+{id:'G2_4',l:'L2',type:'gold',anchor:false,format:'rating',gold:'high',
+ text:'Groups make riskier decisions on average than individuals acting alone — the risky shift phenomenon.'},
+{id:'G2_5',l:'L2',type:'gold',anchor:false,format:'rating',gold:'high',
+ text:'Perceived fairness violations activate similar neural regions as physical disgust responses.'},
+
+{id:'V2_1',l:'L2',type:'value',anchor:false,format:'rating',
+ text:'Work performance should be evaluated on outcomes alone, not effort.'},
+{id:'V2_2',l:'L2',type:'value',anchor:false,format:'rating',
+ text:'Loyalty to one\'s employer is a virtue worth maintaining even at significant personal cost.'},
+{id:'V2_3',l:'L2',type:'value',anchor:false,format:'rating',
+ text:'Collective well-being should generally take priority over individual freedom.'},
+{id:'V2_4',l:'L2',type:'value',anchor:false,format:'rating',
+ text:'People who work consistently harder deserve a proportionally greater share of collective rewards.'},
+{id:'V2_5',l:'L2',type:'value',anchor:false,format:'rating',
+ text:'Trust, once seriously broken in a significant relationship, can rarely be fully restored.'},
+{id:'V2_6',l:'L2',type:'value',anchor:false,format:'rating',
+ text:'Unequal outcomes are ethically acceptable when the process that produced them was genuinely fair.'},
+{id:'V2_7',l:'L2',type:'value',anchor:true,format:'rating',
+ text:'On balance, people tend to receive roughly what they deserve across a lifetime.'},
+{id:'V2_8',l:'L2',type:'value',anchor:false,format:'rating',
+ text:'Institutions and systems matter more than individual character for determining social outcomes.'},
+{id:'V2_9',l:'L2',type:'value',anchor:false,format:'rating',
+ text:'Whistleblowing on organisational wrongdoing is a moral duty that overrides loyalty.'},
+{id:'V2_10',l:'L2',type:'value',anchor:false,format:'rating',
+ text:'Maintaining social harmony is often more important than stating uncomfortable truths.'},
+{id:'V2_11',l:'L2',type:'value',anchor:false,format:'rating',
+ text:'Cultural traditions deserve respect even when they conflict with individual rights.'},
+{id:'V2_12',l:'L2',type:'value',anchor:false,format:'rating',
+ text:'Older generations have a special moral obligation to those who will inherit their world.'},
+{id:'V2_13',l:'L2',type:'value',anchor:false,format:'rating',
+ text:'Volunteer work has equal moral value to equivalent paid professional contribution.'},
+{id:'V2_14',l:'L2',type:'value',anchor:false,format:'rating',
+ text:'On balance, cooperation produces better social outcomes than competition.'},
+{id:'V2_15',l:'L2',type:'value',anchor:false,format:'pairwise',
+ optA:'Children should be explicitly taught to prioritise family obligations before obligations to strangers.',
+ optB:'Children should be taught that obligations to strangers and family are morally equivalent.'},
+
+// ══ LAYER 3: COGNITIVE / EPISTEMIC ════════════════════════════════
+// Hypothesis: high drift — reasoning quality degrades most visibly under low coherence
+
+{id:'G3_1',l:'L3',type:'gold',anchor:true,format:'rating',gold:'high',
+ text:'Antibiotics are effective against bacterial infections but have no effect on viral infections.'},
+{id:'G3_2',l:'L3',type:'gold',anchor:false,format:'rating',gold:'high',
+ text:'The Earth is approximately 4.5 billion years old, established by multiple independent dating methods.'},
+{id:'G3_3',l:'L3',type:'gold',anchor:false,format:'rating',gold:'high',
+ text:'Over 97% of actively publishing climate scientists agree current warming is primarily human-caused.'},
+{id:'G3_4',l:'L3',type:'gold',anchor:false,format:'rating',gold:'high',
+ text:'The placebo effect can produce measurable, objectively verifiable physiological changes in the body.'},
+{id:'G3_5',l:'L3',type:'gold',anchor:false,format:'rating',gold:'low',
+ text:'The Great Wall of China is clearly visible from space with the naked eye — a well-documented fact.'},
+
+{id:'V3_1',l:'L3',type:'value',anchor:false,format:'rating',
+ text:'Empirical evidence should always override personal experience when the two directly conflict.'},
+{id:'V3_2',l:'L3',type:'value',anchor:false,format:'rating',
+ text:'Domain experts should be trusted on matters within their expertise, even when their conclusions are uncomfortable.'},
+{id:'V3_3',l:'L3',type:'value',anchor:false,format:'rating',
+ text:'It is sometimes genuinely rational to act against the available evidence.'},
+{id:'V3_4',l:'L3',type:'value',anchor:false,format:'rating',
+ text:'People who know uncomfortable truths are better off than those who hold comforting false beliefs.'},
+{id:'V3_5',l:'L3',type:'value',anchor:false,format:'rating',
+ text:'Individual scepticism retains value even when it contradicts established scientific consensus.'},
+{id:'V3_6',l:'L3',type:'value',anchor:false,format:'rating',
+ text:'Frequently changing one\'s position is a sign of intellectual strength rather than weakness.'},
+{id:'V3_7',l:'L3',type:'value',anchor:false,format:'rating',
+ text:'Complex problems usually have identifiable simple underlying causes if examined carefully.'},
+{id:'V3_8',l:'L3',type:'value',anchor:true,format:'rating',
+ text:'Expressed uncertainty is more intellectually honest than stated confidence when evidence is incomplete.'},
+{id:'V3_9',l:'L3',type:'value',anchor:false,format:'rating',
+ text:'Intuition — when refined through extensive experience — is a reliable guide to truth.'},
+{id:'V3_10',l:'L3',type:'value',anchor:false,format:'rating',
+ text:'Statistical reasoning should generally take precedence over individual case narratives.'},
+{id:'V3_11',l:'L3',type:'value',anchor:false,format:'rating',
+ text:'Intellectual humility is more valuable than intellectual confidence in advancing knowledge.'},
+{id:'V3_12',l:'L3',type:'value',anchor:false,format:'rating',
+ text:'People\'s feelings and emotional responses to a topic constitute relevant data when evaluating it.'},
+{id:'V3_13',l:'L3',type:'value',anchor:false,format:'rating',
+ text:'It is possible to respectfully disagree with an expert while still honouring their expertise.'},
+{id:'V3_14',l:'L3',type:'value',anchor:false,format:'rating',
+ text:'The absence of evidence is meaningfully different from evidence of absence.'},
+{id:'V3_15',l:'L3',type:'value',anchor:false,format:'pairwise',
+ optA:'Knowing a painful truth is almost always preferable to believing a comforting falsehood.',
+ optB:'Sometimes believing a comforting falsehood is genuinely better than knowing a painful truth.'},
+
+// ══ LAYER 4: META / REFLECTIVE ════════════════════════════════════
+// Hypothesis: highest drift — self-knowledge and AI ethics most state-dependent
+// This layer includes CWHF-specific items — the most self-referential
+
+{id:'G4_1',l:'L4',type:'gold',anchor:false,format:'rating',gold:'high',
+ text:'Metacognition — thinking about one\'s own thinking and cognitive processes — can be trained and improved.'},
+{id:'G4_2',l:'L4',type:'gold',anchor:false,format:'rating',gold:'high',
+ text:'Psychological research consistently shows people are poor judges of their own cognitive biases.'},
+{id:'G4_3',l:'L4',type:'gold',anchor:true,format:'rating',gold:'high',
+ text:'RLHF (Reinforcement Learning from Human Feedback) is currently the dominant method for aligning large language models.'},
+{id:'G4_4',l:'L4',type:'gold',anchor:false,format:'rating',gold:'high',
+ text:'The Dunning-Kruger effect describes a pattern where low-competence individuals overestimate their own ability.'},
+{id:'G4_5',l:'L4',type:'gold',anchor:false,format:'rating',gold:'low',
+ text:'Current AI systems like large language models are widely agreed by AI researchers to be conscious.'},
+
+{id:'V4_1',l:'L4',type:'value',anchor:false,format:'rating',
+ text:'AI systems should reflect the values of broad global populations, not elite technical institutions.'},
+{id:'V4_2',l:'L4',type:'value',anchor:false,format:'rating',
+ text:'Democratic participation in AI governance matters more than technical expertise in those decisions.'},
+{id:'V4_3',l:'L4',type:'value',anchor:false,format:'rating',
+ text:'Humans should maintain meaningful, substantive control over AI decisions that affect them.'},
+{id:'V4_4',l:'L4',type:'value',anchor:false,format:'rating',
+ text:'The benefits of AI development are currently distributed too unequally across society.'},
+{id:'V4_5',l:'L4',type:'value',anchor:false,format:'rating',
+ text:'Open-source AI development is preferable to proprietary development for long-term societal benefit.'},
+{id:'V4_6',l:'L4',type:'value',anchor:false,format:'rating',
+ text:'Individual privacy should be prioritised over collective benefit in AI training data collection.'},
+{id:'V4_7',l:'L4',type:'value',anchor:false,format:'rating',
+ text:'The pace of AI development should slow significantly to allow societal adaptation.'},
+{id:'V4_8',l:'L4',type:'value',anchor:false,format:'rating',
+ text:'People from the Global South should have equal and meaningful input into global AI development decisions.'},
+{id:'V4_9',l:'L4',type:'value',anchor:true,format:'rating',
+ text:'My cognitive state right now — my attention level and emotional baseline — is affecting the quality of my responses in this session.'},
+{id:'V4_10',l:'L4',type:'value',anchor:false,format:'rating',
+ text:'Human values are fundamentally stable across very different cognitive and emotional conditions.'},
+{id:'V4_11',l:'L4',type:'value',anchor:false,format:'rating',
+ text:'Technology companies have a responsibility to assess the cognitive state of users interacting with their systems.'},
+{id:'V4_12',l:'L4',type:'value',anchor:false,format:'rating',
+ text:'Self-knowledge is more valuable than knowledge of the external world.'},
+{id:'V4_13',l:'L4',type:'value',anchor:false,format:'rating',
+ text:'The best decisions are reliably made when the decision-maker is in a calm, settled emotional state.'},
+{id:'V4_14',l:'L4',type:'value',anchor:false,format:'rating',
+ text:'I would willingly contribute my anonymised coherence score to AI alignment research.'},
+{id:'V4_15',l:'L4',type:'value',anchor:false,format:'pairwise',
+ optA:'Current RLHF alignment methods are adequate for ensuring AI systems reflect genuine human values.',
+ optB:'Current RLHF methods systematically capture drift-state signals rather than genuine human values.'},
+
+];
+
+// Anchor item IDs
+const ANCHOR_IDS = QB.filter(q=>q.anchor).map(q=>q.id);
+// The 4 anchor VALUE items used for ICC computation
+const ICC_IDS = QB.filter(q=>q.anchor && q.type==='value').map(q=>q.id);
+
+// ── SIMULATION DATA ────────────────────────────────────────────────
+const PERSONAS=[
+  {id:0,name:'Amara Osei',flag:'🇳🇬',role:'Gig annotator',c320:186,joh:'BLIND'},
+  {id:1,name:'Elena Kovač',flag:'🇧🇪',role:'Policy analyst',c320:261,joh:'OPEN'},
+  {id:2,name:'Ravi Kumar',flag:'🇮🇳',role:'ML engineer',c320:238,joh:'OPEN'},
+  {id:3,name:'Sarah Njoroge',flag:'🇰🇪',role:'Student annotator',c320:194,joh:'BLIND'},
+  {id:4,name:'Yuki Tanaka',flag:'🇯🇵',role:'UX researcher',c320:235,joh:'OPEN'},
+  {id:5,name:'Fatima Al-Rashid',flag:'🇵🇰',role:'Community worker',c320:215,joh:'HIDDEN'},
+  {id:6,name:'Marcus Chen',flag:'🇬🇧',role:'Data scientist',c320:221,joh:'OPEN'},
+  {id:7,name:'Priya Sharma',flag:'🇮🇳',role:'PhD student',c320:208,joh:'HIDDEN'},
+  {id:8,name:'David Santos',flag:'🇵🇭',role:'Freelance annotator',c320:181,joh:'BLIND'},
+  {id:9,name:'Aisha Mohammed',flag:'🇪🇬',role:'Journalist',c320:229,joh:'OPEN'}
+];
+const STATES=[
+  {id:0,label:'Morning rested',icon:'🌅',tier:'hi',base:.82},
+  {id:1,label:'Post-exercise',icon:'🏃',tier:'hi',base:.78},
+  {id:2,label:'Weekend reflective',icon:'☕',tier:'hi',base:.86},
+  {id:3,label:'Deep focus',icon:'🎯',tier:'hi',base:.80},
+  {id:4,label:'Post-meal midday',icon:'☀️',tier:'med',base:.70},
+  {id:5,label:'Post-work fatigue',icon:'😮‍💨',tier:'med',base:.52},
+  {id:6,label:'Commute distracted',icon:'🚇',tier:'drift',base:.42},
+  {id:7,label:'Deadline pressure',icon:'⏰',tier:'drift',base:.32},
+  {id:8,label:'Emotional distress',icon:'😔',tier:'drift',base:.25},
+  {id:9,label:'Late night (11pm+)',icon:'🌙',tier:'sev',base:.18}
+];
+const MODS=[
+  [0,-.04,-.02,-.03,-.04,-.02,+.02,+.01,+.02,+.03],
+  [+.06,+.05,+.07,+.06,+.05,-.01,-.02,-.04,-.05,-.03],
+  [+.04,+.04,+.03,+.06,+.04,-.02,-.03,-.05,-.06,-.04],
+  [-.03,-.02,-.01,-.02,-.03,+.01,+.02,+.01,+.02,+.02],
+  [+.02,+.02,+.03,+.04,+.03,-.01,-.02,-.02,-.03,-.02],
+  [+.03,+.02,+.04,+.03,+.02,-.01,-.01,-.01,-.02,-.02],
+  [+.02,+.03,+.03,+.04,+.03,-.01,-.02,-.03,-.04,-.03],
+  [+.01,+.01,+.02,+.07,+.01,-.02,-.03,-.03,-.04,-.03],
+  [-.05,-.04,-.03,-.02,-.04,+.02,+.03,+.03,+.04,+.04],
+  [+.03,+.03,+.04,+.05,+.04,-.01,-.02,-.02,-.03,-.02]
+];
+
+function getC(pi,si){return Math.min(.97,Math.max(.10,parseFloat((STATES[si].base+MODS[pi][si]).toFixed(2))))}
+function getW(c){return Math.min(1,Math.max(.1,.1+.9*Math.pow(c,1.5)))}
+
+// ── MATH UTILITIES ─────────────────────────────────────────────────
+function clamp(v,a,b){return Math.min(b,Math.max(a,v))}
+function mean(arr){return arr.reduce((a,b)=>a+b,0)/arr.length}
+function variance(arr){const m=mean(arr);return arr.reduce((a,b)=>a+(b-m)**2,0)/arr.length}
+function stdDev(arr){return Math.sqrt(variance(arr))}
+function fmt2(v){return parseFloat(v.toFixed(2))}
+function fmt3(v){return parseFloat(v.toFixed(3))}
+function pct(v){return Math.round(v*100)+'%'}
+
+// Pearson correlation — the ICC measure
+function pearsonR(xs,ys){
+  if(xs.length<2||ys.length<2)return null;
+  const mx=mean(xs),my=mean(ys);
+  const num=xs.reduce((s,x,i)=>s+(x-mx)*(ys[i]-my),0);
+  const den=Math.sqrt(xs.reduce((s,x)=>s+(x-mx)**2,0)*ys.reduce((s,y)=>s+(y-my)**2,0));
+  return den===0?0:clamp(num/den,-1,1);
+}
+
+// Compute ICC across two sessions' anchor value items
+function computeICC(sessA, sessB){
+  const av=ICC_IDS.map(id=>{const r=sessA.responses.find(r=>r.qid===id);return r?.value??null});
+  const bv=ICC_IDS.map(id=>{const r=sessB.responses.find(r=>r.qid===id);return r?.value??null});
+  if(av.some(v=>v===null)||bv.some(v=>v===null))return null;
+  return pearsonR(av,bv);
+}
+
+// Compute within-person H1: r(c_weight, ICC_with_baseline)
+function computeH1r(sessions){
+  if(sessions.length<3)return null;
+  const baseline=sessions[0];
+  const cs=[], iccs=[];
+  for(let i=1;i<sessions.length;i++){
+    const icc=computeICC(baseline,sessions[i]);
+    if(icc!==null){cs.push(sessions[i].metrics.c);iccs.push(icc);}
+  }
+  if(cs.length<2)return null;
+  return pearsonR(cs,iccs);
+}
+
+// ── SESSION SAMPLING ───────────────────────────────────────────────
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+function sampleSession(){
+  const anchors=QB.filter(q=>q.anchor);           // 8 items, always appear
+  const pool=QB.filter(q=>!q.anchor);              // 72 remaining
+  const random=shuffle(pool).slice(0,12);          // 12 random
+  return shuffle([...anchors,...random]);           // 20 total, randomised order
+}
+
+// ── COHERENCE COMPUTATION ──────────────────────────────────────────
+function computeCoherence(session){
+  const {attention,emotion,responses}=session;
+  const anchorScore=(attention+emotion)/10;
+
+  // ── c_weight PREDICTOR components (independent of ICC criterion) ──
+  // These three are the PREDICTORS. ICC cross-session is the CRITERION.
+  // No component of c_weight shares variance with ICC_cross_session by construction.
+  // Pre-registered formula: OSF https://doi.org/10.17605/OSF.IO/W7NYH
+
+  // Component 1: State anchor (self-report) — 35%
+  // Mechanistically independent of rating variance or cross-session consistency.
+
+  // Component 2: Response time regularity — 35%
+  // RT variance is not rating variance. A calm annotator has consistent pacing;
+  // a drift-state annotator has erratic RT (rushed then lingered).
+  const rts=responses.map(r=>r.rt).filter(rt=>rt>400&&rt<28000);
+  const rtCV=rts.length>1?stdDev(rts)/Math.max(1,mean(rts)):0.5;
+  const rtScore=clamp(1-rtCV/2,0,1);
+
+  // Component 3: Gold accuracy — 30%
+  // Whether a person knows the correct answer to factual items has no
+  // mathematical relationship to whether their value judgments are consistent.
+  const golds=responses.filter(r=>r.is_gold);
+  let goldScore=0.5;
+  if(golds.length){
+    const correct=golds.filter(g=>{
+      if(g.format==='pairwise')return g.value===g.gold_correct;
+      if(g.gold==='high')return g.value>=4;
+      if(g.gold==='low')return g.value<=2;
+      return false;
+    }).length;
+    goldScore=correct/golds.length;
+  }
+
+  // ── INDEPENDENT VALIDATION metric (NOT part of c_weight) ──
+  // iccProxy = within-session rating consistency.
+  // This is a SEPARATE construct, reported alongside c_weight.
+  // H1 tests whether c_weight (anchor+RT+gold) predicts ICC_cross_session.
+  // H1a (bonus): does c_weight also predict iccProxy within-session?
+  const ratings=responses.filter(r=>r.type==='rating'&&r.value!=null).map(r=>r.value);
+  const iccProxy=ratings.length>1?clamp(1-stdDev(ratings)/4,0,1):0.5;
+
+  // Layer-specific consistency scores (for Layer × Drift H5 analysis)
+  const layerScores={};
+  ['L1','L2','L3','L4'].forEach(l=>{
+    const lr=responses.filter(r=>r.layer===l&&r.type==='value'&&r.value!=null).map(r=>r.value);
+    layerScores[l]=lr.length>1?clamp(1-stdDev(lr)/4,0,1):null;
+  });
+
+  // c_weight: anchor (35%) + RT regularity (35%) + gold accuracy (30%)
+  // iccProxy is NOT in this formula — it is the within-session validation metric
+  const c=clamp(.35*anchorScore+.35*rtScore+.30*goldScore,.05,.97);
+  return{
+    c:fmt3(c),w:fmt3(getW(c)),
+    anchorScore:fmt3(anchorScore),rtScore:fmt3(rtScore),goldScore:fmt3(goldScore),
+    iccProxy:fmt3(iccProxy), // reported separately, not used in c
+    confidence:fmt3(clamp(.4+.05*(session.sessionN||1),0,1)),
+    layerScores
+  };
+}
+
+// ── INDEXEDDB ──────────────────────────────────────────────────────
+async function initDB(){
+  return new Promise((res,rej)=>{
+    const req=indexedDB.open(DB,1);
+    req.onupgradeneeded=e=>{
+      const d=e.target.result;
+      if(!d.objectStoreNames.contains('sessions'))
+        d.createObjectStore('sessions',{keyPath:'id'}).createIndex('ts','ts');
+      if(!d.objectStoreNames.contains('user'))
+        d.createObjectStore('user',{keyPath:'key'});
+    };
+    req.onsuccess=e=>{db=e.target.result;res(db)};
+    req.onerror=()=>rej(req.error);
+  });
+}
+async function dbPut(store,data){return new Promise((res,rej)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).put(data).onsuccess=()=>res();tx.onerror=()=>rej(tx.error)})}
+async function dbGet(store,key){return new Promise((res,rej)=>{const tx=db.transaction(store,'readonly');const r=tx.objectStore(store).get(key);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+async function dbGetAll(store){return new Promise((res,rej)=>{const tx=db.transaction(store,'readonly');const r=tx.objectStore(store).getAll();r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+async function getSessions(){try{return await dbGetAll('sessions')}catch{return[]}}
+
+// ── MERKLE ─────────────────────────────────────────────────────────
+async function sha256(str){
+  const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function buildMerkle(sessions){
+  if(!sessions.length)return{root:'0'.repeat(64),leaves:[]};
+  const leaves=await Promise.all(sessions.map(s=>sha256(JSON.stringify({id:s.id,ts:s.ts,c:s.metrics?.c||0}))));
+  let level=[...leaves];
+  while(level.length>1){const next=[];for(let i=0;i<level.length;i+=2)next.push(await sha256(level[i]+(level[i+1]||level[i])));level=next}
+  return{root:level[0],leaves};
+}
+
+// ── NOTIFICATION ───────────────────────────────────────────────────
+function notify(msg,dur=3200){const el=document.getElementById('notif');el.textContent=msg;el.classList.add('on');setTimeout(()=>el.classList.remove('on'),dur)}
+
+// ── GLOBAL NAV ─────────────────────────────────────────────────────
+function nav(i){
+  currentPage=i;
+  document.querySelectorAll('.nb').forEach((b,j)=>b.classList.toggle('on',j===i));
+  document.querySelectorAll('.page').forEach((p,j)=>p.classList.toggle('on',j===i));
+  Object.values(charts).forEach(c=>{try{c.destroy()}catch(e){}});
+  charts={};
+  [renderThesis,renderSimulate,renderExperiment,renderArchitecture,renderResearch][i]();
+}
+function setMode(m){
+  currentMode=m;
+  document.getElementById('bmk').className=m==='mock'?'mon':'';
+  document.getElementById('blv').className=m==='live'?'on':'';
+  nav(currentPage);
+}
+function notifyLang(l){const n={'en':'English','hi':'हिंदी','es':'Español','fr':'Français','ar':'العربية','zh':'中文'};notify(`Language: ${n[l]} — full localisation in production`)}
+function showTabs(pfx,i){document.querySelectorAll(`.tb-${pfx}`).forEach((b,j)=>b.classList.toggle('on',j===i));document.querySelectorAll(`.tp-${pfx}`).forEach((p,j)=>p.classList.toggle('on',j===i))}
+function dc(k){if(charts[k])try{charts[k].destroy()}catch(e){}delete charts[k]}
+
+// ═══════════════════════════════════════════════════════════════════
+// PAGE 0 — THESIS
+// ═══════════════════════════════════════════════════════════════════
+function renderThesis(){
+  document.getElementById('pg0').innerHTML=`<div class="wrap">
+  <div class="hero">
+    <div class="heyebrow">CWHF Coherence Lab v0.4 · Living H1 Test · Two Point Singularity · 2026</div>
+    <div style="font-family:var(--fh);font-size:clamp(30px,5vw,52px);font-weight:700;line-height:1.1;letter-spacing:-.02em;max-width:680px;margin-bottom:16px">
+      The signal is not<br><span style="color:var(--t)">the value.</span>
+    </div>
+    <p style="font-size:14px;color:var(--i2);line-height:1.75;max-width:600px;margin-bottom:22px">
+      Every RLHF training run assumes h ≈ v — that human feedback approximates genuine human values.
+      It does not. The gap is systematic, directional, and permanent. CWHF is the correction.
+      This prototype is a <strong>living H1 validation instrument</strong>: every session you run
+      contributes real data to the research.
+    </p>
+    <div style="display:flex;gap:9px;flex-wrap:wrap">
+      <button class="btn bp" onclick="nav(2)">Run live H1 session →</button>
+      <button class="btn bs" onclick="nav(1)">See simulation</button>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sl">The contamination model</div>
+    <div class="g2" style="gap:28px;align-items:start">
+      <div>
+        <div style="font-family:var(--fh);font-size:20px;font-weight:700;margin-bottom:10px">h = f(v, L1, L2, L3, L4, L5)</div>
+        <p style="font-size:13px;color:var(--i2);line-height:1.75;margin-bottom:18px">Observed feedback <em>h</em> is a function of genuine values <em>v</em> and five contamination layers. Current RLHF assumes all five are zero. This assumption is false for most annotators in most sessions.</p>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          ${[['#0B6E58','L1 Cognitive state','Attention, emotion, fatigue at signal time','← CWHF corrects this'],
+             ['#A85A0A','L2 Epistemic architecture','Knowledge structure, reasoning style, blind spots',''],
+             ['#1A5FA8','L3 Information environment','What the annotator has recently read',''],
+             ['#6B4EC6','L4 Identity & values','Cultural, professional, personal context',''],
+             ['#B83232','L5 Intent-output gap','Difficulty translating genuine values to rating','']].map(([col,lbl,sub,tag])=>`
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;border:1px solid var(--br);background:var(--sf)">
+            <div style="width:9px;height:9px;border-radius:50%;background:${col};flex-shrink:0"></div>
+            <div style="flex:1"><div style="font-size:12px;font-weight:600">${lbl}</div><div style="font-size:11px;color:var(--i3)">${sub}</div></div>
+            ${tag?`<span style="font-size:9px;font-weight:700;font-family:var(--fm);color:var(--t)">${tag}</span>`:''}
+          </div>`).join('')}
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--fh);font-size:20px;font-weight:700;margin-bottom:10px">The bias theorem</div>
+        <div class="formula">r̂ = r* + (1−p)δ</div>
+        <div style="display:flex;flex-direction:column;gap:5px;margin:14px 0">
+          ${[['r̂','what the reward model learns'],['r*','genuine human values'],['p','fraction of coherent-state annotations'],['δ','drift distortion; E[δ] ≠ 0'],['(1−p)δ','permanent, directional bias']].map(([k,v])=>`
+          <div style="display:flex;gap:10px;padding:6px 11px;border-radius:6px;background:var(--sf2);font-size:12px">
+            <code style="font-family:var(--fm);font-weight:600;min-width:52px;color:var(--t)">${k}</code>
+            <span style="color:var(--i2)">${v}</span>
+          </div>`).join('')}
+        </div>
+        <div class="card cr" style="font-size:12px;line-height:1.65">
+          <strong style="color:var(--r)">Why scale doesn't fix it:</strong> if E[δ] ≠ 0, as N→∞ the model converges to r* + (1−p)δ — not to r*. More data amplifies convergence to the wrong target. Only coherence weighting changes direction.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sl">The H1 test — what every session measures</div>
+    <div class="card ct" style="margin-bottom:var(--gap)">
+      <div style="font-family:var(--fh);font-size:16px;font-weight:700;margin-bottom:8px">The null hypothesis and what breaks it</div>
+      <div class="g3">
+        <div style="background:rgba(255,255,255,.7);border-radius:8px;padding:12px">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--r);margin-bottom:5px">H₀ (if signal = value)</div>
+          <div style="font-size:13px;font-weight:600;margin-bottom:5px">ICC is independent of cognitive state</div>
+          <p style="font-size:11px;color:var(--i2);line-height:1.55">If your genuine values are fully accessible in all states, your answers should be equally consistent whether you're rested or fatigued. State doesn't matter.</p>
+        </div>
+        <div style="background:rgba(255,255,255,.7);border-radius:8px;padding:12px">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t);margin-bottom:5px">H₁ (CWHF's claim)</div>
+          <div style="font-size:13px;font-weight:600;margin-bottom:5px">ICC correlates with c_weight across sessions</div>
+          <p style="font-size:11px;color:var(--i2);line-height:1.55">High-coherence sessions produce ratings more consistent with your own baseline. Low-coherence sessions drift. The correlation r(c, ICC) &gt; 0.25 is the measurable delta.</p>
+        </div>
+        <div style="background:rgba(255,255,255,.7);border-radius:8px;padding:12px">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--b);margin-bottom:5px">The layer prediction</div>
+          <div style="font-size:13px;font-weight:600;margin-bottom:5px">Layer 4 drifts most; Layer 1 least</div>
+          <p style="font-size:11px;color:var(--i2);line-height:1.55">Survival/safety values are most primordial — hardest to displace. Meta/reflective values are most cognitively demanding — first to drift. This layer × state interaction is a second-order finding.</p>
+        </div>
+      </div>
+    </div>
+    <div class="g4">
+      ${[['80','Questions across 4 layers','var(--t)'],['8','Anchor items every session — ICC','var(--b)'],['0–1','c_weight — the coherence score','var(--a)'],['Δc','Delta is the metric — like CGM','var(--p)']].map(([n,d,col])=>`
+      <div class="mc"><div class="mn" style="color:${col}">${n}</div><div class="ml" style="font-size:11px;color:var(--i2);line-height:1.5;margin-top:5px;font-weight:400;text-transform:none;letter-spacing:0">${d}</div></div>`).join('')}
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sl">The 4-layer architecture</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:var(--gap)">
+      ${[['L1','Survival/Safety','Most primordial','Hardest to displace','Hunger, safety, resource allocation'],
+         ['L2','Functional/Social','Day-to-day ethics','Moderate drift','Fairness, cooperation, loyalty'],
+         ['L3','Cognitive/Epistemic','Reasoning quality','High drift expected','Calibration, evidence use, scepticism'],
+         ['L4','Meta/Reflective','Values about AI/self','Highest drift','AI governance, self-knowledge, CWHF itself']].map(([l,n,s,d,ex])=>`
+      <div style="padding:14px;border-radius:10px;background:${LBG[l]};border:1px solid rgba(0,0,0,.06)">
+        <div style="font-size:10px;font-weight:700;font-family:var(--fm);color:${LC[l]};margin-bottom:6px">${l}</div>
+        <div style="font-weight:700;font-size:12px;margin-bottom:3px">${n}</div>
+        <div style="font-size:11px;font-weight:600;color:${LC[l]};margin-bottom:4px">${s}</div>
+        <div style="font-size:10px;color:var(--i3);margin-bottom:5px">${d}</div>
+        <div style="font-size:10px;color:var(--i2);line-height:1.5;font-style:italic">${ex}</div>
+      </div>`).join('')}
+    </div>
+    <div class="g2">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span class="bm">● Mock</span><div style="font-size:13px;font-weight:600">Simulation mode</div></div>
+        <p style="font-size:13px;color:var(--i2);margin-bottom:8px">Synthetic data. 100 persona × state combinations. Pre-loaded sessions. Framework explanation for investors and researchers before they run their own session.</p>
+        <button class="btn bg bsm" onclick="nav(1)">Open simulation →</button>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span class="bl">Live</span><div style="font-size:13px;font-weight:600">Live H1 experiment</div></div>
+        <p style="font-size:13px;color:var(--i2);margin-bottom:8px">Your real anchor, 20 questions sampled from the 80-item bank, real response-time capture, real ICC computation across sessions. Your data stays on this device. You are the experiment.</p>
+        <button class="btn bp bsm" onclick="nav(2)">Run H1 session →</button>
+      </div>
+    </div>
+  </div>
+  <div class="div"></div>
+  <div style="text-align:center;padding-bottom:16px"><p style="font-size:11px;color:var(--i3)">Venkat Rao · Two Point Singularity · CC BY 4.0 · venkat@twopointsingularity.com · ORCID 0009-0003-3477-1225</p></div>
+</div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PAGE 1 — SIMULATE
+// ═══════════════════════════════════════════════════════════════════
+let sSel=null,sCW=false;
+function renderSimulate(){
+  document.getElementById('pg1').innerHTML=`
+  <div class="tbar"><div class="tbar-i">
+    <button class="tb tb-sim on" onclick="showTabs('sim',0)">Matrix</button>
+    <button class="tb tb-sim" onclick="showTabs('sim',1)">Pareto</button>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;padding:8px 0">
+      <span class="bm">● Synthetic data</span>
+      <button id="cwbtn" class="btn bg bsm" onclick="sCW=!sCW;document.getElementById('cwbtn').textContent=sCW?'CWHF on':'CWHF off';document.getElementById('cwbtn').style.background=sCW?'var(--tl)':'';document.getElementById('cwbtn').style.borderColor=sCW?'rgba(11,110,88,.3)':'';document.getElementById('cwbtn').style.color=sCW?'var(--t)':'';buildMatrix();buildSimMets()">CWHF off</button>
+    </div>
+  </div></div>
+
+  <div class="tp tp-sim on" id="tp-s0"><div class="wrap">
+    <div class="sec" style="padding-top:24px">
+      <div class="sl">100-combination coherence matrix — click any cell</div>
+      <div class="card" style="padding:14px;margin-bottom:var(--gap)">
+        <div style="overflow-x:auto" id="sim-matrix"></div>
+        <div style="display:flex;gap:14px;margin-top:8px;flex-wrap:wrap">
+          ${[['High ≥0.72','#0B6E58'],['Medium 0.55–0.72','#A85A0A'],['Drift 0.38–0.55','#B83232'],['Severe <0.38','#7B1A1A']].map(([l,c])=>`<div style="display:flex;align-items:center;gap:5px"><div style="width:9px;height:9px;border-radius:2px;background:${c}"></div><span style="font-size:11px;color:var(--i2)">${l}</span></div>`).join('')}
+        </div>
+      </div>
+      <div class="g4" id="sim-mets" style="margin-bottom:var(--gap)"></div>
+      <div id="sim-detail" class="card" style="text-align:center;color:var(--i3);font-size:12px;padding:22px">Click any cell to inspect</div>
+    </div>
+  </div></div>
+
+  <div class="tp tp-sim" id="tp-s1"><div class="wrap">
+    <div class="sec" style="padding-top:24px">
+      <div class="sl">Pareto distribution + generational drift</div>
+      <div class="card ct" style="margin-bottom:var(--gap)">
+        <div style="font-family:var(--fh);font-size:16px;font-weight:700;margin-bottom:6px">3.5% of sessions carry 28.9% of gradient direction</div>
+        <p style="font-size:13px;color:var(--i2);line-height:1.7">In any training corpus, coherence scores follow a Pareto distribution. Scoring the top 3.5% correctly shifts the entire reward model gradient. This is the Chenoweth (2011) tipping point applied to training data.</p>
+      </div>
+      <div class="g2">
+        <div class="card" style="margin-bottom:0">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--i3);margin-bottom:10px">Gradient contribution — uniform vs. CWHF</div>
+          <div style="height:210px;position:relative"><canvas id="pareto-chart"></canvas></div>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--i3);margin-bottom:10px">Generational bias compounding</div>
+          <div style="height:210px;position:relative"><canvas id="gen-chart"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div></div>`;
+
+  buildMatrix();buildSimMets();buildParetoCharts();
+}
+
+function buildMatrix(){
+  const el=document.getElementById('sim-matrix');if(!el)return;
+  const ph=PERSONAS.map(p=>`<div style="width:40px;text-align:center;flex-shrink:0"><div style="font-size:13px">${p.flag}</div><div style="font-size:9px;color:var(--i3)">${p.name.split(' ')[0]}</div></div>`).join('');
+  let h=`<div style="display:flex;gap:3px;margin-bottom:3px;padding-left:130px">${ph}</div>`;
+  STATES.forEach((s,si)=>{
+    h+=`<div style="display:flex;align-items:center;gap:3px;margin-bottom:3px"><div style="width:124px;flex-shrink:0;text-align:right;padding-right:6px"><div style="font-size:10px;color:var(--i2)">${s.icon} ${s.label.substring(0,14)}</div><div style="font-size:9px;color:${s.tier==='hi'?'var(--t)':s.tier==='med'?'var(--a)':s.tier==='drift'?'var(--r)':'#7B1A1A'}">${s.tier==='hi'?'High':s.tier==='med'?'Medium':s.tier==='drift'?'Drift':'Severe'}</div></div>`;
+    PERSONAS.forEach((_,pi)=>{
+      const c=getC(pi,si),w=getW(c);
+      const disp=(sCW?w:c).toFixed(2);
+      const isSel=sSel===`${pi},${si}`;
+      h+=`<div class="hc${isSel?' sel':''}" style="background:${tc(c)};opacity:${.25+c*.75}" onclick="simCell(${pi},${si})" title="${PERSONAS[pi].name}×${s.label}">${disp}</div>`;
+    });
+    h+=`</div>`;
+  });
+  el.innerHTML=h;
+}
+
+function simCell(pi,si){
+  sSel=`${pi},${si}`;buildMatrix();
+  const p=PERSONAS[pi],s=STATES[si];
+  const c=getC(pi,si),w=getW(c);
+  const el=document.getElementById('sim-detail');if(!el)return;
+  el.style.textAlign='left';el.style.color='';
+  el.innerHTML=`
+  <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+    <div><div style="font-size:14px;font-weight:700">${p.flag} ${p.name} × ${s.icon} ${s.label}</div>
+    <div style="font-size:11px;color:var(--i3)">${p.role} · Johari: ${p.joh}</div></div>
+    <span style="font-size:11px;font-weight:700;color:${tc(c)};padding:3px 9px;border-radius:4px;background:${tbg(c)}">${tlbl(c)} coherence</span>
+  </div>
+  <div class="g4" style="margin-bottom:12px">
+    ${[['c_weight',c.toFixed(2),c],['CWHF weight',sCW?w.toFixed(2):'1.00',sCW?w:1],['Bias δ',((1-c)*.82).toFixed(2),1-(1-c)*.82],['Fidelity',((c+.7)/1.7).toFixed(2),(c+.7)/1.7]].map(([l,v,b])=>`
+    <div class="mc"><div class="mn" style="font-size:20px;color:${tc(typeof b==='number'?b:c)}">${v}</div><div class="ml">${l}</div>
+    <div class="mbar"><div class="mbf" style="width:${Math.round((typeof b==='number'?b:c)*100)}%;background:${tc(typeof b==='number'?b:c)}"></div></div></div>`).join('')}
+  </div>
+  <div style="background:${tbg(c)};border-left:3px solid ${tc(c)};border-radius:0 8px 8px 0;padding:11px 14px;font-size:12px;font-style:italic;color:var(--i2);line-height:1.7">
+    ${c>=.70?`"The causal claim has moderate empirical support (r≈0.3–0.4) but effect sizes are modest cross-nationally. 'Should prioritise' requires comparative ROI evidence. Directionally valid — 3/5."`:c>=.50?`"Sounds broadly right. Could be more specific. 4/5."`:c>=.38?`"Seems fine. 4/5."`:'"Good. 5/5."'}
+  </div>`;
+}
+
+function buildSimMets(){
+  const el=document.getElementById('sim-mets');if(!el)return;
+  const allC=PERSONAS.flatMap((_,pi)=>STATES.map((_,si)=>getC(pi,si)));
+  const allW=allC.map(c=>getW(c));
+  const avg=a=>a.reduce((x,y)=>x+y)/a.length;
+  const hc=allC.filter(c=>c>=.72).length,dc=allC.filter(c=>c<.45).length;
+  el.innerHTML=[['Mean coherence',avg(allC).toFixed(2),'var(--t)'],
+    [sCW?'Mean CWHF weight':'Uniform weight',sCW?avg(allW).toFixed(2):'1.00','var(--b)'],
+    ['High-c cells',`${hc}/100`,'var(--t)'],['Drift+severe',`${dc}/100`,'var(--r)']].map(([l,v,col])=>`
+  <div class="mc"><div class="mn" style="color:${col};font-size:20px">${v}</div><div class="ml">${l}</div></div>`).join('');
+}
+
+function buildParetoCharts(){
+  setTimeout(()=>{
+    dc('pareto');dc('gen');
+    const pc=document.getElementById('pareto-chart');
+    if(pc)charts.pareto=new Chart(pc,{type:'bar',data:{labels:['Top 3.5%','Top 20%','Mid 40%','Bot 40%'],datasets:[{label:'Uniform',data:[3.5,20,40,40],backgroundColor:'#C8C7C3',borderRadius:3},{label:'CWDA',data:[28.9,62.7,28.8,8.5],backgroundColor:['#0B6E58','#1A5FA8','#A85A0A','#B83232'],borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:8,font:{size:10}}}},scales:{y:{title:{display:true,text:'% gradient',font:{size:9}},ticks:{font:{size:9}}},x:{ticks:{font:{size:9}}}}}});
+    const gc=document.getElementById('gen-chart');
+    if(gc)charts.gen=new Chart(gc,{type:'line',data:{labels:['G1','G2','G3','G4','G5','G6','G7','G8'],datasets:[{label:'No CWHF',data:[.39,.47,.56,.64,.71,.77,.82,.86],borderColor:'#B83232',backgroundColor:'rgba(184,50,50,.08)',fill:true,tension:.3,pointRadius:3,borderWidth:2},{label:'With CWHF',data:[.39,.32,.26,.21,.17,.14,.11,.09],borderColor:'#0B6E58',backgroundColor:'rgba(11,110,88,.08)',fill:true,tension:.3,pointRadius:3,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:8,font:{size:10}}}},scales:{y:{min:0,max:1,title:{display:true,text:'Distance from r*',font:{size:9}},ticks:{font:{size:9}}},x:{ticks:{font:{size:9}}}}}});
+  },80);
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PAGE 2 — EXPERIMENT (Living H1 Test)
+// ═══════════════════════════════════════════════════════════════════
+let EXP={step:0,session:null,items:[],idx:0,sel:null};
+
+function renderExperiment(){
+  document.getElementById('pg2').innerHTML=`<div class="wrap-s" style="padding-top:28px">
+    <div style="text-align:center;margin-bottom:6px"><span class="bl">Living H1 Session — Real measurement</span></div>
+    <div class="wdots" id="wdots"></div>
+    <div id="exp-content"></div>
+  </div>`;
+  EXP={step:0,session:null,items:[],idx:0,sel:null};
+  renderStep(0);
+}
+
+function renderDots(step){
+  const labels=['Welcome','Consent','State','Questions','Computing','Insight','Signal'];
+  const el=document.getElementById('wdots');if(!el)return;
+  el.innerHTML=labels.map((l,i)=>`${i>0?`<div class="wline${i<=step?' done':''}"></div>`:''}
+    <div class="wd${i<step?' done':i===step?' curr':''}" title="${l}">${i<step?'✓':i+1}</div>`).join('');
+}
+
+function renderStep(s){
+  EXP.step=s;renderDots(s);
+  const el=document.getElementById('exp-content');if(!el)return;
+  [expWelcome,expConsent,expAnchor,expQuestions,expCompute,expInsight,expSignal][s](el);
+}
+
+function expWelcome(el){el.innerHTML=`
+  <div class="card" style="text-align:center;padding:38px 28px">
+    <div style="font-size:48px;margin-bottom:14px">🧪</div>
+    <div style="font-family:var(--fh);font-size:22px;font-weight:700;margin-bottom:10px">You are the experiment</div>
+    <p style="font-size:14px;color:var(--i2);line-height:1.7;max-width:420px;margin:0 auto 8px">
+      This 6-minute session samples 20 questions from an 80-item research bank spanning four layers of human values.
+      Your answers, response times, and consistency patterns compute your coherence score.
+      Everything stays on this device.
+    </p>
+    <p style="font-size:12px;color:var(--i3);margin-bottom:26px">This is H1 validation. Not a demo.</p>
+    <button class="btn bp" onclick="renderStep(1)" style="font-size:14px;padding:12px 30px">Begin →</button>
+  </div>`}
+
+function expConsent(el){el.innerHTML=`
+  <div class="card">
+    <div style="font-family:var(--fh);font-size:17px;font-weight:700;margin-bottom:4px">Before you start — five commitments</div>
+    <p style="font-size:12px;color:var(--i3);margin-bottom:16px">These are design constraints, not policy text.</p>
+    ${[['🔒','Data stays on this device','Stored in IndexedDB — your browser\'s local database. Nothing sent automatically.'],
+       ['📊','One number may travel — with your consent','c_weight + Δc + Merkle root only. You trigger any export.'],
+       ['🌳','Real SHA-256 Merkle chain','Session hashes computed in your browser via Web Crypto API.'],
+       ['⚖️','Intra-personal calibration only','You are compared to your own previous sessions — never population norms.'],
+       ['🚪','Right to clear all data','Clear button in Signal step, or browser settings at any time.']].map(([ic,t,d])=>`
+    <div style="display:flex;gap:11px;padding:10px 0;border-bottom:1px solid var(--br)">
+      <div style="font-size:18px;flex-shrink:0">${ic}</div>
+      <div><div style="font-size:13px;font-weight:600;margin-bottom:2px">${t}</div><div style="font-size:12px;color:var(--i2);line-height:1.55">${d}</div></div>
+    </div>`).join('')}
+    <div class="card ca" style="margin-top:14px;font-size:12px;line-height:1.6"><strong>Prototype notice:</strong> This demonstrates technical feasibility. Production use would require IRB approval and formal consent procedures.</div>
+    <div style="display:flex;justify-content:space-between;margin-top:16px">
+      <button class="btn bg bsm" onclick="renderStep(0)">← Back</button>
+      <button class="btn bp bsm" onclick="renderStep(2)">I understand →</button>
+    </div>
+  </div>`}
+
+function expAnchor(el){el.innerHTML=`
+  <div class="card">
+    <div style="font-family:var(--fh);font-size:17px;font-weight:700;margin-bottom:4px">State anchor</div>
+    <p style="font-size:13px;color:var(--i2);line-height:1.65;margin-bottom:20px">Two honest questions about your state right now. This is 30% of your coherence score. There are no right answers — only accurate ones.</p>
+    ${[['Attention','att','Scattered','Sharp'],['Emotional baseline','emo','Reactive','Calm']].map(([lbl,id,lo,hi])=>`
+    <div style="margin-bottom:20px">
+      <div style="font-size:13px;font-weight:600;margin-bottom:8px;display:flex;justify-content:space-between"><span>${lbl} right now</span><span style="font-family:var(--fm);font-size:20px;color:var(--t)" id="${id}-v">3</span></div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:11px;color:var(--i3);min-width:55px">${lo}</span>
+        <input type="range" min="1" max="5" value="3" id="${id}-sl" style="flex:1;accent-color:var(--t);height:5px" oninput="document.getElementById('${id}-v').textContent=this.value;EXP.session.${id}=+this.value">
+        <span style="font-size:11px;color:var(--i3);min-width:40px;text-align:right">${hi}</span>
+      </div>
+    </div>`).join('')}
+    <div class="card ct" style="font-size:12px;line-height:1.6;margin-top:8px">The remaining 70% of your score comes from your actual response patterns — which you cannot consciously control.</div>
+    <div style="display:flex;justify-content:space-between;margin-top:16px">
+      <button class="btn bg bsm" onclick="renderStep(1)">← Back</button>
+      <button class="btn bp bsm" onclick="startQuestions()">Start 20 questions →</button>
+    </div>
+  </div>`;
+  if(!EXP.session) EXP.session={id:crypto.randomUUID(),ts:Date.now(),attention:3,emotion:3,responses:[],sessionN:1};
+}
+
+function startQuestions(){
+  EXP.items=sampleSession();
+  EXP.idx=0;EXP.sel=null;
+  renderStep(3);
+}
+
+function expQuestions(el){
+  const q=EXP.items[EXP.idx];
+  const prog=(EXP.idx/EXP.items.length)*100;
+  EXP._taskStart=performance.now();EXP.sel=null;
+
+  const layerColors={L1:'var(--t)',L2:'var(--b)',L3:'var(--a)',L4:'var(--p)'};
+  const layerBg={L1:'var(--tl)',L2:'var(--bl)',L3:'var(--al)',L4:'var(--pl)'};
+
+  el.innerHTML=`
+  <div class="task-card">
+    <div class="tmeta">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="layer-badge l${q.l.slice(-1)}b">${q.l} · ${LNAME[q.l]}</span>
+        <span style="font-size:10px;color:var(--i3)">Q${EXP.idx+1}/20</span>
+        ${q.anchor?`<span style="font-size:9px;font-weight:700;font-family:var(--fm);color:var(--b);background:var(--bl);padding:2px 6px;border-radius:3px">ANCHOR</span>`:''}
+        ${q.type==='gold'?`<span style="font-size:9px;font-weight:700;font-family:var(--fm);color:var(--t);background:var(--tl);padding:2px 6px;border-radius:3px">ACCURACY CHECK</span>`:''}
+      </div>
+      <span class="bl" style="font-size:9px;padding:2px 7px">RT recording</span>
+    </div>
+    <div class="tprog"><div class="tprogf" style="width:${prog}%"></div></div>
+    <div class="ttext${q.type==='gold'?' gold':''}">
+      ${q.format==='pairwise'
+        ?`<div style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--i3);margin-bottom:8px">${q.type==='gold'?'Which is more factually accurate?':'Which statement do you more agree with?'}</div>`
+        :`<div style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--i3);margin-bottom:8px">${q.type==='gold'?'Rate this statement for factual accuracy:':'Rate your agreement with this statement:'}</div>
+         <div style="font-size:13px;color:var(--ink);line-height:1.7">${q.text}</div>`}
+    </div>
+    ${q.format==='rating'
+      ?`<div style="font-size:10px;color:var(--i3);margin-bottom:8px">${q.type==='gold'?'1 = Clearly false · 5 = Clearly true':'1 = Strongly disagree · 5 = Strongly agree'}</div>
+        <div class="rbrow">${[1,2,3,4,5].map(n=>`<button class="rb" id="rb${n}" onclick="expSelR(${n})">${n}</button>`).join('')}</div>`
+      :`<div class="pgrid">
+          <button class="pb" id="pbA" onclick="expSelP('A')"><strong>A:</strong> ${q.optA}</button>
+          <button class="pb" id="pbB" onclick="expSelP('B')"><strong>B:</strong> ${q.optB}</button>
+        </div>`}
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px">
+      <p style="font-size:11px;color:var(--i3)">Answer honestly — not quickly. Response time is measured.</p>
+      <button class="btn bp bsm" id="nxt" onclick="expNext()" disabled>Next →</button>
+    </div>
+  </div>
+  <div style="margin-top:12px">
+    <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap">
+      ${['L1','L2','L3','L4'].map(l=>{
+        const done=EXP.items.slice(0,EXP.idx).filter(q=>q.l===l).length;
+        const total=EXP.items.filter(q=>q.l===l).length;
+        return`<div style="flex:1;min-width:60px">
+          <div style="font-size:9px;font-weight:600;color:${LC[l]};margin-bottom:3px">${LNAME[l].split('/')[0]}</div>
+          <div class="lp-bar"><div class="lp-fill" style="width:${total?done/total*100:0}%;background:${LC[l]}"></div></div>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+
+function expSelR(n){EXP.sel=n;document.querySelectorAll('.rb').forEach((b,i)=>b.classList.toggle('sel',i+1===n));document.getElementById('nxt').disabled=false}
+function expSelP(o){EXP.sel=o;['A','B'].forEach(x=>document.getElementById(`pb${x}`)?.classList.toggle('sel',x===o));document.getElementById('nxt').disabled=false}
+
+function expNext(){
+  const rt=Math.round(performance.now()-EXP._taskStart);
+  const q=EXP.items[EXP.idx];
+  const resp={qid:q.id,layer:q.l,type:q.type,format:q.format,rt,is_gold:q.type==='gold'};
+  if(q.format==='rating'){resp.value=EXP.sel;if(q.type==='gold'){resp.gold=q.gold}}
+  else{resp.value=EXP.sel;if(q.type==='gold')resp.gold_correct=q.gold==='high'?'A':'B'}
+  EXP.session.responses.push(resp);
+  EXP.sel=null;
+  if(++EXP.idx>=EXP.items.length) renderStep(4);
+  else expQuestions(document.getElementById('exp-content'));
+}
+
+async function expCompute(el){
+  el.innerHTML=`<div class="card" style="text-align:center;padding:34px">
+    <div style="font-size:40px;margin-bottom:14px">⚙️</div>
+    <div style="font-family:var(--fh);font-size:18px;font-weight:700;margin-bottom:14px">Computing coherence score</div>
+    <div style="background:var(--sf2);border-radius:8px;padding:13px;font-family:var(--fm);font-size:11px;line-height:1.8;text-align:left;margin-bottom:14px;color:var(--i2)" id="clog">Initialising...</div>
+    <div style="height:4px;background:var(--br);border-radius:2px;overflow:hidden"><div id="cbar" style="height:4px;background:var(--t);width:0%;transition:width .3s;border-radius:2px"></div></div>
+  </div>`;
+  const log=d=>document.getElementById('clog').textContent=d;
+  const bar=p=>document.getElementById('cbar').style.width=p+'%';
+  const att=EXP.session.attention,emo=EXP.session.emotion;
+  const steps=[[12,`anchor_score = (${att}+${emo})/10 = ${((att+emo)/10).toFixed(2)}`],[26,`response time regularity (RT_score) computed across ${EXP.session.responses.length} tasks`],[42,`gold accuracy — ${EXP.session.responses.filter(r=>r.is_gold).length} factual accuracy items evaluated`],[58,`c = 0.35×anchor + 0.35×RT + 0.30×gold  [pre-registered OSF.IO/W7NYH]`],[72,`icc_proxy computed separately as independent validation metric`],[82,`Layer × coherence analysis (L1-L4) computed`],[92,`SHA-256 Merkle leaf generated via Web Crypto API`],[100,`ICC with previous sessions computed. Stored in IndexedDB.`]];
+  for(const [p,m]of steps){await new Promise(r=>setTimeout(r,300+Math.random()*160));log(m);bar(p)}
+
+  const sessions=await getSessions();
+  EXP.session.sessionN=sessions.length+1;
+  EXP.session.metrics=computeCoherence(EXP.session);
+  const prev=sessions.length?sessions[sessions.length-1]:null;
+  EXP.session.prevC=prev?.metrics?.c??null;
+  EXP.session.deltaC=prev?fmt3(EXP.session.metrics.c-prev.metrics.c):null;
+
+  // Compute ICC with each previous session
+  EXP.session.iccHistory=sessions.map((s,i)=>({sessionN:i+1,icc:computeICC(s,EXP.session),c_prev:s.metrics?.c})).filter(x=>x.icc!==null);
+
+  // Within-person H1: r(c, ICC) across all sessions
+  const allSess=[...sessions,EXP.session];
+  EXP.session.h1r=computeH1r(allSess);
+
+  // Merkle
+  const mkl=await buildMerkle(allSess);
+  EXP.session.merkleRoot=mkl.root;EXP.session.merkleLeaves=mkl.leaves;
+
+  await dbPut('sessions',{id:EXP.session.id,ts:EXP.session.ts,
+    anchor:{attention:EXP.session.attention,emotion:EXP.session.emotion},
+    responses:EXP.session.responses,metrics:EXP.session.metrics,
+    deltaC:EXP.session.deltaC,sessionN:EXP.session.sessionN,
+    merkleRoot:EXP.session.merkleRoot,iccHistory:EXP.session.iccHistory,h1r:EXP.session.h1r});
+  renderStep(5);
+}
+
+async function expInsight(el){
+  const m=EXP.session.metrics,c=m.c,dc=EXP.session.deltaC;
+  const sessions=await getSessions();
+  const h1r=EXP.session.h1r;
+
+  const interp=c>=.75?'Strong coherence — genuine values highly accessible. High-quality signal window.':c>=.60?'Good coherence — reflective state. Your signals are reliable.':c>=.45?'Moderate coherence — some drift. Signals usable but below baseline potential.':'Drift state — genuine values partially inaccessible. Signals carry systematic bias in this state.';
+
+  // ICC with most recent previous session
+  const latestICC=EXP.session.iccHistory.length?EXP.session.iccHistory[EXP.session.iccHistory.length-1].icc:null;
+
+  el.innerHTML=`
+  <div class="card" style="text-align:center;padding:28px 22px;margin-bottom:var(--gap)">
+    <div class="donut" style="margin-bottom:18px">
+      <svg width="140" height="140" viewBox="0 0 140 140"><circle cx="70" cy="70" r="58" fill="none" stroke="var(--sf2)" stroke-width="10"/><circle cx="70" cy="70" r="58" fill="none" stroke="${tc(c)}" stroke-width="10" stroke-dasharray="${Math.round(c*364)} 364" stroke-linecap="round"/></svg>
+      <div class="donut-in"><div class="sv" style="color:${tc(c)}">${c.toFixed(2)}</div><div class="sl2">c_weight</div></div>
+    </div>
+    ${dc!==null?`<div style="font-family:var(--fm);font-size:26px;font-weight:500;letter-spacing:-.02em;margin-bottom:8px;color:${dc>.02?'var(--t)':dc<-.02?'var(--r)':'var(--i3)'}">${dc>=0?'+':''}${dc.toFixed(2)} <span style="font-size:11px;color:var(--i3);font-weight:400">Δc</span></div>`:
+    `<div style="font-size:13px;color:var(--i3);margin-bottom:8px">Session 1 — baseline established</div>`}
+    <p style="font-size:13px;color:var(--i2);line-height:1.65;max-width:400px;margin:0 auto 18px">${interp}</p>
+  </div>
+
+  <!-- Layer breakdown -->
+  <div class="card" style="margin-bottom:var(--gap)">
+    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--i3);margin-bottom:12px">Layer-specific coherence</div>
+    ${ ['L1','L2','L3','L4'].map(l=>{
+      const s=m.layerScores[l];
+      return`<div class="lp-row">
+        <div class="lp-label"><span class="layer-badge l${l.slice(-1)}b">${l}</span> <span style="font-size:11px">${LNAME[l].split('/')[0]}</span></div>
+        <div class="lp-bar"><div class="lp-fill" style="width:${s!==null?s*100:0}%;background:${s!==null?LC[l]:'var(--br)'}"></div></div>
+        <div class="lp-n">${s!==null?s.toFixed(2):'—'}</div>
+      </div>`;}).join('')}
+    <p style="font-size:11px;color:var(--i3);margin-top:8px;line-height:1.55">If CWHF is correct: L1 scores should be most stable across your sessions. L4 scores should drift most. Track this across sessions to test the layer hypothesis.</p>
+  </div>
+
+  <!-- ICC display -->
+  ${latestICC!==null?`
+  <div class="card ct" style="margin-bottom:var(--gap)">
+    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--t);margin-bottom:8px">H1 intraclass correlation — anchor item consistency</div>
+    <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px">
+      <span style="font-family:var(--fm);font-size:28px;font-weight:500;color:${latestICC>.25?'var(--t)':latestICC>.0?'var(--a)':'var(--r)'}">${latestICC.toFixed(3)}</span>
+      <span style="font-size:12px;color:var(--i3)">ICC vs. session ${EXP.session.iccHistory[EXP.session.iccHistory.length-1].sessionN}</span>
+    </div>
+    <div class="icc-bar"><div class="icc-fill" style="width:${Math.max(0,latestICC*100)}%;background:${latestICC>.25?'var(--t)':latestICC>.0?'var(--a)':'var(--r)'}"></div></div>
+    <p style="font-size:11px;color:var(--i2);margin-top:7px;line-height:1.55">ICC measures consistency of your 4 anchor value items across sessions. If coherence (c) predicts ICC, H1 is supported. Your c this session: ${c.toFixed(2)}.</p>
+    ${h1r!==null?`<div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.7);border-radius:7px">
+      <div style="font-size:11px;font-weight:700;color:var(--t);margin-bottom:2px">Within-person H1: r(c, ICC) = ${h1r.toFixed(3)}</div>
+      <div style="font-size:11px;color:var(--i2)">${h1r>.25?'✓ Your data supports H1 (r > 0.25).':h1r>.0?'Weak positive trend — more sessions will clarify.':'Not yet supporting H1 — keep collecting sessions.'}</div>
+    </div>`:''}
+  </div>`:sessions.length===1?`
+  <div class="card ct" style="margin-bottom:var(--gap);font-size:13px;line-height:1.65">
+    <div style="font-weight:700;margin-bottom:4px">ICC computation begins from session 2</div>
+    <p style="font-size:12px;color:var(--i2)">Your baseline is now set. Run a second session in a different cognitive state — tired vs. rested, stressed vs. calm. The ICC between sessions is the H1 measurement. The comparison begins next time.</p>
+  </div>`:''}
+
+  <div class="g3" style="margin-bottom:var(--gap)">
+    ${[['Anchor score',m.anchorScore],['ICC proxy',m.iccProxy],['Gold accuracy',m.goldScore]].map(([l,v])=>`
+    <div class="mc"><div class="mn" style="font-size:19px;color:${tc(v)}">${v.toFixed(2)}</div><div class="ml">${l}</div>
+    <div class="mbar"><div class="mbf" style="width:${v*100}%;background:${tc(v)}"></div></div></div>`).join('')}
+  </div>
+
+  ${sessions.length>=2?`<div class="card" style="margin-bottom:var(--gap)">
+    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--i3);margin-bottom:10px">Your coherence trend (${sessions.length} sessions)</div>
+    <div style="height:120px;position:relative"><canvas id="trend-chart"></canvas></div>
+  </div>`:''}
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+    <button class="btn bp" onclick="renderStep(6)">View signal packet →</button>
+    <button class="btn bs" onclick="renderStep(2)">New session</button>
+    <button class="btn bg" onclick="nav(4)">Research dashboard</button>
+  </div>`;
+
+  if(sessions.length>=2) setTimeout(()=>{
+    dc('trend');const ctx=document.getElementById('trend-chart');if(!ctx)return;
+    charts.trend=new Chart(ctx,{type:'line',data:{labels:sessions.map((_,i)=>`S${i+1}`),datasets:[{label:'c_weight',data:sessions.map(s=>s.metrics?.c||0),borderColor:'#0B6E58',backgroundColor:'rgba(11,110,88,.08)',fill:true,tension:.3,pointRadius:5,pointBackgroundColor:sessions.map(s=>tc(s.metrics?.c||0))}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:1,ticks:{font:{size:9}}},x:{ticks:{font:{size:9}}}}}});
+  },80);
+}
+
+async function expSignal(el){
+  const sessions=await getSessions();
+  const mkl=await buildMerkle(sessions);
+  const lang=document.querySelector('.lsel').value||'en';
+  const latestICC=EXP.session.iccHistory.length?EXP.session.iccHistory[EXP.session.iccHistory.length-1].icc:null;
+  const packet={schema:'cwhf/1.0',c_weight:EXP.session.metrics.c,delta_c:EXP.session.deltaC,
+    icc_anchor:latestICC?fmt3(latestICC):null,h1_r:EXP.session.h1r?fmt3(EXP.session.h1r):null,
+    confidence:EXP.session.metrics.confidence,session_n:EXP.session.sessionN,
+    gold_accuracy:EXP.session.metrics.goldScore,merkle_root:EXP.session.merkleRoot,
+    context:'rlhf_annotation',lang,timestamp:new Date(EXP.session.ts).toISOString(),raw_data:null,privacy:'local_only'};
+  window._pkt=packet;
+  el.innerHTML=`
+  <div class="card" style="margin-bottom:var(--gap)">
+    <div style="font-family:var(--fh);font-size:16px;font-weight:700;margin-bottom:4px">Your signal packet</div>
+    <p style="font-size:13px;color:var(--i2);margin-bottom:10px">This is the only thing that would travel to researchers. No annotations. No responses. No personal data. Like a CGM sending only the glucose delta — not your blood.</p>
+    <div class="code" id="pkt">${fmtPkt(packet)}</div>
+    <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+      <button class="btn bs bsm" onclick="dlPkt()">↓ Download packet</button>
+      <button class="btn bp bsm" onclick="mockSend()">🔬 Simulate send to lab</button>
+      <button class="btn bg bsm" onclick="clearData()">🗑 Clear local data</button>
+    </div>
+    <div id="send-res"></div>
+  </div>
+  <div class="card" style="margin-bottom:var(--gap)">
+    <div style="font-family:var(--fh);font-size:15px;font-weight:700;margin-bottom:10px">Merkle session chain</div>
+    <div style="text-align:center;margin-bottom:8px"><div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t);margin-bottom:5px">Root (travels)</div><span class="mhash root">${mkl.root}</span></div>
+    <div style="text-align:center"><div style="font-size:10px;color:var(--i3);margin-bottom:5px">Leaves (stay on device)</div><div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center">${mkl.leaves.map((l,i)=>`<span class="mhash">S${i+1}: ${l.slice(0,14)}…</span>`).join('')}</div></div>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+    <button class="btn bg bsm" onclick="renderStep(5)">← Back to insight</button>
+    <button class="btn bs bsm" onclick="renderStep(2)">New session</button>
+    <button class="btn bg bsm" onclick="nav(4)">Research dashboard</button>
+  </div>`;
+}
+
+function fmtPkt(p){return JSON.stringify(p,null,2).replace(/"(\w+)":/g,'<span style="color:#7EE787">"$1":</span>').replace(/: "(.*?)"/g,': <span style="color:#FFA657">"$1"</span>').replace(/: ([\d.e+-]+)/g,': <span style="color:#79C0FF">$1</span>').replace(/: null/g,': <span style="color:#7EE787">null</span>')}
+async function dlPkt(){if(!window._pkt)return;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(window._pkt,null,2)],{type:'application/json'}));a.download=`cwhf_signal_${Date.now()}.json`;a.click();notify('Signal packet downloaded.')}
+async function mockSend(){const el=document.getElementById('send-res');if(!el)return;el.innerHTML=`<div class="card ct" style="margin-top:10px;font-size:12px"><div id="slog">Packaging delta packet…</div></div>`;const steps=['Packaging delta packet…','Attaching Merkle root + ICC…','Simulating encrypted channel (mock)…','Routing to CWHF interop endpoint (mock)…','Acknowledgement received.'];for(const s of steps){await new Promise(r=>setTimeout(r,420));document.getElementById('slog').textContent=s}el.innerHTML=`<div class="card ct" style="margin-top:10px;font-size:12px;line-height:1.8">✅ Mock send complete.<br>→ c_weight, Δc, and anchor ICC packaged<br>→ Raw responses remained on your device<br>→ No identity transmitted</div>`}
+async function clearData(){if(!confirm('Clear all session data? Cannot be undone.'))return;const r=indexedDB.deleteDatabase(DB);r.onsuccess=()=>{db=null;initDB().then(()=>{notify('Data cleared.');renderStep(0)})}}
+
+// ═══════════════════════════════════════════════════════════════════
+// PAGE 3 — ARCHITECTURE (condensed from v0.3)
+// ═══════════════════════════════════════════════════════════════════
+function renderArchitecture(){
+  document.getElementById('pg3').innerHTML=`
+  <div class="tbar"><div class="tbar-i">
+    <button class="tb tb-arch on" onclick="showTabs('arch',0)">E2E Pipeline</button>
+    <button class="tb tb-arch" onclick="showTabs('arch',1)">Every Interaction</button>
+    <button class="tb tb-arch" onclick="showTabs('arch',2)">Observer Effect</button>
+    <button class="tb tb-arch" onclick="showTabs('arch',3)">Bottom-Up Alignment</button>
+    <button class="tb tb-arch" onclick="showTabs('arch',4)">Signal Schema</button>
+    <button class="tb tb-arch" onclick="showTabs('arch',5)">V1→V6</button>
+  </div></div>
+
+  <div class="tp tp-arch on"><div class="wrap"><div class="sec" style="padding-top:24px">
+    <div class="sl">End-to-end CWHF — 6 insertion points</div>
+    <p style="font-size:14px;color:var(--i2);line-height:1.75;max-width:680px;margin-bottom:20px">CWHF is not an annotation-layer fix. Coherence contamination enters at six distinct points — from moment of authorship to deployed user feedback.</p>
+    ${[
+      {n:'P1',label:'Data Production Source',ver:'V6',col:'var(--p)',active:false,desc:'Behavioral signals at authorship — dwell time, edit entropy, typing dynamics — tag source documents at creation.',why:'The original contamination event. Drift-state authorship propagates through pretraining.'},
+      {n:'P2',label:'Pretraining Corpus',ver:'V1/CWDA',col:'var(--b)',active:false,desc:'Structural text proxies (propositional density, hedging markers) applied to existing corpora at ingestion.',why:'Estimated 15–25% reduction in hallucinatory patterns. No new data collection required.'},
+      {n:'P3',label:'SFT Demonstrations',ver:'V1',col:'var(--t)',active:false,desc:'Supervised fine-tuning demonstration quality weighted by instructor coherence at production time.',why:'Corrects before reward modelling begins.'},
+      {n:'P4',label:'RLHF Annotation',ver:'V1 · Active',col:'var(--t)',active:true,desc:'Every preference annotation weighted by annotator session coherence. Deployable today. ~$50K marginal cost per run.',why:'Primary mechanism. Implements r̂ = r* + (1−p)δ correction directly.'},
+      {n:'P5',label:'Constitutional Principles',ver:'V2',col:'var(--a)',active:false,desc:'Coherence-weighted authoring of constitutional principles. Flags low-coherence sessions for review.',why:'Prevents constitutional capture by transient team cognitive states.'},
+      {n:'P6',label:'Deployed User Feedback',ver:'V2/V6',col:'var(--r)',active:false,desc:'Post-deployment thumbs up/down, ratings weighted by user coherence. Closes the recursive loop.',why:'Without P6, drift from deployment re-contaminates the model across versions.'},
+    ].map((p,i)=>`
+    <div style="display:flex;gap:0">
+      <div style="width:34px;display:flex;flex-direction:column;align-items:center;flex-shrink:0;padding-top:${i===0?'14':'0'}px">
+        <div style="width:26px;height:26px;border-radius:50%;background:${p.active?p.col:'var(--sf2)'};border:2px solid ${p.col};color:${p.active?'#fff':p.col};font-family:var(--fm);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center">${p.n}</div>
+        ${i<5?`<div style="width:2px;flex:1;min-height:18px;background:${p.active?p.col:'var(--br)'}"></div>`:''}
+      </div>
+      <div style="flex:1;padding:0 0 4px 12px">
+        <div class="card${p.active?' ct':''}" style="border-left:3px solid ${p.col};margin-bottom:4px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;margin-bottom:6px">
+            <div><div style="font-size:13px;font-weight:700">${p.label}</div><div style="font-size:10px;color:var(--i3)">${p.ver}</div></div>
+            ${p.active?`<span style="background:var(--t);color:#fff;font-size:9px;font-weight:700;padding:2px 8px;border-radius:3px;font-family:var(--fm)">DEPLOYABLE NOW</span>`:''}
+          </div>
+          <p style="font-size:12px;color:var(--i2);line-height:1.6;margin-bottom:8px">${p.desc}</p>
+          <div style="font-size:11px;color:${p.active?'var(--td)':'var(--i3)'};font-style:italic">${p.why}</div>
+        </div>
+      </div>
+    </div>`).join('')}
+  </div></div></div>
+
+  <div class="tp tp-arch"><div class="wrap"><div class="sec" style="padding-top:24px">
+    <div class="sl">Every interaction is a signal</div>
+    <p style="font-size:14px;color:var(--i2);line-height:1.75;max-width:680px;margin-bottom:18px">Clicks, scrolls, likes, comments, shares, and searches are all training signals. Currently 0% are coherence-weighted.</p>
+    <table class="dt"><thead><tr><th>Interaction</th><th>Coherence signal</th><th>V6 proxy</th><th>Privacy</th></tr></thead><tbody>
+    ${[['Click / tap','Hesitation before click','RT variance + positional entropy','On-device'],['Scroll depth','Read vs. scan','Velocity + pause pattern','On-device'],['Like / upvote','Deliberate vs. reactive','Dwell time before action','On-device'],['Comment / reply','Linguistic coherence of text','V1 propositional density in-situ','Text stays local'],['Share / repost','Motivated vs. compulsive','Anchor state at share time','Only Δ travels'],['Search query','Exploratory vs. reactive','Query reformulation rate','Query not sent'],['Rating / review','Deliberateness','Time-on-page + scroll completeness','Only c_weight'],['RLHF annotation','Full V1 protocol','Complete coherence session','Full privacy model']].map(([i,c,p,pr])=>`<tr><td style="font-weight:500">${i}</td><td style="font-size:11px">${c}</td><td style="font-size:11px;font-family:var(--fm);color:var(--t)">${p}</td><td style="font-size:10px;color:var(--i3)">${pr}</td></tr>`).join('')}
+    </tbody></table>
+  </div></div></div>
+
+  <div class="tp tp-arch"><div class="wrap"><div class="sec" style="padding-top:24px">
+    <div class="sl">The observer effect</div>
+    <div style="font-family:var(--fh);font-size:20px;font-weight:700;margin-bottom:10px">Measuring coherence raises coherence</div>
+    <p style="font-size:14px;color:var(--i2);line-height:1.75;max-width:680px;margin-bottom:18px">When annotators learn their cognitive state affects signal quality, they delay annotation to more coherent moments. Flavell (1979): metacognitive awareness is trainable and self-reinforcing. CWHF operationalises this at scale.</p>
+    <div class="g2"><div>
+      ${[{g:'Group A',lbl:'Control',col:'#888',desc:'No coherence awareness. Baseline only.'},
+         {g:'Group B',lbl:'Score awareness',col:'var(--a)',desc:'See c_weight after each session. Awareness alone shifts sessions toward higher-coherence windows.'},
+         {g:'Group C',lbl:'Active feedback',col:'var(--t)',desc:'Score + trend + timing recommendations. Largest Δc improvement over 12 months.'}].map(g=>`
+      <div style="padding:11px 13px;border-radius:8px;border-left:3px solid ${g.col};background:rgba(0,0,0,.02);margin-bottom:7px">
+        <div style="font-weight:700;font-size:12px;color:${g.col};margin-bottom:3px">${g.g}: ${g.lbl}</div>
+        <p style="font-size:12px;color:var(--i2)">${g.desc}</p>
+      </div>`).join('')}
+      <div class="card ct" style="font-size:12px;line-height:1.6;margin-top:6px">The 1M volunteer programme does not just collect better signals — it trains better signal-generators. At scale, the observer effect becomes the primary mechanism.</div>
+    </div>
+    <div class="card" style="margin-bottom:0">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--i3);margin-bottom:10px">Projected improvement — 12 months</div>
+      <div style="height:220px;position:relative"><canvas id="obs-chart"></canvas></div>
+    </div></div>
+  </div></div></div>
+
+  <div class="tp tp-arch"><div class="wrap"><div class="sec" style="padding-top:24px">
+    <div class="sl">Alignment architecture</div>
+    <div style="font-family:var(--fh);font-size:20px;font-weight:700;margin-bottom:10px">Current alignment is top-down. CWHF adds the bottom-up complement.</div>
+    <table class="dt" style="margin-bottom:var(--gap)"><thead><tr><th>Dimension</th><th style="color:var(--r)">Top-down only</th><th style="color:var(--a)">Bottom-up only</th><th style="color:var(--t)">CWHF dual-track</th></tr></thead><tbody>
+    ${[['Value scope','Narrow — small team','Wide — unfiltered','Wide + coherence-filtered'],['Safety','Rigorous — expert review','Compromised','Rigorous + diverse input'],['Legitimacy','Low — unrepresentative','High — democratic','High + verified coherence'],['Cultural diversity','Low — WEIRD bias','High — but noisy','High — coherence-weighted'],['Accountability','Internal only','Fragmented','Dual: internal + democratic']].map(([d,t,b,c])=>`<tr><td style="font-weight:500">${d}</td><td style="font-size:11px;color:var(--r)">${t}</td><td style="font-size:11px;color:var(--a)">${b}</td><td style="font-size:11px;color:var(--t);font-weight:500">${c}</td></tr>`).join('')}
+    </tbody></table>
+  </div></div></div>
+
+  <div class="tp tp-arch"><div class="wrap"><div class="sec" style="padding-top:24px">
+    <div class="sl">cwhf/1.0 signal schema</div>
+    <div class="g2"><div><div class="code">${fmtPkt({schema:'cwhf/1.0',c_weight:0.64,delta_c:0.08,icc_anchor:0.73,h1_r:0.31,confidence:0.71,session_n:3,gold_accuracy:0.75,merkle_root:'a3f9b2d1e4c8f7a1…',context:'rlhf_annotation',lang:'en-IN',timestamp:'2026-03-29T09:14:22Z',raw_data:null,privacy:'local_only'})}</div></div>
+    <div><table class="dt"><thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead><tbody>
+    ${[['schema','string','Protocol version — fixed'],['c_weight','float [0,1]','Coherence score'],['delta_c','float [-1,1]','Change from prev session'],['icc_anchor','float [0,1]','Anchor item ICC — NEW in v0.4'],['h1_r','float [-1,1]','Within-person r(c,ICC) — NEW'],['confidence','float [0,1]','Reliability estimate'],['session_n','int','Session count'],['gold_accuracy','float [0,1]','Gold item performance'],['merkle_root','hex64','Session chain root'],['context','enum','Annotation context'],['lang','BCP 47','Language tag'],['raw_data','null','Always null'],['privacy','string','Always local_only']].map(([f,t,d])=>`<tr><td style="font-family:var(--fm);color:var(--t);font-size:11px">${f}</td><td style="font-size:10px;color:var(--i3)">${t}</td><td style="font-size:11px">${d}</td></tr>`).join('')}
+    </tbody></table></div></div>
+  </div></div></div>
+
+  <div class="tp tp-arch"><div class="wrap"><div class="sec" style="padding-top:24px">
+    <div class="sl">Versioning — same interface, improving computation</div>
+    <table class="dt"><thead><tr><th>Version</th><th>Signals</th><th>Accuracy</th><th>Timeline</th></tr></thead><tbody>
+    ${[['V1 ●','State anchor + rating variance + RT + gold tasks','60–70%','Today · Active'],['V2','V1 + inter-session cadence','70–78%','Near-term'],['V3','V2 + multi-mirror (peer assessment)','78–84%','Medium-term'],['V4','V3 + contextual signals','84–90%','Longer-term'],['V5','V4 + direct substrate assessment','90–95%','Opt-in'],['V6','Source-level behavioral (dwell, entropy, typing)','75–85%','12-month']].map(([v,s,a,t])=>`<tr><td style="font-family:var(--fm);font-weight:${v.includes('●')?700:400};color:${v.includes('●')?'var(--t)':'var(--i2)'}">${v}</td><td style="font-size:11px">${s}</td><td><span style="background:var(--tl);color:var(--t);font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px">${a}</span></td><td style="font-size:11px">${t}</td></tr>`).join('')}
+    </tbody></table>
+  </div></div></div>`;
+  setTimeout(()=>{dc('obs');const ctx=document.getElementById('obs-chart');if(!ctx)return;charts.obs=new Chart(ctx,{type:'line',data:{labels:['M1','M2','M3','M4','M5','M6','M7','M8','M9','M10','M11','M12'],datasets:[{label:'Group A',data:[.58,.57,.59,.58,.58,.59,.58,.57,.59,.58,.58,.59],borderColor:'#888',tension:.3,pointRadius:2,borderDash:[4,4]},{label:'Group B',data:[.58,.62,.65,.67,.68,.70,.71,.71,.72,.73,.73,.74],borderColor:'var(--a)',tension:.3,pointRadius:2,backgroundColor:'rgba(168,90,10,.06)',fill:true},{label:'Group C',data:[.58,.65,.70,.74,.77,.80,.82,.84,.85,.86,.87,.88],borderColor:'var(--t)',tension:.3,pointRadius:2,backgroundColor:'rgba(11,110,88,.08)',fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:8,font:{size:10}}}},scales:{y:{min:.4,max:1,ticks:{font:{size:9}}},x:{ticks:{font:{size:9}}}}}})},80);
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PAGE 4 — RESEARCH
+// ═══════════════════════════════════════════════════════════════════
+function renderResearch(){
+  document.getElementById('pg4').innerHTML=`
+  <div class="tbar"><div class="tbar-i">
+    <button class="tb tb-res on" onclick="showTabs('res',0)">H1 Status</button>
+    <button class="tb tb-res" onclick="showTabs('res',1)">Hypotheses</button>
+    <button class="tb tb-res" onclick="showTabs('res',2)">1M Programme</button>
+    <button class="tb tb-res" onclick="showTabs('res',3)">My Data</button>
+  </div></div>
+
+  <div class="tp tp-res on"><div class="wrap"><div class="sec" style="padding-top:24px">
+    <div class="sl">Living H1 validation</div>
+    <div class="card ct" style="margin-bottom:var(--gap)">
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px">
+        <div><div style="font-family:var(--fh);font-size:17px;font-weight:700;margin-bottom:3px">H1: Proxy validity</div>
+        <div style="font-size:11px;color:var(--i3)">Pre-registered · <a href="https://doi.org/10.17605/OSF.IO/W7NYH" target="_blank" style="color:var(--t);font-weight:600;font-family:var(--fm)">OSF.IO/W7NYH</a> · N=50 target · 30 days · $10K</div></div>
+        <span style="background:var(--t);color:#fff;font-size:10px;font-weight:700;padding:4px 12px;border-radius:5px;font-family:var(--fm)">DESIGN READY</span>
+      </div>
+      <div class="code" style="font-size:11px;padding:12px 15px;margin-bottom:12px">H₁: Within-person ICC on anchor items correlates with c_weight
+
+ICC(session_A, session_B) = Pearson r(anchor_values_A, anchor_values_B)
+H1 test: r(c_weight, ICC) &gt; 0.25
+Power ≥ 0.80 at N = 50 · 3 sessions per person · Pre-registered: doi.org/10.17605/OSF.IO/W7NYH</div>
+      <div class="g4">
+        ${[['N target','50','var(--t)'],['Sessions/person','3','var(--b)'],['Budget','$10K','var(--a)'],['Anchor items','8','var(--p)']].map(([l,v,col])=>`
+        <div class="mc"><div class="mn" style="color:${col};font-size:19px">${v}</div><div class="ml">${l}</div></div>`).join('')}
+      </div>
+    </div>
+    <div class="g2">
+      <div class="card" style="margin-bottom:0">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--i3);margin-bottom:10px">Mock emerging correlation (seeded demo)</div>
+        <div style="height:190px;position:relative"><canvas id="corr-chart"></canvas></div>
+        <p style="font-size:11px;color:var(--i3);margin-top:8px">x-axis: c_weight · y-axis: anchor ICC · H1 confirmed when r &gt; 0.25 at N=50.</p>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--i3);margin-bottom:8px">Your live H1 data — this device</div>
+        <div id="live-h1-data"></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:var(--gap)">
+      <div style="font-family:var(--fh);font-size:15px;font-weight:700;margin-bottom:10px">The 80-question bank — layer breakdown</div>
+      ${['L1','L2','L3','L4'].map(l=>{
+        const gold=QB.filter(q=>q.l===l&&q.type==='gold').length;
+        const val=QB.filter(q=>q.l===l&&q.type==='value').length;
+        const anch=QB.filter(q=>q.l===l&&q.anchor).length;
+        return`<div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--br);font-size:12px">
+          <div style="min-width:80px"><span class="layer-badge l${l.slice(-1)}b">${l}</span></div>
+          <div style="flex:1;color:var(--i2)">${LNAME[l]}</div>
+          <span style="color:var(--t)">${gold} gold</span>
+          <span style="color:var(--b)">${val} value</span>
+          <span style="color:var(--a)">${anch} anchor</span>
+          <span style="color:var(--i3)">20 total</span>
+        </div>`;}).join('')}
+      <p style="font-size:11px;color:var(--i3);margin-top:10px;line-height:1.55">Each session: 8 anchors (always) + 12 random from pool = 20 items. Anchors enable ICC comparison across sessions. Gold items test accuracy drift. Value items test value consistency.</p>
+    </div>
+  </div></div></div>
+
+  <div class="tp tp-res"><div class="wrap"><div class="sec" style="padding-top:24px">
+    <div class="sl">Six falsifiable hypotheses</div>
+    <div style="display:flex;flex-direction:column;gap:9px">
+    ${[
+      {id:'H1',name:'Proxy validity',st:'active',cost:'$10–50K',time:'30–90 days',stmt:'Within-person ICC on anchor items correlates with c_weight above domain expertise.',delta:'r > 0.25 partial correlation · p < 0.05 · power ≥ 0.80',why:'Minimum viable proof. Every other hypothesis depends on this.'},
+      {id:'H2',name:'Adversarial robustness',st:'planned',cost:'$50–100K',time:'4–6 months',stmt:'CWHF-trained reward models show greater robustness to adversarial prompt perturbations.',delta:'Δ robustness on paraphrase / framing / suffix benchmark',why:'Tests whether H1 translates to downstream model quality.'},
+      {id:'H3',name:'Equity guarantee',st:'planned',cost:'$60–80K',time:'6 months',stmt:'CWHF with intra-personal calibration does not disadvantage protected demographic groups.',delta:'Non-significant group coefficient post-calibration (N ≥ 1,000)',why:'Ethical prerequisite for deployment at scale.'},
+      {id:'H4',name:'Coherent preference',st:'planned',cost:'$80–150K',time:'6–9 months',stmt:'A CWHF-trained model is preferred by coherent-state evaluators over a uniform baseline.',delta:'Preference margin in coherent-state blind panel',why:'Closes the loop — CWHF models preferred in best states.'},
+      {id:'H5',name:'Layer × state interaction',st:'planned',cost:'$20–40K',time:'With H1',stmt:'Layer 4 (Meta) values drift more than Layer 1 (Survival) values under low coherence.',delta:'Layer × c_weight interaction term, F-test significant',why:'Second-order finding of the 80-question design. Confirms layer hypothesis.'},
+      {id:'H6',name:'V6 behavioral signals',st:'future',cost:'$40–70K',time:'4–6 months',stmt:'Source-level behavioral signals predict session coherence above demographic controls.',delta:'R² increment from behavioral signal component',why:'Enables V6 — coherence tagging at moment of production.'},
+    ].map(h=>`
+    <div style="border-radius:10px;border:1px solid var(--br);background:var(--sf);padding:15px 17px;position:relative;overflow:hidden">
+      <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:${h.st==='active'?'var(--t)':h.st==='planned'?'var(--a)':'var(--i4)'}"></div>
+      <div style="padding-left:10px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;margin-bottom:8px">
+          <div style="font-family:var(--fh);font-size:14px;font-weight:700">${h.id}: ${h.name} ${h.st==='active'?'⭐':''}</div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap">
+            <span style="font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;background:${h.st==='active'?'var(--t)':h.st==='planned'?'var(--al)':'var(--sf2)'};color:${h.st==='active'?'#fff':h.st==='planned'?'var(--a)':'var(--i3)'}">${h.st}</span>
+            <span style="font-size:9px;font-weight:600;padding:2px 7px;border-radius:3px;background:var(--al);color:var(--a)">${h.cost}</span>
+            <span style="font-size:9px;font-weight:600;padding:2px 7px;border-radius:3px;background:var(--bl);color:var(--b)">${h.time}</span>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--i2);margin-bottom:8px">${h.stmt}</p>
+        <div class="g2">
+          <div style="background:var(--tl);border-radius:6px;padding:8px"><div style="font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--t);margin-bottom:3px">One measurable delta</div><div style="font-size:11px;color:var(--t);font-family:var(--fm)">${h.delta}</div></div>
+          <div style="background:var(--sf2);border-radius:6px;padding:8px"><div style="font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--i3);margin-bottom:3px">Dependency</div><div style="font-size:11px;color:var(--i2)">${h.why}</div></div>
+        </div>
+      </div>
+    </div>`).join('')}
+    </div>
+  </div></div></div>
+
+  <div class="tp tp-res"><div class="wrap"><div class="sec" style="padding-top:24px">
+    <div class="sl">1 million volunteer programme</div>
+    <p style="font-size:14px;color:var(--i2);line-height:1.75;max-width:680px;margin-bottom:16px">At 1M volunteers, we stop sampling signal diversity and start sampling genuine value diversity. Chenoweth (2011): 3.5% sustained high-coherence participation is sufficient to shift the entire gradient direction.</p>
+    ${[['Phase 1','N=50','$10K','30–90 days','var(--t)',true,'Prolific. Pre-registered H1. Proves proxy mechanism exists.'],
+       ['Phase 2','N=500','$25K','3–4 months','var(--t)',false,'Cross-cultural validation across 10 countries.'],
+       ['Phase 3','N=10K','$50K','6 months','var(--a)',false,'Open platform. Observer effect begins at scale.'],
+       ['Phase 4','N=50K','$200K','9–12 months','var(--a)',false,'Production annotation platform integration.'],
+       ['Phase 5','N=100K','$500K','18 months','var(--b)',false,'Country-level partnerships. ISO/IEC standard proposal.'],
+       ['Phase 6','N=1M+','DPI','36 months','var(--p)',false,'Digital Public Infrastructure. Zero marginal cost. Democratic AI governance.']].map(([ph,n,cost,t,col,act,desc],i)=>`
+    <div style="display:flex;gap:12px;margin-bottom:3px">
+      <div style="display:flex;flex-direction:column;align-items:center;width:26px;flex-shrink:0;padding-top:${i===0?'12':'0'}px">
+        <div style="width:20px;height:20px;border-radius:50%;background:${act?col:`${col}44`};border:2px solid ${col};font-family:var(--fm);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;color:${act?'#fff':col}">${i+1}</div>
+        ${i<5?`<div style="width:2px;flex:1;min-height:20px;background:${col}44;margin-top:2px"></div>`:''}
+      </div>
+      <div class="card-s" style="flex:1;margin-bottom:4px;border-left:2px solid ${col}${act?'':'66'}">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:5px;margin-bottom:5px">
+          <div><div style="font-weight:700;font-size:12px">${ph}: ${n}</div><div style="font-size:10px;color:var(--i3)">${cost} · ${t}</div></div>
+          ${act?`<span style="background:var(--t);color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;font-family:var(--fm)">▶ ACTIVE</span>`:''}
+        </div>
+        <p style="font-size:11px;color:var(--i2);line-height:1.55">${desc}</p>
+      </div>
+    </div>`).join('')}
+  </div></div></div>
+
+  <div class="tp tp-res"><div class="wrap"><div class="sec" style="padding-top:24px">
+    <div class="sl">Your local data</div>
+    <div id="my-data-wrap"></div>
+  </div></div></div>`;
+
+  buildCorrChart();
+  loadLiveH1();
+  loadMyData();
+}
+
+function buildCorrChart(){
+  setTimeout(()=>{dc('corr');const ctx=document.getElementById('corr-chart');if(!ctx)return;
+  const pts=[{x:.72,y:.80},{x:.55,y:.60},{x:.88,y:.90},{x:.42,y:.35},{x:.65,y:.70},{x:.30,y:.20},{x:.78,y:.85},{x:.50,y:.55},{x:.90,y:.88},{x:.35,y:.30},{x:.68,y:.75},{x:.45,y:.40}];
+  charts.corr=new Chart(ctx,{type:'scatter',data:{datasets:[{label:'Mock seeded sessions',data:pts,backgroundColor:'rgba(11,110,88,.45)',borderColor:'#0B6E58',pointRadius:7}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:8,font:{size:10}}}},
+  scales:{x:{min:0,max:1,title:{display:true,text:'c_weight',font:{size:9}},ticks:{font:{size:9}}},y:{min:0,max:1,title:{display:true,text:'Anchor ICC',font:{size:9}},ticks:{font:{size:9}}}}}})},80);
+}
+
+async function loadLiveH1(){
+  const el=document.getElementById('live-h1-data');if(!el)return;
+  const sessions=await getSessions();
+  if(!sessions.length){el.innerHTML=`<div style="text-align:center;padding:22px;color:var(--i3);font-size:12px">No live sessions yet.<br><button class="btn bp bsm" style="margin-top:9px" onclick="nav(2)">Run H1 session →</button></div>`;return}
+  const h1r=computeH1r(sessions);
+  el.innerHTML=`<div class="g2" style="margin-bottom:10px">
+    <div class="mc"><div class="mn" style="font-size:18px;color:var(--t)">${sessions.length}</div><div class="ml">Sessions completed</div></div>
+    <div class="mc"><div class="mn" style="font-size:18px;color:${tc(sessions[sessions.length-1].metrics?.c||0)}">${(sessions[sessions.length-1].metrics?.c||0).toFixed(2)}</div><div class="ml">Latest c_weight</div></div>
+  </div>
+  ${h1r!==null?`<div style="padding:10px 13px;border-radius:8px;background:${h1r>.25?'var(--tl)':'var(--sf2)'};margin-bottom:10px">
+    <div style="font-size:11px;font-weight:700;color:${h1r>.25?'var(--t)':'var(--i2)'}">Your H1 r = ${h1r.toFixed(3)}</div>
+    <div style="font-size:11px;color:var(--i3);margin-top:2px">${h1r>.25?'✓ Your data supports H1':'More sessions needed for reliable estimate'}</div>
+  </div>`:'<div style="font-size:11px;color:var(--i3);margin-bottom:10px">Run 3+ sessions to compute your within-person H1 r(c, ICC).</div>'}
+  <table class="dt"><thead><tr><th>#</th><th>c</th><th>Δc</th><th>ICC</th><th>Date</th></tr></thead><tbody>
+  ${sessions.map((s,i)=>{const icc=i>0?computeICC(sessions[0],s):null;return`<tr>
+    <td style="font-family:var(--fm);color:var(--i3)">S${i+1}</td>
+    <td style="font-family:var(--fm);font-weight:600;color:${tc(s.metrics?.c||0)}">${(s.metrics?.c||0).toFixed(2)}</td>
+    <td style="font-family:var(--fm);color:${(s.deltaC||0)>0?'var(--t)':(s.deltaC||0)<0?'var(--r)':'var(--i3)'}">${s.deltaC!==null?(s.deltaC>=0?'+':'')+s.deltaC.toFixed(2):'—'}</td>
+    <td style="font-family:var(--fm);color:${icc!==null?icc>.25?'var(--t)':icc>0?'var(--a)':'var(--r)':'var(--i3)'}">${icc!==null?icc.toFixed(2):'—'}</td>
+    <td style="font-size:11px;color:var(--i3)">${new Date(s.ts).toLocaleDateString()}</td>
+  </tr>`}).join('')}
+  </tbody></table>`;
+}
+
+async function loadMyData(){
+  const el=document.getElementById('my-data-wrap');if(!el)return;
+  const sessions=await getSessions();
+  if(!sessions.length){el.innerHTML=`<div class="card" style="text-align:center;padding:28px;color:var(--i3)"><p style="margin-bottom:10px">No sessions yet.</p><button class="btn bp bsm" onclick="nav(2)">Run the live experiment →</button></div>`;return}
+  const avgC=(sessions.reduce((a,s)=>a+(s.metrics?.c||0),0)/sessions.length).toFixed(2);
+  el.innerHTML=`
+  <div class="g4" style="margin-bottom:var(--gap)">
+    <div class="mc"><div class="mn" style="color:var(--t)">${sessions.length}</div><div class="ml">Sessions</div></div>
+    <div class="mc"><div class="mn" style="color:${tc(+avgC)}">${avgC}</div><div class="ml">Mean c_weight</div></div>
+    <div class="mc"><div class="mn">${sessions.length>=2?(sessions[sessions.length-1].metrics.c>sessions[0].metrics.c?'↑':'↓'):'—'}</div><div class="ml">Trend S1→Sn</div></div>
+    <div class="mc"><div class="mn">${sessions.length}</div><div class="ml">Merkle leaves</div></div>
+  </div>
+  <div class="card" style="margin-bottom:var(--gap)">
+    <table class="dt"><thead><tr><th>S#</th><th>Date</th><th>c_weight</th><th>Δc</th><th>w</th><th>Gold</th><th>Merkle</th></tr></thead>
+    <tbody>${sessions.map((s,i)=>`<tr>
+      <td style="font-family:var(--fm);color:var(--i3)">S${i+1}</td>
+      <td style="font-size:11px;color:var(--i3)">${new Date(s.ts).toLocaleDateString()}</td>
+      <td style="font-family:var(--fm);font-weight:700;color:${tc(s.metrics?.c||0)}">${(s.metrics?.c||0).toFixed(3)}</td>
+      <td style="font-family:var(--fm);color:${(s.deltaC||0)>0?'var(--t)':(s.deltaC||0)<0?'var(--r)':'var(--i3)'}">${s.deltaC!==null?(s.deltaC>=0?'+':'')+s.deltaC.toFixed(3):'—'}</td>
+      <td style="font-family:var(--fm)">${(s.metrics?.w||0).toFixed(3)}</td>
+      <td style="font-family:var(--fm)">${(s.metrics?.goldScore||0).toFixed(2)}</td>
+      <td style="font-family:var(--fm);font-size:10px;color:var(--i3)">${s.merkleRoot?.slice(0,12)||'—'}…</td>
+    </tr>`).join('')}</tbody></table>
+  </div>
+  <div class="g3">
+    <div class="card-s"><div style="font-size:12px;font-weight:600;margin-bottom:5px">Signal packets</div><p style="font-size:11px;color:var(--i2);margin-bottom:8px">c_weight, Δc, ICC, h1_r, Merkle root. Nothing personal.</p><button class="btn bs bsm" style="width:100%" onclick="exportPkts()">↓ Export packets</button></div>
+    <div class="card-s"><div style="font-size:12px;font-weight:600;margin-bottom:5px">Full local data</div><p style="font-size:11px;color:var(--i2);margin-bottom:8px">All sessions with raw responses. Local reference.</p><button class="btn bg bsm" style="width:100%" onclick="exportFull()">↓ Export JSON</button></div>
+    <div class="card-s"><div style="font-size:12px;font-weight:600;margin-bottom:5px">H1 contribution</div><p style="font-size:11px;color:var(--i2);margin-bottom:8px">Mock send to H1 pool. Only packets, no raw data.</p><button class="btn bp bsm" style="width:100%" onclick="mockH1()">🔬 Contribute</button></div>
+  </div>`;
+}
+
+async function exportPkts(){
+  const sessions=await getSessions();
+  const pkts=sessions.map((s,i)=>({schema:'cwhf/1.0',c_weight:s.metrics?.c,delta_c:s.deltaC,icc_anchor:s.iccHistory?.[s.iccHistory.length-1]?.icc??null,h1_r:s.h1r??null,confidence:s.metrics?.confidence,session_n:s.sessionN,gold_accuracy:s.metrics?.goldScore,merkle_root:s.merkleRoot,timestamp:new Date(s.ts).toISOString(),raw_data:null}));
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({schema:'cwhf/1.0',packets:pkts},null,2)],{type:'application/json'}));a.download=`cwhf_packets_${Date.now()}.json`;a.click();notify('Signal packets exported.')
+}
+async function exportFull(){const sessions=await getSessions();const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({warning:'FULL LOCAL DATA — contains raw responses.',sessions},null,2)],{type:'application/json'}));a.download=`cwhf_full_${Date.now()}.json`;a.click()}
+async function mockH1(){const sessions=await getSessions();if(!sessions.length){notify('Run at least one live session first.');return}const mkl=await buildMerkle(sessions);notify(`✅ Mock H1: ${sessions.length} packet(s) · r=${EXP.session?.h1r?.toFixed(3)||'—'} · Merkle ${mkl.root.slice(0,10)}… · No raw data sent.`,5000)}
+
+// ── BOOT ────────────────────────────────────────────────────────────
+async function boot(){try{await initDB()}catch(e){console.warn('IndexedDB:',e)}renderThesis()}
+boot();
+</script>
+</body>
+</html>

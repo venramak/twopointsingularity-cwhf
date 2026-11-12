@@ -1,0 +1,184 @@
+{
+ "Null: noise only, balanced design|20": {
+  "sig": 0.05,
+  "confirm": 0.0425,
+  "mean_D": -2.9155862708580143e-05,
+  "sd_Di": 0.08217728297381069,
+  "reps": 400
+ },
+ "Null: noise only, balanced design|30": {
+  "sig": 0.04,
+  "confirm": 0.03,
+  "mean_D": -0.0006074383695589627,
+  "sd_Di": 0.08303242570122311,
+  "reps": 400
+ },
+ "Null: noise only, balanced design|40": {
+  "sig": 0.045,
+  "confirm": 0.0125,
+  "mean_D": 0.0015173763032061722,
+  "sd_Di": 0.08328764925031251,
+  "reps": 400
+ },
+ "Null: noise only, balanced design|60": {
+  "sig": 0.053,
+  "confirm": 0.0035,
+  "mean_D": -6.246874239934786e-05,
+  "sd_Di": 0.0819554535747584,
+  "reps": 2000
+ },
+ "Null: noise only, balanced design|80": {
+  "sig": 0.06,
+  "confirm": 0.0,
+  "mean_D": 1.8692579056539155e-05,
+  "sd_Di": 0.08251296109347261,
+  "reps": 400
+ },
+ "Null: noise only, balanced design|120": {
+  "sig": 0.04,
+  "confirm": 0.0,
+  "mean_D": -0.00031708998085344713,
+  "sd_Di": 0.0828463852967968,
+  "reps": 400
+ },
+ "Null: noise + reflective dislike of attractors|60": {
+  "sig": 0.008,
+  "confirm": 0.002,
+  "mean_D": -0.00842481648702308,
+  "sd_Di": 0.08210865088367902,
+  "reps": 500
+ },
+ "Null: noise + reflective liking of attractors|60": {
+  "sig": 0.208,
+  "confirm": 0.034,
+  "mean_D": 0.008945362587899304,
+  "sd_Di": 0.08222303491751919,
+  "reps": 500
+ },
+ "Effect: tiny pull (logit 0.10)|20": {
+  "sig": 0.22,
+  "confirm": 0.185,
+  "mean_D": 0.014068711046237067,
+  "sd_Di": 0.08321907989133391,
+  "reps": 400
+ },
+ "Effect: tiny pull (logit 0.10)|30": {
+  "sig": 0.2625,
+  "confirm": 0.195,
+  "mean_D": 0.015166105031457308,
+  "sd_Di": 0.08480537250589969,
+  "reps": 400
+ },
+ "Effect: tiny pull (logit 0.10)|40": {
+  "sig": 0.285,
+  "confirm": 0.145,
+  "mean_D": 0.015060661931452068,
+  "sd_Di": 0.08553287820997174,
+  "reps": 400
+ },
+ "Effect: tiny pull (logit 0.10)|60": {
+  "sig": 0.3616666666666667,
+  "confirm": 0.115,
+  "mean_D": 0.014806112986097086,
+  "sd_Di": 0.0852753013069843,
+  "reps": 600
+ },
+ "Effect: tiny pull (logit 0.10)|80": {
+  "sig": 0.4225,
+  "confirm": 0.0425,
+  "mean_D": 0.014324788057042683,
+  "sd_Di": 0.08546583119807263,
+  "reps": 400
+ },
+ "Effect: tiny pull (logit 0.10)|120": {
+  "sig": 0.5875,
+  "confirm": 0.04,
+  "mean_D": 0.014879563409017844,
+  "sd_Di": 0.08604189316241,
+  "reps": 400
+ },
+ "Effect: small pull (logit 0.20)|20": {
+  "sig": 0.45,
+  "confirm": 0.4175,
+  "mean_D": 0.029273689025091133,
+  "sd_Di": 0.08378986675620723,
+  "reps": 400
+ },
+ "Effect: small pull (logit 0.20)|30": {
+  "sig": 0.57,
+  "confirm": 0.465,
+  "mean_D": 0.02999427083558803,
+  "sd_Di": 0.08510840840042183,
+  "reps": 400
+ },
+ "Effect: small pull (logit 0.20)|40": {
+  "sig": 0.6675,
+  "confirm": 0.4875,
+  "mean_D": 0.029955946686798792,
+  "sd_Di": 0.08633468808658425,
+  "reps": 400
+ },
+ "Effect: small pull (logit 0.20)|60": {
+  "sig": 0.8033333333333333,
+  "confirm": 0.475,
+  "mean_D": 0.029532853145792338,
+  "sd_Di": 0.08568386068924268,
+  "reps": 600
+ },
+ "Effect: small pull (logit 0.20)|80": {
+  "sig": 0.8825,
+  "confirm": 0.485,
+  "mean_D": 0.029089813857793956,
+  "sd_Di": 0.08608604131247688,
+  "reps": 400
+ },
+ "Effect: small pull (logit 0.20)|120": {
+  "sig": 0.975,
+  "confirm": 0.4975,
+  "mean_D": 0.02979265489611078,
+  "sd_Di": 0.08647462479894581,
+  "reps": 400
+ },
+ "Effect: moderate pull (logit 0.35)|20": {
+  "sig": 0.765,
+  "confirm": 0.7575,
+  "mean_D": 0.0511730062928058,
+  "sd_Di": 0.0851714571020079,
+  "reps": 400
+ },
+ "Effect: moderate pull (logit 0.35)|30": {
+  "sig": 0.94,
+  "confirm": 0.9075,
+  "mean_D": 0.05228374915973706,
+  "sd_Di": 0.08684256523029163,
+  "reps": 400
+ },
+ "Effect: moderate pull (logit 0.35)|40": {
+  "sig": 0.97,
+  "confirm": 0.94,
+  "mean_D": 0.05211770963836462,
+  "sd_Di": 0.08809583721450316,
+  "reps": 400
+ },
+ "Effect: moderate pull (logit 0.35)|60": {
+  "sig": 0.9966666666666667,
+  "confirm": 0.96,
+  "mean_D": 0.051714960956350614,
+  "sd_Di": 0.08709842301046054,
+  "reps": 600
+ },
+ "Effect: moderate pull (logit 0.35)|80": {
+  "sig": 1.0,
+  "confirm": 0.98,
+  "mean_D": 0.05094554652778521,
+  "sd_Di": 0.08747888668936016,
+  "reps": 400
+ },
+ "Effect: moderate pull (logit 0.35)|120": {
+  "sig": 1.0,
+  "confirm": 0.99,
+  "mean_D": 0.05178124898416495,
+  "sd_Di": 0.08792455311990405,
+  "reps": 400
+ }
+}
