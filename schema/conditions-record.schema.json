@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/venramak/twopointsingularity-cwhf/schema/conditions-record.schema.json",
+  "title": "CWHF conditions record (step 1)",
+  "description": "One record per human label, joined by label_id. Records the conditions under which the label was made, not the person. Governance: data quality only; never pay, ranking or continued work; stored apart from identity; aggregate reporting with small groups suppressed; stated retention; logged access; raters may skip the check-in, see, contest and delete their records. See Signal ≠ Value (Rao, 2026), Section 8 and Appendix C.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "label_id",
+    "rater_pseudonym",
+    "session_id",
+    "position_in_session",
+    "session_elapsed_min",
+    "time_on_item_s",
+    "local_hour_bucket",
+    "pay_model",
+    "schema_version",
+    "consent_flags"
+  ],
+  "properties": {
+    "label_id": {
+      "type": "string",
+      "description": "Joins to the label"
+    },
+    "rater_pseudonym": {
+      "type": "string",
+      "description": "Salted hash; the salt and identity table are stored separately"
+    },
+    "session_id": {
+      "type": "string"
+    },
+    "position_in_session": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Order of this label within its session"
+    },
+    "session_elapsed_min": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Minutes since the session began"
+    },
+    "time_on_item_s": {
+      "type": "number",
+      "minimum": 0
+    },
+    "local_hour_bucket": {
+      "type": "string",
+      "enum": [
+        "00-03",
+        "03-06",
+        "06-09",
+        "09-12",
+        "12-15",
+        "15-18",
+        "18-21",
+        "21-24"
+      ],
+      "description": "Rater's local time in 3-hour bands"
+    },
+    "pay_model": {
+      "type": "string",
+      "enum": [
+        "hourly",
+        "per_item",
+        "other"
+      ]
+    },
+    "checkin_alert_1to5": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Optional; may be skipped without penalty"
+    },
+    "checkin_rushed_1to5": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Optional; may be skipped without penalty"
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "consent_flags": {
+      "type": "object",
+      "properties": {
+        "checkin": {
+          "type": "boolean"
+        },
+        "research_use": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

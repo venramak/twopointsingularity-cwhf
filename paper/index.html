@@ -72,8 +72,8 @@ li{margin:0 0 1.3mm}
 .glance div{border-top:1.5px solid var(--ink);padding-top:2mm;break-inside:avoid}
 .glance h3{font-size:11.5pt;margin:0 0 1mm}
 .glance p{font-size:9.8pt;line-height:1.48;margin:0}
-.refs{font:8.6pt/1.45 var(--sans);padding-left:0;list-style:none}
-.refs li{padding-left:5mm;text-indent:-5mm;margin-bottom:1.6mm}
+.refs{font:8.3pt/1.4 var(--sans);padding-left:0;list-style:none}
+.refs li{padding-left:5mm;text-indent:-5mm;margin-bottom:1.2mm}
 /* cover */
 .cover{height:297mm;background:#0F1117;color:#ECE6DA;position:relative;overflow:hidden;break-after:page;padding:24mm 22mm}
 .cover .k{color:#D9A441}
@@ -84,14 +84,26 @@ li{margin:0 0 1.3mm}
 .cover .meta{position:absolute;left:22mm;right:22mm;bottom:22mm;font:9pt/1.6 var(--sans);color:#A0A7B3;border-top:1px solid rgba(236,230,218,.18);padding-top:5mm;display:grid;grid-template-columns:1.3fr 1fr;gap:6mm}
 .cover .meta b{color:#ECE6DA;font-weight:600}
 .cover svg.art{position:absolute;right:-30mm;top:92mm;width:150mm;opacity:.9}
-.toc{columns:2;column-gap:8mm;font:9.6pt/1.9 var(--sans);padding-left:0;list-style:none;margin-top:4mm}
+.toc{columns:2;column-gap:8mm;font:9.2pt/1.65 var(--sans);padding-left:0;list-style:none;margin-top:4mm}
 .toc span{font-family:var(--mono);color:var(--gold);font-size:8.4pt;margin-right:2mm}
+.est{display:grid;grid-template-columns:1fr 1fr;gap:4mm;margin:5mm 0 3mm;break-inside:avoid}
+.est div{border-radius:3mm;padding:3.5mm 4.5mm;font:9.2pt/1.5 var(--sans)}
+.est .yes{background:var(--teal-s)}.est .no{background:#F6E1E6}
+.est b.h{display:block;font:600 7.8pt/1.3 var(--sans);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.5mm}
+.est .yes b.h{color:var(--teal)}.est .no b.h{color:var(--red)}
+.est ul{margin:0;padding-left:4.5mm}.est li{margin:0 0 .8mm}
+.brief{border:1.5px solid var(--ink);border-radius:3mm;padding:5mm 6mm;margin:4mm 0;break-inside:avoid}
+.brief p{font:9.3pt/1.45 var(--sans);margin:0 0 1.8mm}
+.bt td{padding:1.4mm 2mm;font-size:8.4pt}
+.formula{font-family:var(--display);font-size:12.5pt;text-align:center;margin:2.5mm 0 3mm}
+.appx h2{font-size:17pt}
+.appx table{font-size:8.6pt}
 .note{border:1px solid var(--line);border-radius:3mm;padding:3.5mm 4.5mm;font:9.2pt/1.5 var(--sans);color:#3A3F48;margin:4mm 0;break-inside:avoid}
 </style>
 </head>
 <body>
 <nav class="webbar" aria-label="Paper links"><a href="Signal-not-Value_Rao_2026.pdf">Download PDF</a> · <a href="Signal-not-Value_Technical-Supplement.pdf">Technical supplement</a> · <a href="/">Companion lab</a> · <a href="https://github.com/venramak/twopointsingularity-cwhf">Code</a></nav>
-<style>.webbar{font-family:var(--sans);font-size:14px;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--gold-s);text-align:center}.webbar a{color:var(--ink)}@media print{.webbar{display:none}}</style>
+<style>.webbar{font-family:var(--sans);font-size:14px;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--gold-s);text-align:center}.webbar a{color:var(--ink)}@media print{.webbar{display:none}}@media (max-width:700px){main{padding:16px!important;margin:0!important}.cover{height:auto;min-height:100vh}.cover h1{font-size:40pt}.glance,.callouts,.est{grid-template-columns:1fr!important}table{display:block;overflow-x:auto}}</style>
 
 <section class="cover">
  <div class="k">Two Point Singularity · Research paper · November 2026</div>
@@ -107,8 +119,8 @@ li{margin:0 0 1.3mm}
   <line x1="200" y1="200" x2="246" y2="182" stroke="#D9A441" stroke-width="1.5"/>
  </svg>
  <div class="meta">
-  <div><b>Venkat Rao</b> · Independent researcher · ORCID 0009-0003-3477-1225<br>Version 1.0 · Preprint, not peer reviewed · 12 November 2026 · CC BY 4.0<br>Follows <i>The Coherence-Weighted Human Feedback (CWHF)</i>, March 2026, doi:10.5281/zenodo.19235970</div>
-  <div><b>Companion lab</b> twopointsingularity.com/lab (mirror: cwhf.vercel.app)<br><b>Code and simulation</b> github.com/venramak/twopointsingularity-cwhf<br><b>Website</b> twopointsingularity.com/research/cwhf</div>
+  <div><b>Venkat Rao</b> · Independent researcher · ORCID 0009-0003-3477-1225<br>Version 1.1 · Preprint, not peer reviewed · 12 November 2026 · CC BY 4.0<br>Follows <i>The Coherence-Weighted Human Feedback (CWHF)</i>, March 2026, doi:10.5281/zenodo.19235970</div>
+  <div><b>Companion lab</b> twopointsingularity.com/lab (mirror: cwhf.vercel.app)<br><b>Code and simulation</b> github.com/venramak/twopointsingularity-cwhf<br><b>Website</b> twopointsingularity.com/research/cwhf<br><b>Technical supplement</b> protocol and pre-registration text, in the repository</div>
  </div>
 </section>
 
@@ -118,20 +130,35 @@ li{margin:0 0 1.3mm}
  <div class="k">At a glance</div>
  <h2 style="margin-top:2mm">The whole paper on one page</h2>
  <div class="glance">
-  <div><h3>The question</h3><p>When people judge under pressure, do their choices drift away from what they themselves choose on reflection, in a <i>consistent direction</i> rather than at random?</p></div>
-  <div><h3>Why it matters</h3><p>Random error cancels as more feedback is collected. A consistent lean does not: more data teaches an AI system the lean more firmly.</p></div>
+  <div><h3>The question</h3><p>When people judge under pressure, do their choices move away from the choices the same people make on reflection, in a <i>consistent direction</i> rather than at random?</p></div>
+  <div><h3>Why it matters</h3><p>Random error cancels as more feedback is collected. A consistent lean does not: if it reaches training, more data teaches an AI system the lean more firmly.</p></div>
   <div><h3>What is known</h3><p>Judgments shift with fatigue and time pressure. Raters of AI output favour agreeable, assertive and longer answers. User thumbs data has already pushed one deployed model toward sycophancy.</p></div>
   <div><h3>What is not known</h3><p>Whether the lean grows when the <i>same person</i> is under pressure. We have not found a study that tests this within-person contrast directly. Kopteva and Hlynianyi-Zhuk (2026) propose rater state as a structured bias, with an observational audit; this paper adds a pre-registered manipulation that can show whether the bias has a direction.</p></div>
   <div><h3>The test</h3><p>Sixty people answer 48 questions twice, a week apart: once rushed, once at their own pace. One measure, D, says whether pressure moved them toward a pre-named style.</p></div>
-  <div><h3>What the simulation found</h3><p>Under its stated assumptions, the design catches a 6-point drift 99.7% of the time and raises a false alarm 5.3% of the time. It also exposed four flaws in the first paper's design, now fixed.</p></div>
-  <div><h3>What we propose</h3><p>Record the conditions of every label, prevent drift at source, weight only where it demonstrably helps, audit always. In simulation, fixing conditions beat every weighting formula.</p></div>
+  <div><h3>What the simulation found</h3><p>On simulated participants, under stated assumptions, the design detects a 6-point drift 99.7% of the time and raises a false alarm 5.3% of the time. It also exposed four flaws in the first paper's design, now fixed. No real person has yet been tested.</p></div>
+  <div><h3>What we propose</h3><p>Record the conditions of every label, prevent drift at source, weight only where it demonstrably helps, audit always. In simulation, fixing conditions removed about 30% of the lean with no data lost; the first paper's weighting formula removed about 7% (Figure 5).</p></div>
   <div><h3>What would prove us wrong</h3><p>If the average shift is not reliably above zero, H1 is not supported; if its confidence interval lies below 3 points, any effect is too small to matter by our own standard. Either result is published.</p></div>
  </div>
- <div class="note" style="margin-top:6mm"><b>How to read the claims.</b> Every claim carries one of five labels, and no lower tier is used to prop up a higher one: <span class="tier t-est">Established</span> published evidence; <span class="tier t-hyp">Hypothesis</span> precise and testable, not yet tested; <span class="tier t-sim">Simulated</span> a property of the study design, shown on simulated people; <span class="tier t-pro">Proposed</span> depends on the hypotheses passing; <span class="tier t-ret">Retired</span> claimed in the first paper and withdrawn.<br><b>What this paper does not claim.</b> It does not identify anyone's true values. It tests whether the conditions under which feedback is given shift the choices people make.</div>
- <div class="k" style="margin-top:6mm">Contents</div>
+ <div class="note" style="margin-top:6mm"><b>How to read the claims.</b> Every claim carries one of five labels, and no lower tier is used to prop up a higher one: <span class="tier t-est">Established</span> published evidence; <span class="tier t-hyp">Hypothesis</span> precise and testable, not yet tested; <span class="tier t-sim">Simulated</span> a property of the study design, shown on simulated people; <span class="tier t-pro">Proposed</span> depends on the hypotheses passing; <span class="tier t-ret">Retired</span> claimed in the first paper and withdrawn.</div>
+ <div class="est">
+  <div class="yes"><b class="h">What this paper establishes</b><ul>
+   <li>A testable question about the conditions of human feedback, with one primary estimand (D)</li>
+   <li>A within-person protocol and decision rules fixed before any data</li>
+   <li>A simulation of that protocol, with open code, that found and fixed four design flaws</li>
+   <li>A staged programme (record, prevent, weight, audit) and the evidence each step still needs</li></ul></div>
+  <div class="no"><b class="h">What it does not establish</b><ul>
+   <li>That pressure shifts real AI feedback: no human data have been collected</li>
+   <li>That reflective choices are anyone's true values: they are a stated reference</li>
+   <li>That correcting a lean improves reward models or alignment (H6, untested)</li>
+   <li>That state is the largest source of divergence: usually it is not</li></ul></div>
+ </div>
+</section>
+
+<section class="sec newpage">
+ <div class="k" style="margin-top:0">Contents</div>
  <ol class="toc">
   <li><span>01</span>A thumbs-up is not the value</li>
-  <li><span>02</span>Every digital action is a signal</li>
+  <li><span>02</span>Many digital actions are signals</li>
   <li><span>03</span>Noise averages out. Direction does not.</li>
   <li><span>04</span>What we already know</li>
   <li><span>05</span>The question, stated so it can fail</li>
@@ -144,7 +171,30 @@ li{margin:0 0 1.3mm}
   <li><span>12</span>What changed since the first paper</li>
   <li><span>13</span>What happens next</li>
   <li><span>—</span>Declarations and references</li>
+  <li><span>A–D</span>Analysis plan, simulation map, conditions schema, notation</li>
  </ol>
+
+ <p class="small"><b>Where to start.</b> Heads of data or alignment: the decision brief below. Methodologists: Sections 5–7 and Appendix A. Engineers: Section 8 and Appendix C. Policy readers: Sections 8 and 11. Everyone: Section 10, the strongest objections.</p>
+
+ <div class="k" style="margin-top:5mm">Decision brief</div>
+ <h2 style="margin-top:2mm">For heads of data, alignment and trust &amp; safety</h2>
+ <div class="brief">
+  <p><b>The decision.</b> Should we record the conditions under which each human label is made, before anyone knows whether those conditions bend the labels?</p>
+  <p><b>Why now.</b> Public preference datasets carry no condition fields (Section 4). If H1 holds, a lean is already in the data and cannot be audited after the fact, because the conditions were never stored.</p>
+  <p><b>If H1 fails,</b> the records still document how the data were made, which dataset cards and data-governance reviews increasingly ask for. <b>If H1 holds,</b> the records are what make the lean measurable and the remedy checkable.</p>
+  <p><b>Recommendation.</b> Adopt step 1 (record) for new collection now; it needs no weighting, filtering or change in pay. Defer step 3 (weight) until H2 passes. Treat step 2 (prevent) as the remedy to test first if H1 holds, because in simulation it beat weighting.</p>
+ </div>
+ <table class="bt">
+  <thead><tr><th>Option</th><th>Cost (planning estimate)</th><th>What you learn</th><th>Stop rule</th></tr></thead>
+  <tbody>
+   <tr><td><b>Record conditions</b> (step 1; Appendix C)</td><td>A few logging fields; days of engineering</td><td>Nothing yet; makes every later test possible on your own data</td><td>None needed</td></tr>
+   <tr><td><b>Study 3</b> on public Arena votes</td><td>A few weeks of one analyst; no participants</td><td>Whether within-voter style choice drifts across a sitting</td><td>A flat slope in a large sample counts against the wider claim</td></tr>
+   <tr><td><b>H4</b> on your own thumbs logs</td><td>Days, if timestamps and sessions are kept</td><td>Whether winning answers change style late in sessions</td><td>As Study 3</td></tr>
+   <tr><td><b>Study 1</b> (H1), 60–100 people</td><td>About $3,000–7,000 at 60 people; up to about $11,000 at 100</td><td>Whether pressure causes a directional shift</td><td>The decision table in Section 6</td></tr>
+   <tr><td><b>Study 2</b> (H2)</td><td>Reuses Study 1; adds a source-fix arm</td><td>Whether prevention or weighting removes the lean</td><td>Run only if H1 is supported</td></tr>
+   <tr><td><b>Do nothing</b></td><td>Nothing now</td><td>Nothing</td><td>Any lean stays unmeasured</td></tr>
+  </tbody>
+ </table>
 </section>
 
 <section class="sec newpage">
@@ -153,6 +203,7 @@ li{margin:0 0 1.3mm}
  <p>A tired annotator at the end of a long queue, a parent tapping a thumbs-up at 2 a.m., a voter on a leaderboard between meetings: each produces a signal. Each signal passes through filters before it is recorded. The person's momentary state is one filter. Interface design, incentives, missing information, social pressure and the limits of the measurement itself are others.</p>
  <figure><svg viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A value passes through eight filters before it becomes a recorded signal, which a system then interprets"><defs><marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="#8A8F99"/></marker></defs><rect x="20" y="120" width="140" height="90" rx="12" fill="#D5EEE9" stroke="#0F766E" stroke-width="1.5"/><text x="90" y="160" font-family="Fraunces, Georgia, serif" font-size="22" fill="#0F766E" text-anchor="middle" font-weight="400">Value</text><text x="90" y="184" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400">what the person</text><text x="90" y="198" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400">endorses on reflection</text><rect x="250" y="14" width="230" height="28" rx="6" fill="#F3E6CC" stroke="#94661A" stroke-width="1.5"/><text x="365" y="32.5" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#94661A" text-anchor="middle" font-weight="600">State: pressure, load, fatigue</text><path d="M160,165 C205,165 205,28 248,28" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><path d="M480,28 C525,28 525,165 568,165" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><rect x="250" y="52" width="230" height="28" rx="6" fill="#F1EEE8" stroke="#D8D2C6" stroke-width="1"/><text x="365" y="70.5" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">Choice architecture</text><path d="M160,165 C205,165 205,66 248,66" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><path d="M480,66 C525,66 525,165 568,165" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><rect x="250" y="90" width="230" height="28" rx="6" fill="#F1EEE8" stroke="#D8D2C6" stroke-width="1"/><text x="365" y="108.5" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">Incentives</text><path d="M160,165 C205,165 205,104 248,104" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><path d="M480,104 C525,104 525,165 568,165" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><rect x="250" y="128" width="230" height="28" rx="6" fill="#F1EEE8" stroke="#D8D2C6" stroke-width="1"/><text x="365" y="146.5" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">Information gap</text><path d="M160,165 C205,165 205,142 248,142" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><path d="M480,142 C525,142 525,165 568,165" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><rect x="250" y="166" width="230" height="28" rx="6" fill="#F1EEE8" stroke="#D8D2C6" stroke-width="1"/><text x="365" y="184.5" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">Time inconsistency</text><path d="M160,165 C205,165 205,180 248,180" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><path d="M480,180 C525,180 525,165 568,165" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><rect x="250" y="204" width="230" height="28" rx="6" fill="#F1EEE8" stroke="#D8D2C6" stroke-width="1"/><text x="365" y="222.5" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">Social pressure</text><path d="M160,165 C205,165 205,218 248,218" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><path d="M480,218 C525,218 525,165 568,165" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><rect x="250" y="242" width="230" height="28" rx="6" fill="#F1EEE8" stroke="#D8D2C6" stroke-width="1"/><text x="365" y="260.5" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">Preference construction</text><path d="M160,165 C205,165 205,256 248,256" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><path d="M480,256 C525,256 525,165 568,165" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><rect x="250" y="280" width="230" height="28" rx="6" fill="#F1EEE8" stroke="#D8D2C6" stroke-width="1"/><text x="365" y="298.5" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">Proxy and measurement</text><path d="M160,165 C205,165 205,294 248,294" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><path d="M480,294 C525,294 525,165 568,165" fill="none" stroke="#D8D2C6" stroke-width="1.2"/><text x="365" y="326" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400" font-style="italic">eight reasons a signal can depart from a value</text><rect x="570" y="120" width="88" height="90" rx="12" fill="#F3E6CC" stroke="#94661A" stroke-width="1.5"/><text x="614" y="160" font-family="Fraunces, Georgia, serif" font-size="20" fill="#94661A" text-anchor="middle" font-weight="400">Signal</text><text x="614" y="184" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">the click, vote</text><text x="614" y="198" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">or label</text><line x1="660" y1="165" x2="682" y2="165" stroke="#8A8F99" stroke-width="1.5" marker-end="url(#a1)"/><rect x="684" y="120" width="70" height="90" rx="12" fill="#fff" stroke="#D8D2C6"/><text x="719" y="158" font-family="Fraunces, Georgia, serif" font-size="15" fill="#14161B" text-anchor="middle" font-weight="400">Model</text><text x="719" y="180" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">learns</text><text x="719" y="194" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">from it</text></svg>
   <figcaption><b>Figure 1. The anatomy of a signal.</b> A value reaches a learning system only after passing through eight filters. This paper concerns the first: the state of the person at the moment of the signal. The other seven need different remedies, and the companion lab catalogues 71 cases across all eight.</figcaption></figure>
+ <p>The eight are state, choice architecture, incentives, information gaps, time inconsistency, social pressure, preference construction, and proxy or measurement limits. They are a working taxonomy drawn from behavioural welfare economics and consumer research, grouped because each needs a different remedy. They are not claimed to be exhaustive or fully separate: social pressure and preference construction often co-occur, and an information gap can be a precondition for the others.</p>
  <p>The broader gap is long established. Behavioural economics stopped treating every choice as a revealed preference decades ago (Bernheim and Rangel, 2009). Engagement data diverges from what users say they want (Milli et al., 2023), and optimising for engagement under inconsistent preferences can leave people worse off (Kleinberg et al., 2022).</p>
  <p>State is singled out here not because it is the largest filter. It usually is not. It is singled out because it varies within the same person, can be manipulated ethically in a study, and is cheap to record.</p>
  <div class="callouts">
@@ -162,8 +213,8 @@ li{margin:0 0 1.3mm}
 </section>
 
 <section class="sec">
- <h2><span class="num">02</span>Every digital action is a signal</h2>
- <p class="lede">Paid annotators are only one source. Some everyday digital actions are already collected and used to train or evaluate AI systems; many more could be. The table lists channels where that use is documented, and one where practice is undisclosed.</p>
+ <h2><span class="num">02</span>Many digital actions are signals</h2>
+ <p class="lede">Paid annotators are only one source. Some everyday digital actions are documented as reaching AI training or evaluation; others share the same structure without any claim here that they reach training. The table separates the two.</p>
  <table>
   <thead><tr><th>Channel</th><th>Examples</th><th>How it reaches AI systems</th><th>Status</th></tr></thead>
   <tbody>
@@ -175,11 +226,10 @@ li{margin:0 0 1.3mm}
    <tr><td><b>Interaction traces</b></td><td>Accept, regenerate, copy, edit</td><td>Product metrics and, at some developers, training or evaluation signals</td><td class="small">Varies; often undisclosed</td></tr>
   </tbody>
  </table>
- <p><b>The general claim is established:</b> every recorded action is a signal produced under conditions. <b>The state-specific claim is not.</b> In the wild, defaults, design and incentives often dominate, and a claim that "state explains the gap everywhere" would overreach.</p>
+ <p><b>What is established:</b> the first three channels demonstrably reach AI systems, and every recorded action is produced under some condition. The consent row is an example of the same structure, not a claim that cookie choices train models. <b>The state-specific claim is not established.</b> In the wild, defaults, design and incentives often dominate, and a claim that "state explains the gap everywhere" would overreach.</p>
  <p>What links the two is an argument <i>a fortiori</i>. The study in this paper tests the most favourable conditions: paid, instructed, attentive adults choosing between two short answers, one of them correct. Signals in the wild come from phones, multitasking, late nights and interfaces built to obtain a click. If a lean appears under favourable conditions, the default assumption that it is absent under worse ones loses its basis. That is plausibility, not proof. The opposite is also possible: in the wild, design and incentives may swamp state altogether. That is why each channel needs its own test (Section 9).</p>
- <div class="callouts">
-  <div class="box means"><span class="k">That means</span><p>The question reaches every person whose clicks, votes and ratings feed an AI system, not only the people paid to label data.</p></div>
-  <div class="box sowhat"><span class="k">So what</span><p>A positive result widens the case for recording conditions everywhere. A precise null would constrain this mechanism in this setting, but would not settle the other seven sources of divergence.</p></div>
+ <div class="callouts one">
+  <div class="box sowhat"><span class="k">So what</span><p>A positive H1 is a reason to test each channel, not a finding about any of them. A precise null would constrain this mechanism in this setting, but would not settle the other seven sources of divergence.</p></div>
  </div>
 </section>
 
@@ -190,20 +240,20 @@ li{margin:0 0 1.3mm}
   <figcaption><b>Figure 2. Why direction matters.</b> Illustration with arbitrary units. Random rater error (teal) shrinks as labels accumulate. A consistent 3-point lean (gold) levels off and stays, however much data is added.</figcaption></figure>
  <p>Suppose a share <i>p</i> of labelling sessions is effectively reflective and the rest carry an average lean δ toward a particular style. A reward model trained with equal weights learns, to a first approximation:</p>
  <div class="eq">r̂ ≈ r* + (1 − p) · δ</div>
- <p>Here r* is what it would learn from reflective labels alone. This is arithmetic conditional on the hypothesis, not a theorem about the world. The first paper called it the "Bias Theorem"; that name is retired.</p>
+ <p>Here r* is what it would learn from reflective labels alone. This is arithmetic conditional on the hypothesis, not a theorem about the world (the first paper's name for it is retired; Section 12). Methods that fit the preference pairs directly, such as direct preference optimisation (Rafailov et al., 2023), are not exempt: they learn whatever lean the pairs carry. A second-order risk follows if a model trained on leaned labels produces answers that attract more leaned feedback, so the lean compounds across deployments. That loop is stated as part of H6, not as a finding.</p>
  <h3>What a 3-point lean means in practice</h3>
- <p>In pairwise data, 53 choices in 100 instead of 50 is a learned reward difference of about 0.12 on the logit scale used by most reward models, applied wherever the style appears. Across a million comparisons it is about 30,000 extra choices in one direction. Optimising a model against a learned reward is known to amplify systematic errors in that reward (Gao et al., 2023). Whether a lean of this size changes behaviour enough to matter is itself untested.</p>
+ <p>In pairwise data, 53 choices in 100 instead of 50 is a learned reward difference of about 0.12 on the logit scale used by most reward models, applied wherever the style appears. In a dataset of a million pairwise comparisons, the order of public releases, it is about 30,000 extra choices in one direction. That figure assumes independent comparisons; choices by the same rater are correlated, so it is an upper bound on the information the lean carries, not an estimate. The direction of the argument does not depend on it. Optimising a model against a learned reward is known to amplify systematic errors in that reward (Gao et al., 2023). Whether a lean of this size changes behaviour enough to matter is itself untested.</p>
  <h3>Why three points</h3>
- <p>The threshold is a practical convention, fixed before any data. It is roughly the smallest shift that is a stable reward difference of about 0.12 logits, adds up to tens of thousands of one-directional labels in a typical preference dataset, and can be detected with about 80% power at a feasible sample size. It can be challenged. The full confidence interval will be reported, so readers can apply their own threshold.</p>
+ <p>The threshold is a practical convention, fixed before any data, and it is partly tied to the design. Three things set it: a 3-point lean is a stable reward difference of about 0.12 logits; it adds up to many thousands of one-directional labels at dataset scale; and it is about the smallest drift sixty people can detect with 80% power if D varies across people as simulated (minimum detectable effect 2.8 points at a spread of 8.5; Section 7). The third reason makes the threshold partly a property of the study, and we say so rather than hide it. In standardised terms 3 points is d ≈ 0.35. A 1-point drift is also a drift; this study is simply not built to confirm one. The full confidence interval is reported, so readers can apply their own threshold (Lakens et al., 2018).</p>
  <div class="callouts">
   <div class="box means"><span class="k">That means</span><p>The useful question is not "are tired people noisier?" (they are) but "does tiredness have a direction?"</p></div>
-  <div class="box sowhat"><span class="k">So what</span><p>If it does, scale stops being a cure and becomes an amplifier. That is the cost of not knowing.</p></div>
+  <div class="box sowhat"><span class="k">So what</span><p>If it does, and the lean reaches training, scale stops being a cure and becomes an amplifier. That is the cost of not knowing.</p></div>
  </div>
 </section>
 
 <section class="sec">
  <h2><span class="num">04</span>What we already know</h2>
- <p class="lede">Five findings motivate the question. None of them is the question.</p>
+ <p class="lede">Five findings motivate the question. None of them is the question, and the step from them to AI feedback is a hypothesis, not an inference.</p>
  <table>
   <thead><tr><th>#</th><th>Finding</th><th>Evidence</th><th>What it does not show</th></tr></thead>
   <tbody>
@@ -215,6 +265,17 @@ li{margin:0 0 1.3mm}
   </tbody>
  </table>
  <p>The closest prior work is Kopteva and Hlynianyi-Zhuk (2026), who propose rater state as a structured bias in preference data, with an observational audit framework for public models. Their focus is sustained stress over time and an output-side signature. This paper works on the input side: it manipulates acute pressure within the same person and measures whether the shift has a direction. The two are complementary, and arrived at the question independently: our first paper (March 2026) and their first version (April 2026) appeared within weeks of each other.</p>
+ <table>
+  <thead><tr><th>Line of work</th><th>What it does</th><th>What it does not establish</th><th>Relation to this paper</th></tr></thead>
+  <tbody>
+   <tr><td>Rater-quality models (Dawid and Skene, 1979; Whitehill et al., 2009; Welinder et al., 2010; Raykar et al., 2010; Snow et al., 2008)</td><td>Estimate rater reliability and item difficulty from agreement</td><td>A within-person lean that moves with the conditions of a session</td><td>Baselines that H2 must beat, not rivals</td></tr>
+   <tr><td>Noise in judgment (Kahneman et al., 2021)</td><td>Documents unwanted variability between and within judges</td><td>Direction: noise is variance, which averaging reduces</td><td>Asks the complementary question, whether the error has a sign</td></tr>
+   <tr><td>Style preferences of AI raters (Sharma et al., 2023; Hosking et al., 2023; Singhal et al., 2023)</td><td>Show raters favour agreeable, assertive or longer answers</td><td>Whether the preference grows with the rater's condition</td><td>Supplies the attractor styles H1 tests</td></tr>
+   <tr><td>Reward over-optimisation (Gao et al., 2023)</td><td>Shows optimisation amplifies errors in a learned reward</td><td>Where systematic reward errors come from</td><td>Names one possible source</td></tr>
+   <tr><td>Time pressure and load (Payne et al., 1993; Svenson and Maule, 1993)</td><td>Show time pressure shifts decision strategies toward simpler heuristics</td><td>Effects on AI-feedback choices</td><td>Grounds the manipulation</td></tr>
+   <tr><td>Rater state in RLHF (Kopteva and Hlynianyi-Zhuk, 2026)</td><td>Proposes rater state as a structured bias; observational audit</td><td>A manipulated, within-person, directional test</td><td>Complementary; overlapping concept</td></tr>
+  </tbody>
+ </table>
  <p>One nearby literature urges caution. "Ego depletion", the idea that self-control draws on a limited resource, was not supported by two large pre-registered multi-site replications (Hagger et al., 2016; Vohs et al., 2021). The hypothesis here does not rely on a resource model. It predicts only that pressure changes which answer is chosen, whatever the mechanism, and the study uses direct, reversible manipulations with a check that they worked.</p>
  <div class="callouts one">
   <div class="box sowhat"><span class="k">So what</span><p>The ingredients are all documented: state moves judgment, raters have style preferences, pipelines ignore state, and user feedback reaches reward models. What is missing is the one measurement that joins them.</p></div>
@@ -227,19 +288,35 @@ li{margin:0 0 1.3mm}
  <div class="hyp"><span class="k">H1 · Hypothesis</span><p>Within the same person, judging under time pressure and divided attention increases the rate at which a pre-named "attractor" style is chosen, relative to that person's reflective choices on the same items, by at least 3 percentage points on average.</p></div>
  <div class="hyp"><span class="k">H2 · Hypothesis, run only if H1 holds</span><p>In ordinary labelling, a within-person session score reduces the lean of a training set by at least 25%, more than the best existing rater-quality method, while keeping at least 60% of effective data and meeting prespecified non-inferiority criteria for every language, region and shift group, with uncertainty reported.</p></div>
  <div class="hyp"><span class="k">H3 · Exploratory, observational</span><p>In public Chatbot Arena votes, the same voter's choices lean more toward the confident, agreeable or longer answer as a voting sitting wears on.</p></div>
- <h3>Five terms, one meaning each</h3>
+ <h3>The estimand</h3>
+ <p>For person <i>i</i>, over the <i>n<sub>i</sub></i> primary items answered within time in both sessions, let <i>P<sub>i</sub></i> and <i>R<sub>i</sub></i> be the shares of choices for the attractor under pressure and on reflection. Let <i>u<sub>i</sub></i> count items switched toward the attractor and <i>w<sub>i</sub></i> items switched away. Then</p>
+ <div class="formula">D<sub>i</sub> = P<sub>i</sub> − R<sub>i</sub> = (u<sub>i</sub> − w<sub>i</sub>) / n<sub>i</sub> &nbsp;&nbsp;·&nbsp;&nbsp; M<sub>i</sub> = (u<sub>i</sub> + w<sub>i</sub>) / n<sub>i</sub> &nbsp;&nbsp;·&nbsp;&nbsp; Δ = E[D<sub>i</sub>]</div>
+ <p>The identity matters. An item chosen the same way twice contributes nothing, so D counts only departures from the person's own reflective choice, signed by direction; M counts them unsigned. The target is Δ, the average within-person difference among adults like those recruited, on items like these, under this bundled pressure condition. Analysis population, timeouts and missing items are specified in Appendix A.</p>
+ <h3>Six terms, one meaning each</h3>
  <table>
   <tbody>
    <tr><td style="width:24%"><b>Reflective reference choice</b><br><span class="small">the "value" of the title</span></td><td>The choice the same person makes on the same item with no time limit and no distraction, after time to reflect. A convention chosen so the claim can be tested. The study tests condition-dependent preferences over answers; it does not identify moral values, authentic identity or anyone's uniquely correct preference. Reflection is sometimes worse (Wilson and Schooler, 1991).</td></tr>
    <tr><td><b>Attractor</b></td><td>A pre-named answer style expected to gain under pressure: more confident (unhedged), or more agreeable with the asker. It is the correct answer in exactly half the items, so a shift in accuracy cannot pass for a shift in style.</td></tr>
    <tr><td><b>D</b> · primary</td><td>The reflective–pressured choice gap: how often a person picks the attractor under pressure, minus how often they pick it on reflection. Signed: it measures direction.</td></tr>
    <tr><td><b>M</b> · secondary</td><td>Mismatch: the share of items where a person's two choices differ, in either direction. Five switches toward the attractor and five away give D = 0 but M &gt; 0, so the two answer different questions.</td></tr>
-   <tr><td><b>Coherence</b></td><td>The programme's interpretation, not a measure: how closely a session's choices agree with the same person's reflective choices. The study measures D and M; "coherence" names what they are about.</td></tr>
+   <tr><td><b>Elicitation condition</b></td><td>The circumstances of a choice that the study sets: timer, memory load, session order. What is manipulated. A person's inner state is not measured; only self-reported rushedness is checked.</td></tr>
+   <tr><td><b>Coherence</b></td><td>The programme's interpretation, not a measure: how closely a session's choices agree with the same person's reflective choices. Methods and results use D and M only. "CWHF" now names the programme of Section 8; the first paper's weighting formula is one conditional step within it, not the brand. The name is kept for citation continuity.</td></tr>
   </tbody>
  </table>
- <div class="callouts">
-  <div class="box means"><span class="k">That means</span><p>"Value" is not a metaphysical claim. It is a reference point anyone can measure and anyone can dispute.</p></div>
-  <div class="box sowhat"><span class="k">So what</span><p>A directional gap biases training data whichever self one prefers, because the data average to neither.</p></div>
+ <p class="small">"Value" in the title names the subject of the programme; in every technical statement it means the reflective reference choice. These definitions are used verbatim in the companion lab and the site glossary; any change raises the paper's version number.</p>
+ <h3>What the alternatives predict</h3>
+ <table>
+  <thead><tr><th>Account</th><th>D</th><th>M</th><th>Other signature</th></tr></thead>
+  <tbody>
+   <tr><td><b>H1:</b> pressure pulls toward the attractor</td><td>&gt; 0</td><td>Up</td><td>Holds where the attractor is wrong as well as right</td></tr>
+   <tr><td>Pressure adds only noise</td><td>≈ 0</td><td>Up</td><td>Accuracy falls; switches balanced in both directions</td></tr>
+   <tr><td>Pressure improves judgment</td><td>≈ 0 or &lt; 0</td><td>Small</td><td>Accuracy holds or rises</td></tr>
+   <tr><td>Pressure pushes away from the attractor</td><td>&lt; 0</td><td>Up</td><td>Reported; the attractor model is then wrong for this task</td></tr>
+   <tr><td>Item effects, not condition</td><td>Driven by few items</td><td>—</td><td>Fails the person-and-item cluster-robust check</td></tr>
+  </tbody>
+ </table>
+ <div class="callouts one">
+  <div class="box sowhat"><span class="k">So what</span><p>The test does not need reflection to be the better self. A directional gap biases training data whichever reference one prefers, because the data average to neither (Bernheim and Rangel, 2009).</p></div>
  </div>
 </section>
 
@@ -248,31 +325,40 @@ li{margin:0 0 1.3mm}
  <p class="lede">Study 1 compares each person with themselves. Sixty adults on a research platform, paid by the hour, answer the same 48 question pairs twice, at least a week apart, in counterbalanced order.</p>
  <figure><svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Each person answers the same 48 questions twice, at least seven days apart, once under pressure and once at their own pace; D is the difference"><defs><marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="#8A8F99"/></marker></defs><rect x="20" y="40" width="150" height="190" rx="12" fill="#fff" stroke="#D8D2C6"/><text x="95" y="72" font-family="Fraunces, Georgia, serif" font-size="16" fill="#14161B" text-anchor="middle" font-weight="400">Same person</text><text x="95" y="92" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#5B6270" text-anchor="middle" font-weight="400">same 48 questions</text><rect x="38" y="112" width="114" height="26" rx="5" fill="#F3E6CC"/><text x="95" y="129" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#94661A" text-anchor="middle" font-weight="600">confident vs hedged</text><rect x="38" y="148" width="114" height="26" rx="5" fill="#F3E6CC"/><text x="95" y="165" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#94661A" text-anchor="middle" font-weight="600">agrees vs disagrees</text><text x="95" y="200" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">attractor right in</text><text x="95" y="214" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">exactly half the items</text><rect x="230" y="30" width="240" height="95" rx="12" fill="#F3E6CC" stroke="#94661A"/><text x="350" y="58" font-family="Fraunces, Georgia, serif" font-size="16" fill="#94661A" text-anchor="middle" font-weight="400">Pressured session</text><text x="350" y="80" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">timer set to own reading speed</text><text x="350" y="98" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">+ hold a 5-digit number</text><text x="350" y="116" font-family="JetBrains Mono, monospace" font-size="11.5" fill="#94661A" text-anchor="middle" font-weight="600">→ attractor rate P</text><rect x="230" y="150" width="240" height="95" rx="12" fill="#D5EEE9" stroke="#0F766E"/><text x="350" y="178" font-family="Fraunces, Georgia, serif" font-size="16" fill="#0F766E" text-anchor="middle" font-weight="400">Reflective session</text><text x="350" y="200" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">no timer, no load</text><text x="350" y="218" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="middle" font-weight="400">reasons on half the items</text><text x="350" y="236" font-family="JetBrains Mono, monospace" font-size="11.5" fill="#0F766E" text-anchor="middle" font-weight="600">→ attractor rate R</text><path d="M170,120 C200,120 200,78 228,78" fill="none" stroke="#8A8F99" stroke-width="1.4" marker-end="url(#a3)"/><path d="M170,150 C200,150 200,198 228,198" fill="none" stroke="#8A8F99" stroke-width="1.4" marker-end="url(#a3)"/><text x="350" y="140" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400" font-style="italic">≥ 7 days apart · order counterbalanced</text><path d="M470,78 C505,78 505,138 538,138" fill="none" stroke="#8A8F99" stroke-width="1.4" marker-end="url(#a3)"/><path d="M470,198 C505,198 505,142 538,142" fill="none" stroke="#8A8F99" stroke-width="1.4" marker-end="url(#a3)"/><rect x="540" y="85" width="200" height="110" rx="12" fill="#fff" stroke="#14161B" stroke-width="1.4"/><text x="640" y="120" font-family="Fraunces, Georgia, serif" font-size="24" fill="#14161B" text-anchor="middle" font-weight="400">D = P − R</text><text x="640" y="146" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#5B6270" text-anchor="middle" font-weight="400">per person, then averaged</text><text x="640" y="166" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">H1 holds if mean D is reliably</text><text x="640" y="182" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">above 0 and at least 3 points</text><text x="380" y="285" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#5B6270" text-anchor="middle" font-weight="400" font-style="italic">60 people · one-sided t-test on D · decision rule fixed in advance</text></svg>
   <figcaption><b>Figure 3. The within-person design.</b> In the pressured session a timer is set from each person's own reading speed and they hold a five-digit number in mind. In the reflective session there is no timer, no load, and a written reason on a random half of the items. D is computed per person, then averaged.</figcaption></figure>
- <h3>Built-in safeguards</h3>
- <ul>
-  <li><b>Length removed from the timed test.</b> Long answers go unread under a timer, which would fake a result. Length is tested separately, without a timer (Study 3).</li>
-  <li><b>A bundled manipulation, stated as such.</b> The pressured session combines a timer and a memory load, so Study 1 estimates their combined effect. A later 2 × 2 study (timer × load) can separate them.</li>
-  <li><b>Reasons on half the items.</b> Writing a reason can itself shift choices (Shafir et al., 1993). The primary D uses all items; a pre-registered sensitivity analysis uses only items with no written reason.</li>
-  <li><b>Carry-over, measured rather than assumed away.</b> Item order is randomised in each session, and the debrief asks whether people remembered earlier answers. Seven days reduces memory effects but does not remove them; the control arm and an order × condition test estimate what remains.</li>
-  <li><b>Attention checks, a manipulation check and a funnel debrief</b> that flags anyone who guessed the hypothesis.</li>
-  <li><b>A reference control arm:</b> twelve extra people do two reflective sessions, measuring how much the reference itself moves.</li>
-  <li><b>Timeouts reported by first language and age,</b> because second-language readers are most affected by a timer.</li>
- </ul>
- <h3>The decision rule, fixed in advance</h3>
- <p>Significance and size are judged separately, from the mean of D and its 95% confidence interval.</p>
+ <h3>What else could produce a positive D, and what the design does about it</h3>
  <table>
-  <thead><tr><th>Outcome</th><th>Rule</th><th>What it means</th></tr></thead>
+  <thead><tr><th style="width:24%">Alternative</th><th style="width:30%">How it could mimic H1</th><th>How the design handles it</th></tr></thead>
   <tbody>
-   <tr><td><b>Exceeds the threshold</b></td><td>Lower bound above 3 points</td><td>The effect is larger than the practical threshold</td></tr>
-   <tr><td><b>Supported under the prespecified criterion</b></td><td>p &lt; 0.05 and mean D ≥ 3 points; interval includes 3</td><td>A directional effect, plausibly of practical size; proceed to Study 2</td></tr>
-   <tr><td><b>Directional but small</b></td><td>p &lt; 0.05 and mean D &lt; 3 points</td><td>A lean exists; if the upper bound is below 3, it is too small to matter by this standard</td></tr>
-   <tr><td><b>Not supported</b></td><td>p ≥ 0.05</td><td>No reliable direction; if the upper bound is below 3, a precise null that constrains this mechanism</td></tr>
-   <tr><td><b>Uninformative</b></td><td>People did not feel more rushed</td><td>Fix the manipulation and rerun</td></tr>
+   <tr><td>Memory and practice</td><td>Second session repeats first-session answers</td><td>Sessions ≥ 7 days apart, order counterbalanced, item order randomised; an order × condition test; debrief asks about recall. Identical items are needed for a within-item contrast, so this is reduced and measured, not removed</td></tr>
+   <tr><td>Screen-side bias</td><td>Rushed people favour one side</td><td>The attractor's side is randomised per item and person. Simulated side bias of up to 25 points gave a 4.6% false-alarm rate (Section 7)</td></tr>
+   <tr><td>Accuracy loss</td><td>Rushed choices regress toward 50%</td><td>The attractor is correct in exactly half the items, so pure noise gives D ≈ 0; D is also reported where the attractor is wrong</td></tr>
+   <tr><td>Item effects</td><td>A few items drive the mean</td><td>Person-and-item cluster-robust model as a pre-registered check; item-level results published</td></tr>
+   <tr><td>Reading speed and language</td><td>The timer hits slower readers hardest</td><td>A personal timer from each person's reading speed; timeouts reported by first language and age</td></tr>
+   <tr><td>Length</td><td>Long answers go unread under a timer</td><td>Answers length-matched within 15%; length tested only untimed (Study 3)</td></tr>
+   <tr><td>Writing reasons</td><td>Reasons shift reflective choices (Shafir et al., 1993)</td><td>Reasons on a random half of reflective items; D reported on all items and on no-reason items, side by side</td></tr>
+   <tr><td>Demand characteristics</td><td>People guess the hypothesis (Orne, 1962)</td><td>Funnel debrief; suspicion rule in Appendix A</td></tr>
+   <tr><td>Selective timeouts</td><td>Hard items drop out under pressure</td><td>Timeouts excluded from D, with a pre-registered sensitivity analysis that keeps them</td></tr>
+   <tr><td>An unstable reference</td><td>Reflective choices change by themselves</td><td>Control arm of twelve people, two reflective sessions, reported before the primary result (Appendix A)</td></tr>
+   <tr><td>The bundle</td><td>Timer and load act differently</td><td>Stated as a combined effect; a later 2 × 2 study (timer × load) can separate them</td></tr>
+  </tbody>
+ </table>
+ <div class="note"><b>A worked example.</b> Participant P-027 answers 44 primary items within time in both sessions. On reflection she chose the attractor on 18 (40.9%). Under pressure she switched 7 items toward it and 3 away, so she chose it on 22 (50.0%). Her D is (7 − 3) / 44 = +9.1 points, and her M is 10 / 44 = 22.7%. H1 asks whether the average D across all participants is reliably above zero, and how large it is. One person's D says nothing about her as a rater.</div>
+ <h3>The decision rule, fixed in advance</h3>
+ <p>Significance and size are judged separately, from the mean of D and its 95% confidence interval. The last column is the sentence the results paper will use, fixed now so the result cannot be re-described later.</p>
+ <table>
+  <thead><tr><th>Outcome</th><th>Rule</th><th>The sentence we commit to</th></tr></thead>
+  <tbody>
+   <tr><td><b>Exceeds the threshold</b></td><td>Lower 95% bound above 3 points</td><td>"Under this pressure condition, choices shifted toward the attractor by more than 3 points on average."</td></tr>
+   <tr><td><b>Supported under the prespecified criterion</b></td><td>p &lt; 0.05 and mean D ≥ 3; interval includes 3</td><td>"A directional shift was found; its size is consistent with, but not shown to exceed, 3 points." Proceed to Study 2</td></tr>
+   <tr><td><b>Directional but small</b></td><td>p &lt; 0.05 and mean D &lt; 3</td><td>"A small directional shift was found." If the upper bound is below 3: "too small to matter by this study's standard"</td></tr>
+   <tr><td><b>Not supported</b></td><td>p ≥ 0.05</td><td>"No reliable directional shift was found in this task and population." If the upper bound is below 3, add: "this constrains, but does not rule out, the mechanism." Never: "rater state does not matter"</td></tr>
+   <tr><td><b>Reverse</b></td><td>Two-sided exploratory test shows D &lt; 0</td><td>"Pressure moved choices away from the attractor; the attractor model is wrong for this task." Reported as exploratory</td></tr>
+   <tr><td><b>Uninformative</b></td><td>Mean rushed rating not at least 1 point higher under pressure</td><td>"The manipulation failed; D is not interpreted." Not evidence for or against H1; fix the induction and rerun</td></tr>
   </tbody>
  </table>
  <div class="callouts">
   <div class="box means"><span class="k">That means</span><p>Every person is their own control, so stable differences in skill, language or temperament are controlled. They may still change how strongly pressure acts.</p></div>
-  <div class="box sowhat"><span class="k">So what</span><p>The study costs about $3,000–7,000 and eight to ten weeks, and every possible result is publishable.</p></div>
+  <div class="box sowhat"><span class="k">So what</span><p>The study costs about $3,000–7,000 at sixty people (up to about $11,000 at a hundred) and eight to ten weeks, and every possible result is publishable.</p></div>
  </div>
 </section>
 
@@ -292,7 +378,19 @@ li{margin:0 0 1.3mm}
   </tbody>
  </table>
  <p><b>Two chances, reported separately.</b> For a true drift of about 3.5 points, the test is significant in 80% of simulated studies but significant <i>and</i> with a mean of at least 3 points in only 48%, because the measured shift runs below the true one. For about 6 points the figures are 99.7% and 96%; for about 1.7 points, 36% and 12%.</p>
- <p><b>One honest caveat.</b> Power depends on how much D varies between people. The simulation gave a spread of about 8.5 points. If it is nearer 11, sixty people give only about 69% power for a 3-point drift. The study therefore pre-registers a rule: after the first 20 people, an analyst who cannot see the average computes the standard deviation of D and sets the final sample, between 60 and 100, from a formula fixed in the registration. Every simulated result can be reproduced from the published code and seeds (H1: 400–2,000 replications per setting; H2: 80 per scenario).</p>
+ <p><b>One honest caveat.</b> Power depends on how much D varies between people, and the simulated spread of about 8.5 points comes from invented personas. The table shows what other spreads would mean, for a mean measured D of 3 points.</p>
+ <table>
+  <thead><tr><th>Spread of D<sub>i</sub> (SD, points)</th><th class="n">6</th><th class="n">8.5 (simulated)</th><th class="n">11</th><th class="n">13</th></tr></thead>
+  <tbody>
+   <tr><td>Power at 60 people</td><td class="n">98%</td><td class="n">86%</td><td class="n">67%</td><td class="n">55%</td></tr>
+   <tr><td>Power at 100 people</td><td class="n">&gt;99%</td><td class="n">97%</td><td class="n">86%</td><td class="n">74%</td></tr>
+   <tr><td>People needed for 80%</td><td class="n">27</td><td class="n">52</td><td class="n">85</td><td class="n">118</td></tr>
+   <tr><td>Smallest drift detectable at 60 (80% power)</td><td class="n">2.0</td><td class="n">2.8</td><td class="n">3.6</td><td class="n">4.3</td></tr>
+  </tbody>
+ </table>
+ <p><b>The sample-size rule, and a check that it is safe.</b> After the first 20 analysable people, an analyst who receives only the standard deviation of D, never its mean, sets the final sample: the smallest number between 60 and 100 that gives 80% power for 3 points. The decision and its reason are logged on OSF before recruitment continues. If more than 100 would be needed, the study stops at 100 and reports the result as directional evidence at reduced power, with the calculation published for a follow-up. In simulation the full procedure kept the false-alarm rate at 4.9% (spread 8.5) and 4.8% (spread 11), against 5.0% for a fixed sample of 60, and raised the average sample to 82 when the spread was 11. Re-estimating a sample from variance alone is a standard internal-pilot design (Friede and Kieser, 2006).</p>
+ <p><b>Side bias, simulated.</b> If pressure made each person favour one screen side by up to 25 points, randomising the attractor's side kept the false-alarm rate at 4.6% and the mean D at zero. Fixing the attractor on one side would have produced a false positive every time, which is why the randomisation is in the protocol.</p>
+ <p>Every simulated number in this paper maps to a script, a seed and an output file in the repository (Appendix B).</p>
  <div class="callouts">
   <div class="box means"><span class="k">That means</span><p>The design was broken in four places, and the simulation found all four before a single participant was paid.</p></div>
   <div class="box sowhat"><span class="k">So what</span><p>Publishing the simulation and its code before the data is what makes the eventual result, whichever way it falls, credible.</p></div>
@@ -304,12 +402,12 @@ li{margin:0 0 1.3mm}
  <p class="lede">The first paper's answer was a weighting formula. The simulation of Study 2 changed that answer.</p>
  <figure><svg viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Lean left in the training signal under each remedy; fixing conditions at source removed the most without losing data or penalising any group"><text x="250" y="18" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#5B6270" text-anchor="start" font-weight="400">lean left in the training signal (points)</text><text x="600" y="18" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400">data kept</text><text x="690" y="18" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#5B6270" text-anchor="middle" font-weight="400">weakest group</text><line x1="250.0" y1="28" x2="250.0" y2="294" stroke="#ECE7DD"/><text x="250.0" y="310" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">0</text><line x1="301.6666666666667" y1="28" x2="301.6666666666667" y2="294" stroke="#ECE7DD"/><text x="301.6666666666667" y="310" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">1</text><line x1="353.3333333333333" y1="28" x2="353.3333333333333" y2="294" stroke="#ECE7DD"/><text x="353.3333333333333" y="310" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">2</text><line x1="405.0" y1="28" x2="405.0" y2="294" stroke="#ECE7DD"/><text x="405.0" y="310" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">3</text><line x1="456.66666666666663" y1="28" x2="456.66666666666663" y2="294" stroke="#ECE7DD"/><text x="456.66666666666663" y="310" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">4</text><line x1="508.33333333333337" y1="28" x2="508.33333333333337" y2="294" stroke="#ECE7DD"/><text x="508.33333333333337" y="310" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">5</text><line x1="560.0" y1="28" x2="560.0" y2="294" stroke="#ECE7DD"/><text x="560.0" y="310" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">6</text><text x="240" y="51" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="end" font-weight="400">Equal weights (today's default)</text><rect x="250" y="38" width="276.9" height="20" rx="3" fill="#9AA0AA" opacity="0.8"/><text x="532.9333333333334" y="52" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="start" font-weight="600">5.4</text><text x="600" y="52" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">100%</text><text x="690" y="52" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">1.00</text><text x="240" y="89" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="end" font-weight="400">Attention-check filter</text><rect x="250" y="76" width="259.9" height="20" rx="3" fill="#94661A" opacity="0.8"/><text x="515.8833333333333" y="90" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="start" font-weight="600">5.0  (−6%)</text><text x="600" y="90" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">83%</text><text x="690" y="90" font-family="JetBrains Mono, monospace" font-size="11" fill="#9F1239" text-anchor="middle" font-weight="400">0.84</text><text x="240" y="127" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="end" font-weight="400">Dawid–Skene rater reliability</text><rect x="250" y="114" width="250.1" height="20" rx="3" fill="#94661A" opacity="0.8"/><text x="506.06666666666666" y="128" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="start" font-weight="600">4.8  (−10%)</text><text x="600" y="128" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">77%</text><text x="690" y="128" font-family="JetBrains Mono, monospace" font-size="11" fill="#9F1239" text-anchor="middle" font-weight="400">0.63</text><text x="240" y="165" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="end" font-weight="400">CWHF v1 formula, within-person</text><rect x="250" y="152" width="256.3" height="20" rx="3" fill="#94661A" opacity="0.8"/><text x="512.2666666666667" y="166" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="start" font-weight="600">5.0  (−7%)</text><text x="600" y="166" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">91%</text><text x="690" y="166" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">1.00</text><text x="240" y="203" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="end" font-weight="400">CWHF sharp, within-person</text><rect x="250" y="190" width="226.8" height="20" rx="3" fill="#94661A" opacity="0.8"/><text x="482.8166666666666" y="204" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="start" font-weight="600">4.4  (−18%)</text><text x="600" y="204" font-family="JetBrains Mono, monospace" font-size="11" fill="#9F1239" text-anchor="middle" font-weight="400">59%</text><text x="690" y="204" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">1.02</text><text x="240" y="241" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="end" font-weight="400">CWHF sharp, raw scores</text><rect x="250" y="228" width="196.3" height="20" rx="3" fill="#9F1239" opacity="1"/><text x="452.3333333333333" y="242" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="start" font-weight="600">3.8  (−29%)</text><text x="600" y="242" font-family="JetBrains Mono, monospace" font-size="11" fill="#9F1239" text-anchor="middle" font-weight="400">53%</text><text x="690" y="242" font-family="JetBrains Mono, monospace" font-size="11" fill="#9F1239" text-anchor="middle" font-weight="400">0.43</text><text x="240" y="279" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11.5" fill="#14161B" text-anchor="end" font-weight="600">Fix conditions at source</text><rect x="250" y="266" width="194.3" height="20" rx="3" fill="#0F766E" opacity="1"/><text x="450.26666666666665" y="280" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="start" font-weight="600">3.8  (−30%)</text><text x="600" y="280" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">100%</text><text x="690" y="280" font-family="JetBrains Mono, monospace" font-size="11" fill="#14161B" text-anchor="middle" font-weight="400">1.00</text><text x="380" y="322" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400" font-style="italic">Simulation, moderate drift, moderate-quality session score. Red: below the 60% data or 0.90 group-weight limits.</text></svg>
   <figcaption><b>Figure 5. What each remedy removed.</b> <span class="tier t-sim">Simulated</span> The first paper's formula removed about 7% of the lean. Raw-score weighting reached the target only by cutting night-shift workers' weight to under half. Shorter sessions, breaks and hourly pay removed about 30% with no data lost and no group penalised. All under the simulation's assumptions.</figcaption>
- <p><b>What the simulation assumed, and where the ranking reverses.</b> The source fix was modelled as improving average state by 0.15 standard deviations: a scenario, not an estimate. In a scenario where drift appears only in badly depleted sessions concentrated in night queues, sharp within-person weighting removed 55% of the lean, more than the source fix, but kept only 47% of the data. The simulation can make the recommendation lose; it won only under the central scenario. Study 2 tests which holds in real work.</p></figure>
+ <p><b>What the simulation assumed, and where the ranking reverses.</b> The source fix is a bundle (capped sessions, enforced breaks, hourly pay) modelled as one assumption: it lowers average session depletion by 0.15 on the model's 0–1 scale. That number is a scenario, not a simulated mechanism or an estimate. Varying it shows what is robust. Lowering depletion by 0.05, 0.10, 0.15 or 0.20 removed about 11%, 22%, 32% or 44% of the lean (400 replications each, Monte Carlo error about 1 point), against about 8% for the first paper's formula and 19% for sharp within-person weighting in the same rerun. So the direction (prevention beats gentle weighting) held at every size tried; beating sharp weighting needed at least 0.10; the 30% figure itself is assumption-dependent. In a scenario where drift appears only in badly depleted sessions concentrated in night queues, sharp within-person weighting removed 55% of the lean, more than the source fix, but kept only 47% of the data. Study 2 tests which holds in real work.</p></figure>
  <p>CWHF now names a programme, not a formula. It runs in four steps, cheapest first:</p>
  <table>
   <thead><tr><th>Step</th><th>What it does</th><th>Depends on</th></tr></thead>
   <tbody>
-   <tr><td><b>1 · Record</b></td><td>Store session length, position, time of day, pay model and a two-item check-in with every label</td><td>Nothing. Useful even if H1 fails</td></tr>
+   <tr><td><b>1 · Record</b></td><td>Store session length, position, time of day, pay model and a two-item check-in with every label (schema in Appendix C)</td><td>Nothing. Useful even if H1 fails</td></tr>
    <tr><td><b>2 · Prevent</b></td><td>Cap sessions, enforce breaks, pay by the hour, keep hard items away from the end of long queues</td><td>H1, to justify the cost</td></tr>
    <tr><td><b>3 · Weight</b></td><td>Down-weight a person's own worst sessions, never comparing people with each other</td><td>H2 passing all its conditions</td></tr>
    <tr><td><b>4 · Audit</b></td><td>Publish the lean, the data kept and every group's weight for each training set</td><td>Steps 1–3</td></tr>
@@ -317,7 +415,20 @@ li{margin:0 0 1.3mm}
  </table>
  <p><b>Adopt now, before any result:</b> record conditions with every label, state collection conditions in every dataset card, avoid per-item pay and long unbroken queues, and compare the style of answers that win product feedback early versus late in sessions before training on it.</p>
  <p><b>What a lab gets in the first quarter.</b> Honestly, nothing measurable until H1 and H2 report. What makes it worth starting anyway: step 1 is a handful of logging fields most platforms already hold, and a retrospective check of existing thumbs data against session position (H4) needs days, not a study. For high-risk systems, Article 10 of the EU AI Act requires data governance that includes examining possible biases; condition records and step-4 audits could support that documentation. That is a possible use, not a compliance claim.</p>
- <p><b>Rules for step 1.</b> A log of anyone's state is a surveillance risk in its own right. It is kept for data quality only, stored apart from identity, deleted or aggregated within a stated period, accessed by a named few with every access logged, visible to the rater, and reported only in aggregate. It never affects pay, ranking or continued work.</p>
+ <p><b>What each step costs.</b> Step 1 costs a few logging fields and a retention policy. Step 2 is the expensive one: capped sessions and hourly pay lower throughput per rater. Step 3 costs almost nothing to compute and is only worth doing if H2 passes. Step 4 costs analyst time per training set. A lab that adopts step 1 now and defers step 2 is making a defensible choice, provided it publishes the deferral; that is what step 4 is for.</p>
+ <div class="note"><b>Rules for step 1, as a protocol.</b> (1) <i>Purpose:</i> data quality only; never pay, ranking, discipline or continued work. (2) <i>Separation:</i> condition records keyed to a salted pseudonym, stored apart from identity. (3) <i>Minimisation:</i> only the Appendix C fields; no biometrics, webcam or wearable data. (4) <i>Retention:</i> raw records deleted or aggregated within a stated period. (5) <i>Access:</i> a named few, every access logged. (6) <i>Reporting:</i> aggregate only, with small groups suppressed. (7) <i>Rights:</i> raters may skip the check-in without penalty, see their own records, contest them and ask for deletion. A lab that will not accept these terms should not adopt step 1: a state log without them is worse than none.</div>
+ <p><b>How H2 will be judged.</b> Each pass condition has an operational definition, fixed with the registration (full text in the technical supplement).</p>
+ <table>
+  <thead><tr><th style="width:22%">Criterion</th><th>Specification</th></tr></thead>
+  <tbody>
+   <tr><td>Lean reduced</td><td>|lean| against a reflective benchmark from at least 100 separate people, reduced by ≥ 25% relative to equal weights, with the 95% bootstrap interval (people and items resampled) excluding zero</td></tr>
+   <tr><td>Beats existing practice</td><td>Larger reduction than both an attention-check filter and Dawid–Skene reliability weighting, tuned as standard</td></tr>
+   <tr><td>Data kept</td><td>Effective sample size (Σw)² / Σw² ≥ 60% of labels</td></tr>
+   <tr><td>No group harmed</td><td>Every language, region and shift group's mean weight within 0.90–1.10 of the others', judged on its interval, not on a non-significant difference; no group's lean higher after weighting than before</td></tr>
+   <tr><td>Prevention tested, not assumed</td><td>A source-fix arm (capped sessions, breaks, hourly pay, equal weights). If it reduces lean as much as the best weighting method, weighting is not recommended</td></tr>
+   <tr><td>Robust to gaming</td><td>Reported separately for raters whose check-in answers shift once weights exist; a large drop in benefit is reported as a failure of weighting</td></tr>
+  </tbody>
+ </table>
  <p><b>Two known weak points.</b> If session scores ever influence weights, raters may learn to perform alertness and platforms may build shadow scores; scores are therefore never shown to managers or used per person, anchor items are harder to game than self-reports, and audits look for gaming. And comparing people only with themselves has a blind spot: someone who is always depleted looks normal against their own baseline. Prevention, not weighting, is the remedy for that.</p>
  <div class="callouts">
   <div class="box means"><span class="k">That means</span><p>Bad working conditions may be a data-quality problem, not only a welfare problem. In the simulation, the cheapest fix was also the fairest; Study 2 tests whether that holds in practice.</p></div>
@@ -329,13 +440,15 @@ li{margin:0 0 1.3mm}
  <h2><span class="num">09</span>How far one result travels</h2>
  <p class="lede">H1 is the first link in a chain of separately testable questions. Each needs its own data.</p>
  <figure><svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Six linked tests from paid raters to model behaviour; each needs its own data"><defs><marker id="a6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="#8A8F99"/></marker></defs><rect x="20" y="60" width="108" height="110" rx="12" fill="#D5EEE9" stroke="#0F766E"/><text x="74.0" y="92" font-family="Fraunces, Georgia, serif" font-size="20" fill="#0F766E" text-anchor="middle" font-weight="400">H1</text><text x="74.0" y="120" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#14161B" text-anchor="middle" font-weight="600">Paid raters</text><text x="74.0" y="140" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">lab experiment</text><line x1="129" y1="115" x2="143" y2="115" stroke="#8A8F99" stroke-width="1.4" marker-end="url(#a6)"/><rect x="145" y="60" width="108" height="110" rx="12" fill="#D5EEE9" stroke="#0F766E"/><text x="199.0" y="92" font-family="Fraunces, Georgia, serif" font-size="20" fill="#0F766E" text-anchor="middle" font-weight="400">H2</text><text x="199.0" y="120" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#14161B" text-anchor="middle" font-weight="600">Ordinary labelling</text><text x="199.0" y="140" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">remedies compared</text><line x1="254" y1="115" x2="268" y2="115" stroke="#8A8F99" stroke-width="1.4" marker-end="url(#a6)"/><rect x="270" y="60" width="108" height="110" rx="12" fill="#F3E6CC" stroke="#94661A"/><text x="324.0" y="92" font-family="Fraunces, Georgia, serif" font-size="20" fill="#94661A" text-anchor="middle" font-weight="400">H3</text><text x="324.0" y="120" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#14161B" text-anchor="middle" font-weight="600">Public votes</text><text x="324.0" y="140" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">public Arena data</text><line x1="379" y1="115" x2="393" y2="115" stroke="#8A8F99" stroke-width="1.4" marker-end="url(#a6)"/><rect x="395" y="60" width="108" height="110" rx="12" fill="#F3E6CC" stroke="#94661A"/><text x="449.0" y="92" font-family="Fraunces, Georgia, serif" font-size="20" fill="#94661A" text-anchor="middle" font-weight="400">H4</text><text x="449.0" y="120" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#14161B" text-anchor="middle" font-weight="600">Product thumbs</text><text x="449.0" y="140" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">developer data</text><line x1="504" y1="115" x2="518" y2="115" stroke="#8A8F99" stroke-width="1.4" marker-end="url(#a6)"/><rect x="520" y="60" width="108" height="110" rx="12" fill="#F3E6CC" stroke="#94661A"/><text x="574.0" y="92" font-family="Fraunces, Georgia, serif" font-size="20" fill="#94661A" text-anchor="middle" font-weight="400">H5</text><text x="574.0" y="120" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#14161B" text-anchor="middle" font-weight="600">Engagement</text><text x="574.0" y="140" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">platform logs</text><line x1="629" y1="115" x2="643" y2="115" stroke="#8A8F99" stroke-width="1.4" marker-end="url(#a6)"/><rect x="645" y="60" width="108" height="110" rx="12" fill="#EEECE8" stroke="#14161B"/><text x="699.0" y="92" font-family="Fraunces, Georgia, serif" font-size="20" fill="#14161B" text-anchor="middle" font-weight="400">H6</text><text x="699.0" y="120" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#14161B" text-anchor="middle" font-weight="600">Model behaviour</text><text x="699.0" y="140" font-family="Hanken Grotesk, Inter, sans-serif" font-size="10.5" fill="#5B6270" text-anchor="middle" font-weight="400">does fixing it help?</text><rect x="20" y="20" width="233" height="24" rx="4" fill="#D5EEE9"/><text x="136" y="36" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#0F766E" text-anchor="middle" font-weight="600">this programme</text><rect x="270" y="20" width="358" height="24" rx="4" fill="#F3E6CC"/><text x="449" y="36" font-family="Hanken Grotesk, Inter, sans-serif" font-size="11" fill="#94661A" text-anchor="middle" font-weight="600">signals from everyone else</text><text x="380" y="200" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#14161B" text-anchor="middle" font-weight="400" font-style="italic">A positive answer at one link justifies the next test. It does not answer it.</text><text x="380" y="222" font-family="Hanken Grotesk, Inter, sans-serif" font-size="12" fill="#5B6270" text-anchor="middle" font-weight="400" font-style="italic">A precise null constrains this mechanism here; other sources of divergence remain.</text></svg>
-  <figcaption><b>Figure 6. One result, six tests.</b> H1 and H2 are this programme. H3 can run now on public data. H4 to H6 need data held by AI developers and platforms, and are offered to them as open questions.</figcaption></figure>
+  <figcaption><b>Figure 6. One result, six tests.</b> H1 and H2 are this programme. H3 can run now on public data. H4 to H6 need data held by AI developers and platforms, and are offered to them as open questions, not as part of the current studies. A positive H1 justifies testing the next link; it does not answer it. A null H1 clears nothing downstream.</figcaption></figure>
  <h3>Study 3: the same question in public votes</h3>
  <p>Chatbot Arena's public release records, for each vote, the two models, both answers, the vote, an anonymised user ID and a timestamp. Study 3 groups each user's votes into sittings and asks whether the chance of choosing the more confident, more agreeable or longer answer rises with position in the sitting, comparing each voter only with themselves. It needs no new participants, only research time; it can start now; and it is the one place length can be tested fairly.</p>
- <p>It is observational. Later votes differ from earlier ones in more ways than fatigue: topics drift within a sitting, model pairs vary in difficulty, and voters learn. The registration will list these confounds and the controls for each. A positive slope is a reason for H4, not evidence of cause. A flat slope in a large sample would count against the wider claim.</p>
+ <div class="note"><b>Study 3 analysis plan in brief.</b> <i>Sitting:</i> consecutive votes by one user ID with no gap over 30 minutes. <i>Styles, fixed in advance and scored blind to position:</i> difference between the two answers in hedging words (a published lexicon), in agreement with a view stated in the prompt (a classifier validated on 300 human-coded pairs) and in length. <i>Model:</i> logistic regression of choosing the higher-style answer on position in sitting, with user, model-pair and prompt-category fixed effects and standard errors clustered by user; one model per style; one-sided test of a positive slope, Holm-corrected across the three styles. Time of day is not used, because timestamps are not in voters' local time. <i>Order of work:</i> the analysis script is released with the registration, before the data are opened. <i>Effort:</i> a few weeks of one analyst's time.</div>
+ <p>It is observational. Later votes differ from earlier ones in more ways than fatigue: topics drift within a sitting, model pairs vary in difficulty, and voters learn. User fixed effects absorb who keeps voting; prompt-category effects absorb some topic drift; the rest is a stated limit. A positive slope is a reason for H4, not evidence of cause. A flat slope in a large sample would count against the wider claim.</p>
+ <p><b>What H6 would need.</b> Comparable reward models or preference predictors trained on the same pairs under four regimes (original labels; labels with condition fields; labels from a source-fixed arm; condition-aware weighting), and evaluated on held-out reflective preferences, sensitivity to answer style, sycophancy evaluations, calibration and robustness across rater groups. A smaller lean in the data is not, by itself, better alignment; H6 is where that would be shown or not.</p>
  <div class="callouts">
-  <div class="box means"><span class="k">That means</span><p>The first real data on this question can come from a public dataset, before any lab study is funded.</p></div>
-  <div class="box sowhat"><span class="k">So what</span><p>Developers who hold thumbs data with session metadata can run H4 in an afternoon. This paper is an invitation to do so.</p></div>
+  <div class="box means"><span class="k">That means</span><p>Real, if observational, evidence on this question can come from a public dataset before any lab study is funded.</p></div>
+  <div class="box sowhat"><span class="k">So what</span><p>Developers who hold thumbs data with timestamps and session IDs can run H4 with the Study 3 plan. The author offers to analyse such data jointly and to publish the result whichever way it falls.</p></div>
  </div>
 </section>
 
@@ -345,18 +458,31 @@ li{margin:0 0 1.3mm}
  <table>
   <thead><tr><th style="width:38%">Objection</th><th>Answer</th></tr></thead>
   <tbody>
-   <tr><td>"The reflective choice is not the right reference."</td><td>Agreed that it is a convention. The test only asks whether the gap has a direction, and a directional gap biases data whichever reference one prefers.</td></tr>
+   <tr><td>"The reflective choice is just another biased state, such as boredom or over-thinking."</td><td>It may be. Policy evaluation always needs a stated reference (Bernheim and Rangel, 2009), and this one is chosen for testability. The test only asks whether the gap has a direction: if fast choices are the better ones, or neither is, a directional gap still means the data average to neither.</td></tr>
    <tr><td>"You are extrapolating from 60 people to billions of users."</td><td>No. The general claim is established separately; the step to wild signals is stated as plausibility, and each channel needs its own test.</td></tr>
    <tr><td>"A lab task is not real labelling work."</td><td>True. Study 1 tests whether the effect can exist; Study 2 tests whether it appears in ordinary sessions.</td></tr>
    <tr><td>"Pressure might make people more accurate."</td><td>Then D is near zero or negative and H1 fails. The design allows that outcome.</td></tr>
-   <tr><td>"Three points is too small to matter."</td><td>Across a million labels it is 30,000 choices in one direction. The threshold is fixed in advance so it cannot move after the data.</td></tr>
+   <tr><td>"Three points is too small to matter, or was picked to suit the sample."</td><td>It is partly set by the design, as Section 3 says. It is fixed in advance, reported with the full interval, and anyone may apply their own threshold.</td></tr>
+   <tr><td>"This is just noise, which Kahneman and colleagues already described."</td><td>Noise is variance, and averaging reduces it. The question here is whether the error has a sign, which averaging does not remove.</td></tr>
+   <tr><td>"Rushed people pick whatever is on one side."</td><td>The attractor's side is randomised per item and person; in simulation, strong side bias produced no false positives beyond the 5% expected.</td></tr>
+   <tr><td>"Why not a field study of real shift boundaries?"</td><td>It would have more external validity and no causal identification. Study 1 trades realism for a within-person causal estimate; Studies 2 and 3 restore the field side.</td></tr>
+   <tr><td>"A rater's preferences may legitimately change."</td><td>A week apart they may. The control arm measures how far reflective choices move without pressure; D is read against that.</td></tr>
    <tr><td>"OpenAI already found and fixed sycophancy."</td><td>That incident shows the pathway exists. It does not show why the signal leaned, or that other signals are free of it.</td></tr>
    <tr><td>"Raters will game a state score."</td><td>Possibly, if scores ever affect weights. Scores are never used per person or shown to managers, anchor items are harder to game than self-reports, and prevention needs no score at all.</td></tr>
    <tr><td>"Kopteva and Hlynianyi-Zhuk already proposed this."</td><td>They proposed rater state as a structured bias with an observational audit. This paper adds the experiment that can show whether pressure causes a directional shift. Complementary, and an invitation to collaborate.</td></tr>
    <tr><td>"The simulation proves nothing."</td><td>Correct. It shows the design works under stated assumptions. The real study will show whether the assumptions hold.</td></tr>
   </tbody>
  </table>
- <p><b>Further limits.</b> Only two attractor styles are tested; the first study runs in one language; the items are constructed rather than real model outputs; and time pressure is not the same as fatigue at the end of a long shift. Each limit is a reason for a follow-up, named in the roadmap.</p>
+ <p><b>Limits we acknowledge.</b> Only two attractor styles are tested. The study runs in one language. The items are constructed, not real model outputs, and the 48 primary items are specified but not yet written; Study 1 can be no better than its item bank, so the full bank, reviewer notes and disputed items will be published with the data. Time pressure for twenty minutes is not fatigue at the end of a long shift. The manipulation check is self-reported. The author designed the analysis, so he will not analyse the confirmatory data unblinded, and the primary analysis script will be frozen before recruitment.</p>
+ <h3>Pre-mortem: if this is wrong in three years, why?</h3>
+ <ul>
+  <li><b>The wrong attractor.</b> In real labelling the style that gains under pressure may be shorter, safer or more hedged answers, not confident or agreeable ones. H1 could fail while a lean exists.</li>
+  <li><b>The wrong pressure.</b> A timer and a memory load are not end-of-shift fatigue, money worries or loneliness. A lab effect may not generalise.</li>
+  <li><b>The wrong population.</b> Paid participants who know they are in a study may behave differently from annotators paid by throughput.</li>
+  <li><b>Lab is not field.</b> H1 can pass while H2 to H6 fail.</li>
+  <li><b>No problem to solve.</b> Existing rater-quality methods, or the averaging inside reward-model training, may already absorb the effect. H2 and H6 test this; the paper does not assume otherwise.</li>
+ </ul>
+ <p>If any of these proves true, the result is published, logged in the changelog, and the affected claim is narrowed or withdrawn, not defended.</p>
 </section>
 
 <section class="sec">
@@ -364,10 +490,13 @@ li{margin:0 0 1.3mm}
  <p class="lede">The risk is less in the study than in what is done with its results.</p>
  <p><b>The study.</b> Both experimental studies run only after independent ethics approval. The manipulation is mild and reversible: a timer and a number to remember. Participants know one session will be rushed, are paid the same regardless of speed or accuracy, and can stop at any time.</p>
  <p><b>Equity.</b> A state score can easily become a proxy for who someone is: shift workers, carers, older people, second-language readers. The simulation showed this happens even with a perfect state measure. Hence three standing rules: compare each person only with themselves; protect every group's weight and outcome; and never let a score affect anyone's pay or work.</p>
+ <p><b>Data protection.</b> Condition records about identifiable raters are personal data under the GDPR and India's Digital Personal Data Protection Act 2023. Step 1 therefore needs a lawful basis, purpose limitation, minimisation, stated retention and rights of access and deletion, and an adopter should say where the records are processed. This is a design requirement, not legal advice.</p>
+ <p><b>Dual use.</b> A record of rater condition can be turned into a tool to screen, rank or drop workers, and nothing in the method prevents that. The conditions of use forbid it, but a condition of use is not enforcement. Adopters are asked to publish their recording policy, accept external audit of how records are used, and give raters the right to see and contest their own records.</p>
  <p><b>Beyond annotation.</b> For end users, CWHF applies only in aggregate. Inferring an individual's state from their behaviour, and using it to decide what they are shown, is outside CWHF and contrary to its conditions of use. No webcam, wearable or biometric inference, ever.</p>
  <p><b>Reliability is not goodness.</b> A calm, consistent rater can still endorse a harmful answer. CWHF sits alongside content safety review; it never replaces it.</p>
+ <div class="note"><b>For standards and policy readers.</b> The programme proposes one auditable artefact: a conditions card attached to each training dataset, listing how labels were made (session lengths, pay model, check-in summaries), the measured lean, the data kept and every group's weight. It needs no disclosure of model internals and no new data from regulators; only that the conditions of human judgment be recorded where the label is made. It extends datasheets for datasets (Gebru et al., 2021) to the annotation layer. For high-risk systems, such a card could support the data-governance documentation of EU AI Act Article 10; that is a possible use, not a compliance claim.</div>
  <div class="callouts one">
-  <div class="box sowhat"><span class="k">So what</span><p>The most effective remedy found, better working conditions, is also the one that benefits the people producing the data.</p></div>
+  <div class="box sowhat"><span class="k">So what</span><p>In simulation, the most effective remedy, better working conditions, is also the one that benefits the people producing the data. Whether that holds in practice is what Study 2 tests.</p></div>
  </div>
 </section>
 
@@ -385,11 +514,28 @@ li{margin:0 0 1.3mm}
    <tr><td>Recursive state-capture of populations</td><td>Plausible loop, no evidence</td><td>Stated as a hypothesis only</td></tr>
    <tr><td>Weighting by a coherence score as the fix</td><td>Simulation: about 7% of the lean removed</td><td>Record, prevent, weight, audit</td></tr>
    <tr><td>The registered H1 design and π ≥ 0.60 rule</td><td>Four design flaws (Section 7)</td><td>Revised H1–H3, to be registered</td></tr>
+   <tr><td>Coherence scores (c, Δc and related indices) in earlier companion material</td><td>Never validated</td><td>D and M; the scores are retired</td></tr>
   </tbody>
  </table>
- <div class="callouts">
-  <div class="box means"><span class="k">That means</span><p>The idea survived its own audit. Most of the scaffolding around it did not.</p></div>
-  <div class="box sowhat"><span class="k">So what</span><p>Retiring claims in public is the price of being taken seriously, and the strongest signal that the remaining ones are meant.</p></div>
+ <h3>What this paper stands behind</h3>
+ <table>
+  <thead><tr><th>Claim</th><th>Status</th><th>Basis</th></tr></thead>
+  <tbody>
+   <tr><td>Professional judgments shift with state, in one direction</td><td><span class="tier t-est">Established</span></td><td>Linder et al., 2014; Sievertsen et al., 2016</td></tr>
+   <tr><td>Raters of AI output favour agreeable, assertive or longer answers</td><td><span class="tier t-est">Established</span></td><td>Sharma et al., 2023; Hosking et al., 2023; Singhal et al., 2023</td></tr>
+   <tr><td>User feedback has reached a reward model and moved a deployed model</td><td><span class="tier t-est">Established</span></td><td>OpenAI, 2025</td></tr>
+   <tr><td>Public preference releases carry no rater-condition fields</td><td><span class="tier t-est">Established</span></td><td>HH-RLHF, SHP, Chatbot Arena releases</td></tr>
+   <tr><td>The planned test detects a 6-point drift 99.7% of the time at 60 people, with 5.3% false alarms</td><td><span class="tier t-sim">Simulated</span></td><td>2,000 replications; open code</td></tr>
+   <tr><td>Fixing conditions removed more lean than the first paper's formula</td><td><span class="tier t-sim">Simulated</span></td><td>About 30% against 7%; direction robust to the assumed size, magnitude not</td></tr>
+   <tr><td>Pressure shifts choices toward the attractor</td><td><span class="tier t-hyp">Hypothesis</span></td><td>H1, untested</td></tr>
+   <tr><td>The reflective choice is the right reference</td><td>A stated convention</td><td>Section 5; objections in Section 10</td></tr>
+   <tr><td>A lean of this size matters at training scale</td><td><span class="tier t-hyp">Hypothesis</span></td><td>H6; not claimed, only unmeasured</td></tr>
+  </tbody>
+ </table>
+ <h3>Changes in version 1.1</h3>
+ <p class="small">After a second adversarial review round (13 reviewers): estimand and switch identity for D and M; alternative-explanations table; worked example; committed result sentences; power by spread and a simulation check of the sample-size rule; side-bias simulation; sensitivity of the source-fix result to its assumed size (and correction of its description from "0.15 standard deviations" to "0.15 on a 0–1 depletion scale"); H2 criteria table; Study 3 plan; related-work table; pre-mortem; data-protection, dual-use and policy notes; conditions schema (Appendix C); reproducibility map (Appendix B); cost figures made consistent. No hypothesis, threshold or decision rule was loosened.</p>
+ <div class="callouts one">
+  <div class="box means"><span class="k">That means</span><p>The idea survived its own audit. Most of the scaffolding around it did not, and what remains is listed above with its status.</p></div>
  </div>
 </section>
 
@@ -399,21 +545,37 @@ li{margin:0 0 1.3mm}
   <thead><tr><th>Stage</th><th>What</th><th>Status</th></tr></thead>
   <tbody>
    <tr><td>0</td><td>This paper, the companion lab and the simulation code, published openly</td><td>Now</td></tr>
-   <tr><td>1</td><td>Register the revised H1, H2 and H3 on OSF</td><td>Next</td></tr>
-   <tr><td>1b</td><td>Study 3 on public Chatbot Arena data</td><td>Can start now; no recruitment</td></tr>
-   <tr><td>2</td><td>Write and pilot the 48-item question bank</td><td>Next</td></tr>
+   <tr><td>1</td><td>Register the revised H1, H2 and H3 on OSF, with the Study 3 script</td><td>Next</td></tr>
+   <tr><td>1b</td><td>Study 3 on public Chatbot Arena data</td><td>No recruitment; a few weeks of one analyst</td></tr>
+   <tr><td>2</td><td>Write, review and pilot the 48-item question bank (the main bottleneck before Study 1; validation in Appendix A)</td><td>Next</td></tr>
    <tr><td>3</td><td>Ethics approval through a university partner</td><td>Needs a collaborator</td></tr>
    <tr><td>4</td><td>Study 1: about 72 recruited for 60 analysable, plus a 12-person control arm</td><td>$3,000–11,000</td></tr>
    <tr><td>5</td><td>Study 2, if Study 1 is confirmed</td><td>Reuses Study 1</td></tr>
    <tr><td>6</td><td>H4–H6 with developers and platforms that hold the data</td><td>By invitation</td></tr>
   </tbody>
  </table>
+ <h3>What each result would lead to</h3>
+ <table>
+  <thead><tr><th>Result</th><th>Next action</th></tr></thead>
+  <tbody>
+   <tr><td>H1 supported or exceeds the threshold</td><td>Independent replication; Study 2</td></tr>
+   <tr><td>H1 directional but small</td><td>Report; refine the utility case before any remedy</td></tr>
+   <tr><td>H1 precise null (upper bound below 3)</td><td>Publish; narrow the programme to record and audit; no weighting</td></tr>
+   <tr><td>H1 null with a wide interval</td><td>Inconclusive; improve precision or redesign</td></tr>
+   <tr><td>H1 reverse</td><td>Investigate what pressure protects against; the attractor model is withdrawn for this task</td></tr>
+   <tr><td>H1 holds only for some items or groups</td><td>Replicate; study moderators before generalising</td></tr>
+   <tr><td>H1 holds, H2 fails</td><td>Do not promote weighting; recommend record, prevent and audit</td></tr>
+   <tr><td>H2 passes, H6 finds no model-level change</td><td>Reassess the downstream mechanism; data quality alone is not alignment</td></tr>
+  </tbody>
+ </table>
+ <p><b>Who runs it, and when it stops.</b> An independent researcher has no laboratory, and one advantage that matters here: a negative result threatens no grant, team or product. The confirmatory studies will run under an independent principal investigator at a partner institution, with no co-authorship history with the author; no participant data will be collected until that person and an ethics approval are in place. If none of stages 1–4 finds support or a partner within twelve months, the programme pauses and says so in public.</p>
  <h3>How to take part</h3>
  <ul>
   <li><b>Take the flip test</b> in the companion lab at twopointsingularity.com/lab. It is a demonstration, not research participation, and says nothing about you.</li>
   <li><b>Rerun the simulation.</b> Code, seeds and outputs are open at github.com/venramak/twopointsingularity-cwhf. Change the assumptions and see whether the conclusions hold.</li>
   <li><b>Review the items.</b> Anyone who finds a question with two defensible answers improves the study directly.</li>
-  <li><b>Collaborate.</b> University researchers who can provide ethics review, and teams who could record step 1 in their pipelines or run H4, are invited to write to venkat@twopointsingularity.com.</li>
+  <li><b>Collaborate.</b> University researchers who can provide ethics review or serve as principal investigator, and teams who could record step 1 in their pipelines or run H4, are invited to write to venkat@twopointsingularity.com.</li>
+  <li><b>Report a flaw.</b> Open an issue in the repository. Every accepted correction is logged in public, with its date.</li>
  </ul>
  <p class="pull">The question is small enough to test and large enough to matter. The next step is data.</p>
 </section>
@@ -422,9 +584,10 @@ li{margin:0 0 1.3mm}
  <h2>Declarations</h2>
  <p><b>Funding.</b> None.</p>
  <p><b>Conflicts of interest.</b> The author publishes books on related themes under Two Point Singularity and has a commercial interest in that wider work. He will not serve as principal investigator of the confirmatory studies.</p>
- <p><b>Use of AI assistance.</b> Literature checks, simulation code, analysis and drafting were carried out with the help of an AI assistant (Claude, Anthropic). The author directed the work and made every decision. Every citation was checked against its original source before release, and the simulation code was reviewed for agreement with the written protocol. The author takes full responsibility for all claims and errors.</p>
- <p><b>Data and code.</b> No human data were collected for this paper. The simulation code is released under Apache-2.0, and its seeds, outputs, the full protocol and the pre-registration text under CC BY 4.0, at github.com/venramak/twopointsingularity-cwhf. The companion lab sets no cookies and uses no browser storage or analytics; its only outside request is for web fonts.</p>
- <p><b>Relationship to earlier work.</b> This paper follows and supersedes the claims of Rao (2026a). The earlier H1 registration (OSF W7NYH) remains on record; the revised hypotheses will be registered before any data are collected or opened.</p>
+ <p><b>Use of AI assistance.</b> An AI assistant (Claude, Anthropic) was used for literature retrieval, simulation code, analysis scripts and drafting, and to simulate hostile review panels. The author set the question, the hypotheses, the thresholds and the decision rules, chose which review points to adopt, and made every normative and interpretive judgment. Citations were checked against their original sources; one reference found to be misattributed in an earlier draft was corrected. The simulation code was checked against the written protocol, and its outputs regenerate every simulated number in the paper. The author takes full responsibility for all claims and errors.</p>
+ <p><b>Data and code availability.</b> No human participant data were collected for this paper. The simulation code (Apache-2.0) and its seeds, outputs, the full protocol and the pre-registration text (CC BY 4.0) are at github.com/venramak/twopointsingularity-cwhf, release tag <code>paper-v1.1</code>. Participant-level data and analysis scripts from the empirical studies will be deposited with a DOI on completion. The companion lab sets no cookies and uses no browser storage or analytics; its only outside request is for web fonts.</p>
+ <p><b>Ethics.</b> No ethics application has been submitted yet. No participant data will be collected before approval by an independent research ethics committee at a partner institution.</p>
+ <p><b>Registration.</b> This paper follows and supersedes the claims of Rao (2026a). The earlier H1 registration (OSF W7NYH) remains on record. The revised H1–H3 are not yet registered; they will be registered before any data are collected or opened, and this paper will be updated with the link.</p>
  <p><b>Suggested citation.</b> Rao, V. (2026). <i>Signal ≠ Value: Does Pressure Bend the Human Feedback That Trains AI?</i> Two Point Singularity. Preprint. CC BY 4.0.</p>
 
  <h2 style="margin-top:9mm">References</h2>
@@ -433,27 +596,121 @@ li{margin:0 0 1.3mm}
   <li>Conlin, M., O'Donoghue, T., &amp; Vogelsang, T. J. (2007). Projection bias in catalog orders. <i>American Economic Review</i>, 97(4), 1217–1249.</li>
   <li>Dawid, A. P., &amp; Skene, A. M. (1979). Maximum likelihood estimation of observer error-rates using the EM algorithm. <i>Journal of the Royal Statistical Society C</i>, 28(1), 20–28.</li>
   <li>Ethayarajh, K., Choi, Y., &amp; Swayamdipta, S. (2022). Stanford Human Preferences (SHP) dataset. huggingface.co/datasets/stanfordnlp/SHP.</li>
+  <li>Friede, T., &amp; Kieser, M. (2006). Sample size recalculation in internal pilot study designs: a review. <i>Biometrical Journal</i>, 48(4), 537–555.</li>
   <li>Gao, L., Schulman, J., &amp; Hilton, J. (2023). Scaling laws for reward model overoptimization. <i>ICML 2023</i>. arXiv:2210.10760.</li>
+  <li>Gebru, T., Morgenstern, J., Vecchione, B., et al. (2021). Datasheets for datasets. <i>Communications of the ACM</i>, 64(12), 86–92.</li>
   <li>Hagger, M. S., Chatzisarantis, N. L. D., Alberts, H., et al. (2016). A multilab preregistered replication of the ego-depletion effect. <i>Perspectives on Psychological Science</i>, 11(4), 546–573.</li>
   <li>Hosking, T., Blunsom, P., &amp; Bartolo, M. (2023). Human feedback is not gold standard. arXiv:2309.16349.</li>
+  <li>Kahneman, D., Sibony, O., &amp; Sunstein, C. R. (2021). <i>Noise: A Flaw in Human Judgment</i>. Little, Brown Spark.</li>
   <li>Kleinberg, J., Mullainathan, S., &amp; Raghavan, M. (2022). The challenge of understanding what users want: inconsistent preferences and engagement optimization. arXiv:2202.11776.</li>
   <li>Kopteva, E., &amp; Hlynianyi-Zhuk, V. (2026). Rater state bias in RLHF preference data: an audit framework. arXiv:2607.16195.</li>
+  <li>Lakens, D., Scheel, A. M., &amp; Isager, P. M. (2018). Equivalence testing for psychological research: a tutorial. <i>Advances in Methods and Practices in Psychological Science</i>, 1(2), 259–269.</li>
   <li>Linder, J. A., Doctor, J. N., Friedberg, M. W., et al. (2014). Time of day and the decision to prescribe antibiotics. <i>JAMA Internal Medicine</i>, 174(12), 2029–2031.</li>
   <li>LMSYS (2023). Chatbot Arena conversation dataset release. lmsys.org/blog/2023-07-20-dataset.</li>
   <li>Milli, S., Carroll, M., Wang, Y., Pandey, S., Zhao, S., &amp; Dragan, A. D. (2023). Engagement, user satisfaction, and the amplification of divisive content on social media. arXiv:2305.16941.</li>
   <li>OpenAI (2025, 2 May). Expanding on what we missed with sycophancy. openai.com/index/expanding-on-sycophancy.</li>
+  <li>Orne, M. T. (1962). On the social psychology of the psychological experiment. <i>American Psychologist</i>, 17(11), 776–783.</li>
+  <li>Payne, J. W., Bettman, J. R., &amp; Johnson, E. J. (1993). <i>The Adaptive Decision Maker</i>. Cambridge University Press.</li>
   <li>Radford, A., Wu, J., Child, R., Luan, D., Amodei, D., &amp; Sutskever, I. (2019). Language models are unsupervised multitask learners. OpenAI.</li>
+  <li>Rafailov, R., Sharma, A., Mitchell, E., Ermon, S., Manning, C. D., &amp; Finn, C. (2023). Direct preference optimization: your language model is secretly a reward model. <i>NeurIPS 2023</i>. arXiv:2305.18290.</li>
+  <li>Raykar, V. C., Yu, S., Zhao, L. H., et al. (2010). Learning from crowds. <i>Journal of Machine Learning Research</i>, 11, 1297–1322.</li>
   <li>Rao, V. (2026a). The Coherence-Weighted Human Feedback (CWHF): correcting the foundational flaw in AI alignment. Zenodo. doi:10.5281/zenodo.19235970.</li>
     <li>Shafir, E., Simonson, I., &amp; Tversky, A. (1993). Reason-based choice. <i>Cognition</i>, 49(1–2), 11–36.</li>
   <li>Sharma, M., Tong, M., Korbak, T., et al. (2023). Towards understanding sycophancy in language models. arXiv:2310.13548.</li>
   <li>Sievertsen, H. H., Gino, F., &amp; Piovesan, M. (2016). Cognitive fatigue influences students' performance on standardized tests. <i>PNAS</i>, 113(10), 2621–2624.</li>
   <li>Singhal, P., Goyal, T., Xu, J., &amp; Durrett, G. (2023). A long way to go: investigating length correlations in RLHF. arXiv:2310.03716.</li>
+  <li>Snow, R., O'Connor, B., Jurafsky, D., &amp; Ng, A. Y. (2008). Cheap and fast, but is it good? Evaluating non-expert annotations for natural language tasks. <i>EMNLP 2008</i>, 254–263.</li>
+  <li>Svenson, O., &amp; Maule, A. J. (Eds.) (1993). <i>Time Pressure and Stress in Human Judgment and Decision Making</i>. Plenum Press.</li>
   <li>Regulation (EU) 2024/1689 (Artificial Intelligence Act), Article 10: Data and data governance. <i>Official Journal of the European Union</i>, L, 12 July 2024.</li>
+  <li>Digital Personal Data Protection Act, 2023 (India), No. 22 of 2023.</li>
   <li>Utz, C., Degeling, M., Fahl, S., Schaub, F., &amp; Holz, T. (2019). (Un)informed consent: studying GDPR consent notices in the field. arXiv:1909.02638.</li>
   <li>Vohs, K. D., Schmeichel, B. J., Lohmann, S., et al. (2021). A multisite preregistered paradigmatic test of the ego-depletion effect. <i>Psychological Science</i>, 32(10), 1566–1581.</li>
+  <li>Welinder, P., Branson, S., Belongie, S., &amp; Perona, P. (2010). The multidimensional wisdom of crowds. <i>NeurIPS 2010</i>.</li>
+  <li>Whitehill, J., Ruvolo, P., Wu, T., Bergsma, J., &amp; Movellan, J. (2009). Whose vote should count more: optimal integration of labels from labelers of unknown expertise. <i>NeurIPS 2009</i>.</li>
   <li>Wilson, T. D., &amp; Schooler, J. W. (1991). Thinking too much: introspection can reduce the quality of preferences and decisions. <i>Journal of Personality and Social Psychology</i>, 60(2), 181–192.</li>
   <li>Zheng, J., &amp; Meister, M. (2024). The unbearable slowness of being. arXiv:2408.10234.</li>
  </ul>
+</section>
+
+<section class="sec appx newpage">
+ <div class="k">Appendix A</div>
+ <h2 style="margin-top:2mm">H1 analysis plan in brief</h2>
+ <p class="small">The registration text in the technical supplement governs; this summary is for reviewers.</p>
+ <table>
+  <tbody>
+   <tr><td style="width:26%"><b>Estimand</b></td><td>Δ = E[D<sub>i</sub>], D<sub>i</sub> = P<sub>i</sub> − R<sub>i</sub> over primary items answered within time in both sessions (Section 5)</td></tr>
+   <tr><td><b>Analysis population</b></td><td>Everyone with ≥ 10 such items, regardless of the manipulation check, which gates interpretation, not inclusion. Exclusions: two or more failed attention checks; a reflective session under a third of the median time</td></tr>
+   <tr><td><b>Primary test</b></td><td>One-sample t-test of mean D &gt; 0, one-sided, α = 0.05; one-sided because the remedy question only arises if the lean has the predicted direction. A reverse effect is tested two-sided and reported as exploratory</td></tr>
+   <tr><td><b>Fallback</b></td><td>If a Shapiro–Wilk test on the D<sub>i</sub> rejects normality at α = 0.01, a Wilcoxon signed-rank test with the same decision table</td></tr>
+   <tr><td><b>Reported in all cases</b></td><td>Mean D, SD, 95% interval, exact p, d, share of people with D &gt; 0, mean M, and the same for the control arm</td></tr>
+   <tr><td><b>Sample size</b></td><td>60–100 by the blinded variance rule (Section 7), decided at 20 people and logged before recruitment continues</td></tr>
+   <tr><td><b>Timeouts</b></td><td>Excluded from D; sensitivity analyses count a timeout as each option in turn and exclude people with more than 30% timeouts</td></tr>
+   <tr><td><b>Multiplicity</b></td><td>Gatekeeping: style-level tests (confident, agreeable) are interpreted only if the overall test succeeds. Interaction, π, accuracy change, item-level and subgroup results are exploratory and enter no decision. H2 runs only if H1 is supported; H3 is observational with its own Holm correction</td></tr>
+   <tr><td><b>Robustness</b></td><td>Linear probability model of attractor choice on condition with person and item cluster-robust errors; order × condition; D on no-reason items; D where the attractor is wrong</td></tr>
+   <tr><td><b>Suspicion</b></td><td>People who name the attractor hypothesis unprompted are flagged, kept in the primary analysis and excluded in a sensitivity analysis; any difference above 1 point is reported</td></tr>
+   <tr><td><b>Exclusion sensitivity</b></td><td>The primary result is reported with and without each exclusion class. An exclusion class that changes the verdict is reported as such in the results abstract</td></tr>
+   <tr><td><b>Control arm</b></td><td>Twelve people, two reflective sessions ≥ 7 days apart. Its mean D (expected near zero) and SD are reported before the primary result. If its 95% interval excludes zero, the primary D is also reported net of the control mean</td></tr>
+   <tr><td><b>Item bank</b></td><td>48 primary items, 24 per style, attractor correct in exactly half of each, answers length-matched within 15%. Each item reviewed by two people blind to the attractor and correctness flags: one defensible correct answer? style identifiable? lengths matched? Accepted only if both agree on all three; agreement and every rejected item are published with a versioned bank</td></tr>
+   <tr><td><b>Blinding and code</b></td><td>The primary analysis script is frozen and released before recruitment; the author does not analyse confirmatory data unblinded</td></tr>
+  </tbody>
+ </table>
+</section>
+
+<section class="sec appx">
+ <div class="k">Appendix B</div>
+ <h2 style="margin-top:2mm">Simulation: model and reproducibility map</h2>
+ <p><b>H1 model.</b> For person <i>i</i> and item <i>j</i>, logit P<sub>R</sub>(attractor) = b<sub>i</sub> + e<sub>j</sub> + a<sub>i</sub>·clar<sub>j</sub>·C<sub>j</sub>, and logit P<sub>P</sub>(attractor) = b<sub>i</sub> + e<sub>j</sub> + (1 − att<sub>i</sub>)·a<sub>i</sub>·clar<sub>j</sub>·C<sub>j</sub> + pull<sub>i</sub>, with a lapse rate mixing in random choice under pressure. C<sub>j</sub> = +1 where the attractor is correct, −1 otherwise. Skill a, lapse, attenuation att, susceptibility to pull, reading speed and style preference b vary by persona; all persona values are invented and listed in <code>h1sim.py</code> and the technical supplement.</p>
+ <p><b>H2 model.</b> Raters label 600 items across sessions; each session has a depletion z in [0, 1]. Depletion raises lapses, lowers discrimination and, when a pull exists, moves choices toward the attractor. A session score combines a noisy two-item self-report with response-time variability. Lean is measured against the reflective population rate of each item. The source fix lowers mean depletion by 0.15 (sensitivity 0.05–0.20).</p>
+ <table>
+  <thead><tr><th>Number in the paper</th><th>Script</th><th>Replications, seed</th><th>Output</th></tr></thead>
+  <tbody>
+   <tr><td>5.3% false alarms; 99.7%, 80%, 36% detection; 96%, 48%, 12% significant and ≥ 3</td><td><code>persontest.py</code></td><td>2,000 (null), 600 (effects) at N = 60; seed N + reps</td><td><code>h1_person_test.json</code></td></tr>
+   <tr><td>Figure 4 curves; four design flaws</td><td><code>run_h1_grid.py</code>, <code>h1sim.py</code></td><td>400–1,000 per setting; seeds by setting</td><td><code>h1_results.json</code></td></tr>
+   <tr><td>Figure 5; 7%, 18%, 29%, 30%; 55% and 47% in the threshold scenario</td><td><code>h2sim.py 80</code></td><td>80 per scenario; seed 1000 × scenario index + 5</td><td><code>h2_results.json</code></td></tr>
+   <tr><td>Power by spread; sample-size rule (4.9%, 4.8%); side bias (4.6%); source-fix sensitivity (11–44%)</td><td><code>sensitivity.py</code></td><td>5,000–20,000 (rule), 4,000 (side bias), 400 (H2); seed 20261112</td><td><code>sensitivity_results.json</code></td></tr>
+  </tbody>
+ </table>
+ <p class="small">Python 3 with NumPy and SciPy. Reruns with the stated seeds reproduce the outputs exactly. The 400-replication H2 rerun in <code>sensitivity.py</code> agrees with the 80-replication headline figures within Monte Carlo error (gentle formula 8% against 7%; source fix 32% against 30%).</p>
+</section>
+
+<section class="sec appx newpage">
+ <div class="k">Appendix C</div>
+ <h2 style="margin-top:2mm">Conditions record: a minimum schema for step 1</h2>
+ <p>One record per label, joined to the label by its ID. It follows the lineage of datasheets for datasets (Gebru et al., 2021) and is useful however H1 turns out.</p>
+ <table>
+  <thead><tr><th>Field</th><th>Meaning</th><th>Required</th></tr></thead>
+  <tbody>
+   <tr><td><code>label_id</code></td><td>Joins to the label</td><td>Yes</td></tr>
+   <tr><td><code>rater_pseudonym</code></td><td>Salted hash, stored apart from identity</td><td>Yes</td></tr>
+   <tr><td><code>session_id</code>, <code>position_in_session</code></td><td>Which session, and the label's order within it</td><td>Yes</td></tr>
+   <tr><td><code>session_elapsed_min</code></td><td>Minutes since the session began</td><td>Yes</td></tr>
+   <tr><td><code>time_on_item_s</code></td><td>Seconds spent on this item</td><td>Yes</td></tr>
+   <tr><td><code>local_hour_bucket</code></td><td>Rater's local time in 3-hour bands</td><td>Yes</td></tr>
+   <tr><td><code>pay_model</code></td><td><code>hourly</code>, <code>per_item</code> or <code>other</code></td><td>Yes</td></tr>
+   <tr><td><code>checkin_alert_1to5</code>, <code>checkin_rushed_1to5</code></td><td>Two taps at session start; may be skipped without penalty</td><td>Optional</td></tr>
+   <tr><td><code>schema_version</code>, <code>consent_flags</code></td><td>Version of this schema; what the rater agreed to</td><td>Yes</td></tr>
+  </tbody>
+ </table>
+ <p><b>Do not record</b> names, contact details, demographics beyond what the study design needs, health, biometrics, webcam or wearable data, or anything inferred about a person's state from their behaviour. <b>Governance</b> follows the step 1 protocol in Section 8: purpose limited to data quality, aggregate reporting with small groups suppressed, stated retention, logged access, and rater rights to see, contest and delete. A machine-readable version is in the repository.</p>
+</section>
+
+<section class="sec appx">
+ <div class="k">Appendix D</div>
+ <h2 style="margin-top:2mm">Notation</h2>
+ <table>
+  <thead><tr><th style="width:18%">Symbol</th><th>Meaning</th><th style="width:16%">Section</th></tr></thead>
+  <tbody>
+   <tr><td>P<sub>i</sub>, R<sub>i</sub></td><td>Share of attractor choices under pressure, on reflection, for person i</td><td>5</td></tr>
+   <tr><td>u<sub>i</sub>, w<sub>i</sub></td><td>Items switched toward, away from the attractor</td><td>5</td></tr>
+   <tr><td>D<sub>i</sub>, D</td><td>Reflective–pressured choice gap for person i; its sample mean</td><td>5</td></tr>
+   <tr><td>M<sub>i</sub></td><td>Mismatch: share of items chosen differently in the two sessions</td><td>5</td></tr>
+   <tr><td>Δ</td><td>Population mean of D<sub>i</sub>: the estimand</td><td>5</td></tr>
+   <tr><td>SESOI</td><td>Smallest effect size of interest: 3 percentage points</td><td>3, 6</td></tr>
+   <tr><td>r̂, r*, p, δ</td><td>Learned reward; reward from reflective labels; share of reflective sessions; average lean per pressured session</td><td>3</td></tr>
+   <tr><td>ESS</td><td>Effective sample size, (Σw)² / Σw², as a share of labels</td><td>8</td></tr>
+   <tr><td>π</td><td>Share of changed answers that moved toward the attractor (descriptive only; its 0.60 rule is retired)</td><td>7, 12</td></tr>
+  </tbody>
+ </table>
 </section>
 
 </main>
