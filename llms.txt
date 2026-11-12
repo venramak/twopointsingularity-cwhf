@@ -11,12 +11,12 @@
 - [Neev](https://twopointsingularity.com/neev/): a five-part Hinglish series on why humans believe in stories; premieres Friday 8 January 2027, 7 pm IST.
 
 ## Research
-- [Signal ≠ Value Lab](https://twopointsingularity.com/lab/): the companion lab to the CWHF whitepaper v2.0: evidence, where human signals enter AI, a flip test, the full design simulation and the claims ledger. Also at https://cwhf.vercel.app/. Not evidence about real people; no data collected yet.
+- [Signal ≠ Value Lab](https://twopointsingularity.com/lab/): the companion lab to the paper Signal ≠ Value (2026): evidence, where human signals enter AI, a flip test, the full design simulation and the claims ledger. Also at https://cwhf.vercel.app/. Not evidence about real people; no data collected yet.
 - [Corrections and changes](https://twopointsingularity.com/corrections/): a public log.
 - [Coherence Intelligence: the signal is not the value](https://twopointsingularity.com/research/coherence-intelligence/): white paper v2.2; a framework for measuring the state behind human feedback. Theoretical; pre-registered; untested.
-- [CWHF: Coherence-Weighted Human Feedback](https://twopointsingularity.com/research/cwhf/): whether pressure leaves a consistent lean in human feedback used to train AI; whitepaper v2.0 (November 2026), three studies specified and simulated, not yet tested. Earlier registration OSF.IO/W7NYH.
-- [CWHF whitepaper v2.0 (PDF)](https://cwhf.vercel.app/whitepaper/CWHF-Whitepaper-v2.0.pdf): Signal ≠ Value: Coherence-Weighted Human Feedback, preprint, CC BY 4.0.
-- [CWHF code and simulation](https://github.com/venramak/twopointsingularity-cwhf): open source, CC BY 4.0.
+- [CWHF: Coherence-Weighted Human Feedback](https://twopointsingularity.com/research/cwhf/): whether pressure leaves a consistent lean in human feedback used to train AI; the paper Signal ≠ Value (November 2026): six tests specified, three simulated, not yet tested. Earlier registration OSF.IO/W7NYH.
+- [Signal ≠ Value (paper, PDF)](https://cwhf.vercel.app/paper/Signal-not-Value_Rao_2026.pdf): Does Pressure Bend the Human Feedback That Trains AI? Preprint, CC BY 4.0. Web version: https://cwhf.vercel.app/paper/. Technical supplement: https://cwhf.vercel.app/paper/Signal-not-Value_Technical-Supplement.pdf. Supersedes the claims of doi:10.5281/zenodo.19235970.
+- [CWHF code and simulation](https://github.com/venramak/twopointsingularity-cwhf): open source; text CC BY 4.0, code Apache-2.0.
 
 ## Books
 - [The Village Came First](https://twopointsingularity.com/books/village-came-first/): The village was the first story everyone believed. (Coming to Kindle)
