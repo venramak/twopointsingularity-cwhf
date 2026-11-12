@@ -884,19 +884,19 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
 .tool-hero>*{min-width:0}
 .idstrip a{display:inline-flex;align-items:center;min-height:24px}
 /* ===== v14: instruments (Lab + Neev app) ===== */
-.instr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,3vw,32px);margin-top:28px}
-.instr a{display:flex;flex-direction:column;gap:12px;padding:clamp(22px,3vw,36px);border:1px solid var(--line);background:var(--bg2);text-decoration:none;color:inherit;min-height:280px;transition:border-color .3s,transform .3s}
-.instr a:hover,.instr a:focus-visible{border-color:var(--gold);transform:translateY(-2px)}
-.instr .rl,.ways .rl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
-.instr h3{font-size:clamp(26px,3vw,38px);font-weight:300;margin:0;letter-spacing:-.01em}
-.instr p{font-family:var(--ui);font-size:16px;color:var(--mute);margin:0;max-width:40ch}
-.instr .go{margin-top:auto;font-family:var(--ui);font-size:15px;color:var(--fg);border-bottom:1px solid var(--gold);align-self:flex-start;padding-bottom:2px}
-.instr svg{width:100%;max-width:220px;height:64px;color:var(--mute)}
+.fork{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,3vw,32px);margin-top:28px}
+.fork a{display:flex;flex-direction:column;gap:12px;padding:clamp(22px,3vw,36px);border:1px solid var(--line);background:var(--bg2);text-decoration:none;color:inherit;min-height:280px;transition:border-color .3s,transform .3s}
+.fork a:hover,.fork a:focus-visible{border-color:var(--gold);transform:translateY(-2px)}
+.fork .rl,.ways .rl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.fork h3{font-size:clamp(26px,3vw,38px);font-weight:300;margin:0;letter-spacing:-.01em}
+.fork p{font-family:var(--ui);font-size:16px;color:var(--mute);margin:0;max-width:40ch}
+.fork .go{margin-top:auto;font-family:var(--ui);font-size:15px;color:var(--fg);border-bottom:1px solid var(--gold);align-self:flex-start;padding-bottom:2px}
+.fork svg{width:100%;max-width:220px;height:64px;color:var(--mute)}
 .ways{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,3vw,32px);margin-top:56px}
 .ways>div{display:flex;flex-direction:column;gap:8px;padding-top:18px;border-top:1px solid var(--line)}
 .ways b{font-size:22px;font-weight:400}
 .ways p{font-family:var(--ui);font-size:15px;color:var(--mute);margin:0}
-@media (max-width:760px){.instr,.ways{grid-template-columns:1fr}.instr a{min-height:0}}
+@media (max-width:760px){.fork,.ways{grid-template-columns:1fr}.fork a{min-height:0}}
 /* embed bench */
 .bench{border:1px solid var(--line);background:var(--bg2);margin-top:32px}
 .bench-bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px 18px;padding:10px 14px;border-bottom:1px solid var(--line)}
@@ -931,6 +931,26 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
 .evl .st{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border:1px solid currentColor;border-radius:var(--r);color:var(--mute)}
 .evl .st.done{color:var(--gold)}.evl .st.now{color:var(--neev)}
 @media (max-width:620px){.evl li{grid-template-columns:1fr}}
+
+/* ===== v15: the story ===== */
+.mv5{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.mv5 li{background:var(--bg);padding:20px 18px 22px;display:flex;flex-direction:column;gap:8px}
+.mv5 .n{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--gold)}
+.mv5 b{font-size:21px;font-weight:400;line-height:1.2}
+.mv5 p{font-family:var(--ui);font-size:14.5px;line-height:1.5;color:var(--mute);margin:0}
+@media (max-width:900px){.mv5{grid-template-columns:1fr}}
+.story{max-width:680px}
+.story .mv{padding:44px 0;border-top:1px solid var(--line)}
+.story .mv:first-child{border-top:0;padding-top:0}
+.story .mv .n{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.story .mv h3{font-size:clamp(30px,4vw,46px);font-weight:300;margin:10px 0 18px;letter-spacing:-.015em}
+.story .mv p{font-size:clamp(18px,1.6vw,21px);line-height:1.65;margin:0 0 16px}
+.story .close{font-size:clamp(26px,3.4vw,40px);font-weight:300;line-height:1.25;margin-top:12px}
+.claims{width:100%;border-collapse:collapse;margin-top:24px;font-family:var(--ui);font-size:15.5px}
+.claims td{padding:14px 12px 14px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.claims td:last-child{white-space:nowrap;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);padding-right:0;text-align:right}
+.claims tr.p td:last-child{color:var(--neev)}
+@media (max-width:620px){.claims td{display:block;padding:4px 0}.claims tr{display:block;padding:12px 0;border-bottom:1px solid var(--line)}.claims td{border:0}.claims td:last-child{text-align:left;white-space:normal}}
 </style>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} body{margin:0} img{max-width:100%} [hidden]{display:none!important}</style>
 </head>
@@ -945,7 +965,7 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
       Two Point Singularity
     </a>
     <nav class="main" aria-label="Main">
-      <a href="/what-is-two-point-singularity/">Understand</a>
+      <a href="/story/">Understand</a>
       <a href="/neev-app/">Reflect</a>
       <a href="/neev/">Watch<i class="dot-new" aria-label="new"></i></a>
       <a href="/books/">Read</a>
@@ -967,7 +987,7 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
 <div class="sheet" id="sheet" role="dialog" aria-label="Menu">
   <div class="eyebrow">Menu</div>
   <nav aria-label="Mobile">
-    <a href="/what-is-two-point-singularity/">Understand</a><a href="/neev-app/">Reflect</a><a href="/neev/">Watch</a>
+    <a href="/story/">Understand</a><a href="/neev-app/">Reflect</a><a href="/neev/">Watch</a>
     <a href="/books/">Read</a><a href="/lab/">Verify</a><a href="#retreat">The retreat</a>
     <a href="#writing">Writing</a><a href="#start">Start here</a><a href="#learn">Learn</a><a href="/about/">About</a>
   </nav>
@@ -1019,20 +1039,32 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
     </div>
   </div></section>
 
+  <section class="block" id="story5"><div class="wrap">
+    <div class="eyebrow">The story in five movements</div>
+    <h2 style="font-size:clamp(34px,4.4vw,58px);font-weight:300;margin-top:14px;letter-spacing:-.02em;max-width:22ch">One story. Every book, episode and test is a chapter of it.</h2>
+    <ol class="mv5">
+      <li><span class="n">1</span><b>Two hunters</b><p>No mind is enough alone, so we borrow each other’s.</p></li>
+      <li><span class="n">2</span><b>The village</b><p>You are made of a few people: the ones who come, the ones who tell you the truth, the ones who know your name.</p></li>
+      <li><span class="n">3</span><b>The drift</b><p>We kept the scale and lost the holding. What we signal drifts from what we value.</p></li>
+      <li><span class="n">4</span><b>The witness</b><p>Machines now learn from our signals, and cannot tell if we were held or alone.</p></li>
+      <li><span class="n">5</span><b>The foundation</b><p>The second singularity, humans holding each other, has to come first.</p></li>
+    </ol>
+    <a class="btn mag" href="/story/" style="margin-top:28px" data-evt="home_story">Read the story · 4 minutes</a>
+  </div></section>
   <section class="block" id="instruments"><div class="wrap">
-    <div class="eyebrow">Two instruments</div>
+    <div class="eyebrow">Two tracks</div>
     <h2 style="font-size:clamp(34px,4.4vw,58px);font-weight:300;margin-top:14px;letter-spacing:-.02em;max-width:20ch">Feel it. Then test it.</h2>
-    <p class="mute" style="font-family:var(--ui);font-size:17px;max-width:52ch;margin-top:14px">The idea has two halves. One can be felt: who holds you. One can be tested: whether the state of a person changes what their feedback means.</p>
-    <div class="instr">
+    <p class="mute" style="font-family:var(--ui);font-size:17px;max-width:52ch;margin-top:14px">The story has two ends. One is felt: who holds you. One can be tested: whether being held or alone changes what a person’s feedback means.</p>
+    <div class="fork">
       <a href="/neev-app/" data-evt="home_neev_app">
-        <span class="rl">Feel it · Neev app</span>
+        <span class="rl">Neev · feel it</span>
         <svg viewBox="0 0 220 64" aria-hidden="true" fill="none" stroke="currentColor"><circle cx="32" cy="32" r="6" fill="var(--gold)" stroke="none"/><circle cx="32" cy="32" r="15"/><circle cx="32" cy="32" r="25" stroke-dasharray="2 4"/><circle cx="32" cy="32" r="31" stroke-opacity=".4" stroke-dasharray="1 5"/></svg>
         <h3>Draw who holds you.</h3>
         <p>A short audit in your own answers. Free, private, no login. See that people need people in different ways.</p>
         <span class="go">Open the Neev app</span>
       </a>
       <a href="/lab/" data-evt="home_lab">
-        <span class="rl">Test it · Signal ≠ Value Lab</span>
+        <span class="rl">Signal ≠ Value · test it</span>
         <svg viewBox="0 0 220 64" aria-hidden="true"><rect x="0" y="10" width="150" height="10" fill="var(--gold)"/><rect x="0" y="34" width="100" height="10" fill="currentColor" opacity=".55"/><text x="158" y="19" font-size="11" fill="currentColor" font-family="monospace">signal</text><text x="108" y="43" font-size="11" fill="currentColor" font-family="monospace">value</text></svg>
         <h3>A thumbs-up is not the value.</h3>
         <p>The same person gives different feedback when they feel held and when they do not. Move the slider, then open the full lab.</p>
@@ -1331,6 +1363,8 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
       <div class="tri-static"><span class="rl">The correction</span><b>CWHF</b><p>Does pressure bend feedback, and what to do about it. Below.</p><span class="status wip">Paper 2026 · design simulated</span></div>
       <div class="tri-static"><span class="rl">The human side</span><b>The Coherence Lens</b><p>Relational structure and resilience. Below.</p><span class="status wip">v1.4</span></div>
     </div>
+    <div class="eyebrow" style="margin:56px 0 6px">How strong each link is</div>
+    <table class="claims"><tbody><tr><td>People rely on each other’s attention and judgement (distributed cognition, shared intentionality).</td><td>Well established</td></tr><tr><td>Human social networks are layered in circles of rough size.</td><td>Established pattern; exact numbers disputed</td></tr><tr><td>A person’s state (fatigue, mood, context, framing) changes their answers and choices.</td><td>Well established</td></tr><tr><td>Current AI training treats human feedback as state-free.</td><td>Largely true of current practice</td></tr><tr class="p"><td>The state-dependent error is directional and does not average out with scale.</td><td>Hypothesis · H1 tests this</td></tr><tr class="p"><td>Being well held moves feedback closer to the value it stands for.</td><td>Proposal · unproven</td></tr></tbody></table>
     <div class="eyebrow" style="margin:56px 0 28px">Coherence research</div>
     <div class="research-item">
       <div>
@@ -1399,7 +1433,7 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
   </div></section>
   <section class="block"><div class="wrap tw">
     <div class="eyebrow tl-ey">The four proposed instruments</div><h2 class="tl-h">Substrate, state, direction, trajectory.</h2>
-    <div class="instr"><div><span class="ins-s">C320</span><b>The substrate</b><p>A proposed profile of 64 skills across four layers (survival, functional, cognitive, meta), scored from 64 to 320. Two people with the same total can be built very differently.</p></div><div><span class="ins-s">c</span><b>The state</b><p>A proposed coherence score for a person at the moment they give a signal.</p></div><div><span class="ins-s">Δc</span><b>The direction</b><p>How c changes from one session to the next. The paper&#x27;s primary metric: is this person steadying or slipping?</p></div><div><span class="ins-s">Ψ(t)</span><b>The trajectory</b><p>The shape of a person&#x27;s coherence over time, across daily, weekly and longer rhythms. Same average, different waveform.</p></div></div>
+    <p class="fine" style="margin-bottom:12px">November 2026: the C320 substrate profile is retired from current work. It stays here as part of the published record.</p><div class="instr"><div><span class="ins-s">C320</span><b>The substrate</b><p>A proposed profile of 64 skills across four layers (survival, functional, cognitive, meta), scored from 64 to 320. Two people with the same total can be built very differently.</p></div><div><span class="ins-s">c</span><b>The state</b><p>A proposed coherence score for a person at the moment they give a signal.</p></div><div><span class="ins-s">Δc</span><b>The direction</b><p>How c changes from one session to the next. The paper&#x27;s primary metric: is this person steadying or slipping?</p></div><div><span class="ins-s">Ψ(t)</span><b>The trajectory</b><p>The shape of a person&#x27;s coherence over time, across daily, weekly and longer rhythms. Same average, different waveform.</p></div></div>
     <p class="honest">These are research instruments, proposed and not yet validated. They are not shown to individuals as personal scores, on this site or in the Neev app.</p>
   </div></section>
   <section class="block"><div class="wrap tw">
@@ -1436,6 +1470,46 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
 </section>
 
 <!-- ================= TOOLS ================= -->
+<!-- ================= THE STORY ================= -->
+<section class="view" data-view="story" aria-label="The story">
+  <div class="phero"><div class="layers" data-par></div><div class="wrap">
+    <div class="eyebrow">The story · five movements</div>
+    <h2 data-h1>No mind is enough on its own.</h2>
+    <p class="lede">So we borrow each other’s, and what we borrow is only as good as how well the person we borrow from is held. Every book, every episode, the app and the lab are chapters of this one story.</p>
+  </div></div>
+  <section class="block"><div class="wrap story">
+    <div class="mv" id="m1"><span class="n">1 · Two hunters</span><h3>Seventy thousand years ago</h3>
+      <p>Two people walk through a forest. One watches the left. The other watches the right. Neither can see everything, so each lends the other half a world. When one stiffens, the other moves before knowing why.</p>
+      <p>That is the oldest human technology. A single mind takes in a thin slice of what is happening around it. So we do not survive by seeing more. We survive by trusting what someone else sees.</p></div>
+    <div class="mv" id="m2"><span class="n">2 · The village</span><h3>You are made of a few people</h3>
+      <p>Trust at that depth does not scale by itself. So we built things to carry it further: language, ritual, custom, story, law, God. Each one lets strangers act as if they were watching each other’s side of the forest.</p>
+      <p>Underneath all of them the unit stayed small. A few people who would come at 2:40 in the night. A dozen or so who tell you the truth. A hundred or more who know your name. Take them away and what is left is not a freer you. It is a less steady one.</p></div>
+    <div class="mv" id="m3"><span class="n">3 · The drift</span><h3>Reachable by thousands, held by no one</h3>
+      <p>In two generations we thinned those circles faster than at any time before. We kept the scale and lost the holding.</p>
+      <p>A person who is not held does not stop choosing. They choose differently. Tired, alone, cornered, we click, rate, buy and answer in ways we would not stand behind on a better day. What we signal drifts away from what we value.</p></div>
+    <div class="mv" id="m4"><span class="n">4 · The witness</span><h3>Something new is learning from us</h3>
+      <p>It knows almost everything and never sleeps, and it learns what humans want by reading our signals: every rating, every click, every correction. It cannot see whether we were held or alone when we gave them. It takes the 2:40 version of us as the whole of us.</p>
+      <p>So the question “can machines be aligned with human values?” has a question hiding under it. Which human? Held, or alone? A signal is not the value.</p></div>
+    <div class="mv" id="m5"><span class="n">5 · The foundation</span><h3>The second singularity has to come first</h3>
+      <p>There are two points ahead. At one, machines out-think us. At the other, we hold each other well enough to be worth learning from. The first is coming whether we are ready or not. The second is ours to build.</p>
+      <p>It is built from both ends. People rebuild who holds them: that is <b>Neev</b>, the practice. Machines learn to tell a held signal from a lonely one: that is <b>Signal ≠ Value</b>, the research.</p>
+      <p class="close">It begins with one question. How many people are you made of?</p></div>
+  </div></section>
+  <section class="block"><div class="wrap">
+    <div class="eyebrow">Two tracks, one story</div>
+    <div class="fork" style="margin-top:20px">
+      <a href="/neev-app/" data-evt="story_neev"><span class="rl">Neev · the practice</span><h3>Who holds you?</h3><p>The series, the books and the app. Draw your own circles, and reach one person.</p><span class="go">Open the Neev app</span></a>
+      <a href="/lab/" data-evt="story_lab"><span class="rl">Signal ≠ Value · the research</span><h3>Which human did the machine learn from?</h3><p>A pre-registered claim about AI feedback, and the test that could prove it wrong.</p><span class="go">Open the lab</span></a>
+    </div>
+  </div></section>
+  <section class="block"><div class="wrap" style="max-width:860px">
+    <div class="eyebrow">What is known, and what is proposed</div>
+    <h3 style="font-size:clamp(26px,3vw,38px);font-weight:300;margin-top:10px">Each link in the story, and how strong it is.</h3>
+    <table class="claims"><tbody><tr><td>People rely on each other’s attention and judgement to get through the world.</td><td>Well established</td></tr><tr><td>Human social life comes in layered circles of rough size.</td><td>Established pattern; numbers approximate</td></tr><tr><td>Whether a person is held, tired or cornered changes their answers and choices.</td><td>Well established</td></tr><tr><td>AI training treats human feedback the same, whatever the person was going through.</td><td>Largely true today</td></tr><tr class="p"><td>That error leans one way and does not wash out with more data.</td><td>Hypothesis, being tested</td></tr><tr class="p"><td>Being well held brings a person’s feedback closer to what they value.</td><td>Proposal, unproven</td></tr></tbody></table>
+    <p class="fine" style="margin-top:16px">The last two links are this work’s own claims. They are labelled as such everywhere, and the research is set up so they can fail. <a href="/corrections/">Corrections</a> are public.</p>
+  </div></section>
+</section>
+
 <!-- ================= LAB ================= -->
 <section class="view" data-view="lab" aria-label="Signal and Value Lab">
   <div class="phero"><div class="layers" data-par></div><div class="wrap">
@@ -1459,7 +1533,8 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
   <section class="block"><div class="wrap">
     <div class="eyebrow" style="margin-bottom:10px">The full lab</div>
     <h3 style="font-size:clamp(26px,3vw,38px);font-weight:300">Evidence, the flip test, the simulation and the proposal.</h3>
-    <p class="mute" style="font-family:var(--ui);font-size:17px;max-width:60ch;margin-top:12px">Inside: 71 cases of signals departing from values, where human signals enter AI systems, a flip test you can take, the full simulation of the planned study with the four design flaws it caught, and CWHF v2. Every claim carries its tier: established, hypothesis, simulated, proposed or retired.</p>
+    <p class="mute" style="font-family:var(--ui);font-size:17px;max-width:60ch;margin-top:12px">Why it exists: no human mind is enough on its own, so people rely on each other’s signals. Machines now learn from those signals at scale, without seeing the state they came from.</p>
+    <p class="mute" style="font-family:var(--ui);font-size:17px;max-width:60ch;margin-top:10px">Inside: 71 cases of signals departing from values, where human signals enter AI systems, a flip test you can take, the full simulation of the planned study with the four design flaws it caught, and CWHF v2. Every claim carries its tier: established, hypothesis, simulated, proposed or retired.</p>
     <div class="bench" id="labBench">
       <div class="bench-bar">
         <div class="bench-tabs" id="labTabs"></div>
@@ -1486,11 +1561,12 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
       <li><b>Pilot data</b><span class="t">None collected yet.</span><span class="st now">Next</span></li>
       <li><b>Validated result</b><span class="t">None yet. If H1 finds no meaningful link, the framework is revised and the null result is published.</span><span class="st">Open</span></li>
     </ol>
-    <p class="fine" style="margin-top:18px">The CWHF and Coherence Intelligence labs are now one: the Signal ≠ Value Lab v2.2. The author has a commercial interest and will not serve as principal investigator. Drafted with AI assistance; claims and errors are the author’s.</p>
+    <p class="fine" style="margin-top:18px">The author has a commercial interest and will not serve as principal investigator. Drafted with AI assistance; claims and errors are the author’s.</p>
+    <p style="font-family:var(--ui);font-size:16px;margin-top:22px">This is the research end of one story. The other end is <a href="/neev-app/">Neev</a>: who holds you. <a href="/story/">Read the story</a>.</p>
     <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px">
       <a class="btn" href="/research/coherence-intelligence/">The white paper</a>
       <a class="btn" href="/research/cwhf/">The research programme</a>
- <a class="btn" href="https://cwhf.vercel.app/paper/Signal-not-Value_Rao_2026.pdf" target="_blank" rel="noopener">Paper (PDF) ↗</a>
+      <a class="btn" href="https://cwhf.vercel.app/paper/Signal-not-Value_Rao_2026.pdf" target="_blank" rel="noopener">Paper (PDF) ↗</a>
       <a class="btn" href="https://osf.io/w7nyh" target="_blank" rel="noopener">The pre-registration ↗</a>
     </div>
   </div></section>
@@ -1703,9 +1779,9 @@ h1.hh-wrap .eyebrow,h1.hh-wrap .hh-h{display:block}
       <p class="fine" style="max-width:38ch">Two Point Singularity Press, an imprint of Kirti Enterprises. Thane, Maharashtra.</p>
       <p class="fine" style="max-width:38ch;margin-top:10px">Pre-registered at OSF.IO/W7NYH · ORCID 0009-0003-3477-1225 · Corrections in public</p>
     </div>
-    <div><h4>Explore</h4><ul><li><a href="/what-is-two-point-singularity/">Understand</a></li><li><a href="#ideas">The Coherence Wheel</a></li><li><a href="/neev-app/">Neev app</a></li><li><a href="/lab/">Signal ≠ Value Lab</a></li><li><a href="/glossary/">Glossary</a></li><li><a href="/neev-app/">Reflect</a></li><li><a href="/neev/">Watch</a></li><li><a href="/books/">Read</a></li><li><a href="/lab/">Verify</a></li></ul></div>
+    <div><h4>Explore</h4><ul><li><a href="/story/">Understand</a></li><li><a href="#ideas">The Coherence Wheel</a></li><li><a href="/neev-app/">Neev app</a></li><li><a href="/lab/">Signal ≠ Value Lab</a></li><li><a href="/glossary/">Glossary</a></li><li><a href="/neev-app/">Reflect</a></li><li><a href="/neev/">Watch</a></li><li><a href="/books/">Read</a></li><li><a href="/lab/">Verify</a></li></ul></div>
     <div><h4>Take part</h4><ul><li><a href="#start">Start here</a></li><li><a href="#learn">Learn the Lens</a></li><li><a href="#retreat">The visual retreat</a></li><li><a href="#writing">Letters and essays</a></li><li><a href="#immerse">The full descent</a></li><li><a href="/about/">About</a></li><li><a href="/privacy/">Privacy</a></li><li><a href="https://twopointsingularity.com/terms/">Terms</a></li></ul></div>
-    <div><h4>Read without the journey</h4><ul><li><a href="/what-is-two-point-singularity/">What is Two Point Singularity?</a></li><li><a href="/glossary/">Glossary</a></li><li><a href="/lab/">Signal ≠ Value Lab</a></li><li><a href="/neev-app/">Neev app</a></li><li><a href="/corrections/">Corrections</a></li><li><a href="/books/">All books</a></li><li><a href="/research/cwhf/">CWHF research</a></li><li><a href="/neev/">Neev series</a></li></ul><h4 style="margin-top:20px">Elsewhere</h4><ul><li><a href="https://www.amazon.in/dp/B0HJWLJ9CB" target="_blank" rel="noopener">Amazon.in</a></li><li><a href="https://orcid.org/0009-0003-3477-1225" target="_blank" rel="noopener">ORCID</a></li><li><a href="https://osf.io/w7nyh" target="_blank" rel="noopener">OSF</a></li><li><a href="https://cwhf.vercel.app/" target="_blank" rel="noopener">CWHF</a></li></ul>
+    <div><h4>Read without the journey</h4><ul><li><a href="/what-is-two-point-singularity/">What is Two Point Singularity?</a></li><li><a href="/story/">The story</a></li><li><a href="/glossary/">Glossary</a></li><li><a href="/lab/">Signal ≠ Value Lab</a></li><li><a href="/neev-app/">Neev app</a></li><li><a href="/corrections/">Corrections</a></li><li><a href="/books/">All books</a></li><li><a href="/research/cwhf/">CWHF research</a></li><li><a href="/neev/">Neev series</a></li></ul><h4 style="margin-top:20px">Elsewhere</h4><ul><li><a href="https://www.amazon.in/dp/B0HJWLJ9CB" target="_blank" rel="noopener">Amazon.in</a></li><li><a href="https://orcid.org/0009-0003-3477-1225" target="_blank" rel="noopener">ORCID</a></li><li><a href="https://osf.io/w7nyh" target="_blank" rel="noopener">OSF</a></li><li><a href="https://cwhf.vercel.app/" target="_blank" rel="noopener">CWHF</a></li></ul>
     </div>
   </div>
 </footer>
@@ -2207,8 +2283,7 @@ var CONTACT = 'venkat@twopointsingularity.com';
 /* LAB_SOURCES: the interactive labs shown on /lab/. When the CWHF and Coherence Intelligence labs are merged,
    leave ONE entry here and the tabs disappear. Each lab must allow framing from https://twopointsingularity.com. */
 var LAB_SOURCES = [
-  {label:'Signal ≠ Value Lab', url:'https://cwhf.vercel.app/'}
-  
+  {label:'Signal ≠ Value Lab v2.2', url:'https://cwhf.vercel.app/'}
 ];
 /* Cookieless analytics: events queue until the Plausible (or compatible) snippet is added to <head>. */
 window.plausible = window.plausible || function(){ (window.plausible.q = window.plausible.q || []).push(arguments); };
@@ -2624,7 +2699,7 @@ function route(){
 const TITLES = {
   home:'Two Point Singularity · Coherence precedes intelligence', 'two-point-singularity':'What is Two Point Singularity?', glossary:'Glossary · Two Point Singularity',
   'coherence-intelligence':'Coherence Intelligence · The signal is not the value', research:'Research · Two Point Singularity', read:'Books · Two Point Singularity',
-  watch:'Neev · Two Point Singularity', tools:'The Neev app · Two Point Singularity', lab:'Signal ≠ Value Lab · Two Point Singularity', learn:'Learn · Two Point Singularity', about:'About Venkat Rao · Two Point Singularity',
+  watch:'Neev · Two Point Singularity', tools:'The Neev app · Two Point Singularity', lab:'Signal ≠ Value Lab · Two Point Singularity', story:'The story · Two Point Singularity', learn:'Learn · Two Point Singularity', about:'About Venkat Rao · Two Point Singularity',
   ideas:'The Coherence Wheel · Two Point Singularity', retreat:'The visual retreat · Two Point Singularity', writing:'Letters and essays · Two Point Singularity', privacy:'Privacy · Two Point Singularity', map:'Your coherence map', start:'Start here · Two Point Singularity', immerse:'The descent · Two Point Singularity'
 };
 const NEXT = {
@@ -2638,6 +2713,7 @@ const NEXT = {
   watch:['read','Read the books','Nine rooms of life, one idea.'],
   read:['tools','Reflect in the Neev app','See who holds you, in your own answers.'],
   tools:['lab','Test the idea in the lab','See why a signal is not the value, then open the full lab.'],
+  story:['tools','Begin with Neev','Draw who holds you. It takes a few minutes and stays on your phone.'],
   lab:['research','Read the research','The papers, the pre-registration and the corrections log.'],
   research:['learn','Learn the Lens','Learn to see who holds you. Then teach it.'],
   learn:['about','Why this exists','The origin of Two Point Singularity.'],
@@ -2740,8 +2816,8 @@ function renderWriting(){
 
 
 /* ---------------- real paths <-> in-page views ---------------- */
-const NAVMAP = {book:'read', research:'lab', 'coherence-intelligence':'lab'};
-const PATHS = {'/':'home','/what-is-two-point-singularity/':'two-point-singularity','/glossary/':'glossary','/books/':'read','/research/cwhf/':'research','/research/coherence-intelligence/':'coherence-intelligence','/about/':'about','/privacy/':'privacy','/neev/':'watch','/lab/':'lab','/neev-app/':'tools'};
+const NAVMAP = {'two-point-singularity':'story', glossary:'story', book:'read', research:'lab', 'coherence-intelligence':'lab'};
+const PATHS = {'/':'home','/what-is-two-point-singularity/':'two-point-singularity','/glossary/':'glossary','/books/':'read','/research/cwhf/':'research','/research/coherence-intelligence/':'coherence-intelligence','/about/':'about','/privacy/':'privacy','/neev/':'watch','/lab/':'lab','/story/':'story','/neev-app/':'tools'};
 function toHash(href){ if(!href) return null; if(href[0]==='#') return href.slice(1); const u = href.replace(/^https:\/\/twopointsingularity\.com/,''); if(PATHS[u]) return PATHS[u]; const m = u.match(/^\/books\/([a-z0-9-]+)\/$/); return m ? 'book-'+m[1] : null; }
 document.addEventListener('click', e=>{
   if(e.defaultPrevented || e.button!==0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
