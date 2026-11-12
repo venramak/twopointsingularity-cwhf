@@ -1,0 +1,1249 @@
+{
+ "power": {
+  "null": [
+   [
+    20,
+    0.07,
+    0.058,
+    -0.02
+   ],
+   [
+    30,
+    0.045,
+    0.013,
+    -0.02
+   ],
+   [
+    40,
+    0.065,
+    0.007,
+    0.01
+   ],
+   [
+    60,
+    0.07,
+    0.003,
+    -0.01
+   ],
+   [
+    80,
+    0.07,
+    0.0,
+    -0.02
+   ],
+   [
+    120,
+    0.07,
+    0.0,
+    -0.01
+   ]
+  ],
+  "tiny": [
+   [
+    20,
+    0.247,
+    0.205,
+    1.67
+   ],
+   [
+    30,
+    0.237,
+    0.155,
+    1.75
+   ],
+   [
+    40,
+    0.278,
+    0.12,
+    1.72
+   ],
+   [
+    60,
+    0.407,
+    0.09,
+    1.74
+   ],
+   [
+    80,
+    0.48,
+    0.058,
+    1.73
+   ],
+   [
+    120,
+    0.565,
+    0.033,
+    1.75
+   ]
+  ],
+  "small": [
+   [
+    20,
+    0.512,
+    0.472,
+    3.41
+   ],
+   [
+    30,
+    0.593,
+    0.482,
+    3.49
+   ],
+   [
+    40,
+    0.635,
+    0.448,
+    3.46
+   ],
+   [
+    60,
+    0.85,
+    0.458,
+    3.49
+   ],
+   [
+    80,
+    0.907,
+    0.497,
+    3.49
+   ],
+   [
+    120,
+    0.98,
+    0.458,
+    3.5
+   ]
+  ],
+  "moderate": [
+   [
+    20,
+    0.84,
+    0.83,
+    5.99
+   ],
+   [
+    30,
+    0.925,
+    0.885,
+    6.07
+   ],
+   [
+    40,
+    0.978,
+    0.925,
+    6.05
+   ],
+   [
+    60,
+    0.993,
+    0.968,
+    6.09
+   ],
+   [
+    80,
+    1.0,
+    0.985,
+    6.09
+   ],
+   [
+    120,
+    1.0,
+    0.993,
+    6.09
+   ]
+  ]
+ },
+ "power_K": {
+  "null": [
+   [
+    48,
+    0.05,
+    0.01
+   ],
+   [
+    72,
+    0.07,
+    0.003
+   ],
+   [
+    96,
+    0.05,
+    0.0
+   ]
+  ],
+  "tiny": [
+   [
+    48,
+    0.318,
+    0.13
+   ],
+   [
+    72,
+    0.407,
+    0.09
+   ],
+   [
+    96,
+    0.448,
+    0.045
+   ]
+  ],
+  "small": [
+   [
+    48,
+    0.718,
+    0.502
+   ],
+   [
+    72,
+    0.85,
+    0.458
+   ],
+   [
+    96,
+    0.91,
+    0.49
+   ]
+  ],
+  "moderate": [
+   [
+    48,
+    0.983,
+    0.938
+   ],
+   [
+    72,
+    0.993,
+    0.968
+   ],
+   [
+    96,
+    1.0,
+    0.993
+   ]
+  ]
+ },
+ "ops": {
+  "Null: noise only, balanced design": {
+   "sig": 0.063,
+   "confirm": 0.004,
+   "old_pi060": 0.0,
+   "cover": 0.931,
+   "mean_D": 0.0,
+   "true_D": -0.0002,
+   "sd_D": 0.0106,
+   "mean_pi": 0.5001,
+   "flip_rate": 0.2987,
+   "acc_drop": 0.0674
+  },
+  "Null: noise + reflective dislike of attractors": {
+   "sig": 0.011,
+   "confirm": 0.0,
+   "old_pi060": 0.0,
+   "cover": 0.926,
+   "mean_D": -0.0088,
+   "true_D": -0.0104,
+   "sd_D": 0.0105,
+   "mean_pi": 0.4852,
+   "flip_rate": 0.2965,
+   "acc_drop": 0.0662
+  },
+  "Null: fixed 7 s timer, long options unread": {
+   "sig": 0.065,
+   "confirm": 0.005,
+   "old_pi060": 0.0,
+   "cover": 0.932,
+   "mean_D": 0.0001,
+   "true_D": -0.0002,
+   "sd_D": 0.0103,
+   "mean_pi": 0.5001,
+   "flip_rate": 0.2992,
+   "acc_drop": 0.0674
+  },
+  "Effect: small pull (logit 0.20)": {
+   "sig": 0.851,
+   "confirm": 0.48,
+   "old_pi060": 0.006,
+   "cover": 0.918,
+   "mean_D": 0.0296,
+   "true_D": 0.0348,
+   "sd_D": 0.0111,
+   "mean_pi": 0.5494,
+   "flip_rate": 0.2996,
+   "acc_drop": 0.0698
+  },
+  "Effect: moderate pull (logit 0.35)": {
+   "sig": 0.998,
+   "confirm": 0.97,
+   "old_pi060": 0.213,
+   "cover": 0.878,
+   "mean_D": 0.0517,
+   "true_D": 0.0607,
+   "sd_D": 0.0113,
+   "mean_pi": 0.5859,
+   "flip_rate": 0.3009,
+   "acc_drop": 0.0726
+  },
+  "Effect: moderate pull, same-sitting carry-over": {
+   "sig": 0.946,
+   "confirm": 0.237,
+   "old_pi060": 0.311,
+   "cover": 0.002,
+   "mean_D": 0.0246,
+   "true_D": 0.0607,
+   "sd_D": 0.0076,
+   "mean_pi": 0.5868,
+   "flip_rate": 0.1414,
+   "acc_drop": 0.0344
+  },
+  "Effect: moderate pull, fixed timer on long items": {
+   "sig": 0.999,
+   "confirm": 0.969,
+   "old_pi060": 0.199,
+   "cover": 0.878,
+   "mean_D": 0.0517,
+   "true_D": 0.0607,
+   "sd_D": 0.0109,
+   "mean_pi": 0.5858,
+   "flip_rate": 0.3015,
+   "acc_drop": 0.0726
+  },
+  "Null: noise + reflective liking of attractors": {
+   "sig": 0.213,
+   "confirm": 0.023,
+   "old_pi060": 0.0,
+   "cover": 0.93,
+   "mean_D": 0.0087,
+   "true_D": 0.0099,
+   "sd_D": 0.0104,
+   "mean_pi": 0.515,
+   "flip_rate": 0.2933,
+   "acc_drop": 0.0665
+  },
+  "Effect: tiny pull (logit 0.10)": {
+   "sig": 0.387,
+   "confirm": 0.083,
+   "old_pi060": 0.0,
+   "cover": 0.934,
+   "mean_D": 0.0149,
+   "true_D": 0.0173,
+   "sd_D": 0.011,
+   "mean_pi": 0.5249,
+   "flip_rate": 0.2991,
+   "acc_drop": 0.0686
+  }
+ },
+ "length": {
+  "Null: fixed 7 s timer, long options unread": {
+   "sig": 0.0,
+   "confirm": 0.0,
+   "old_pi060": 0.0,
+   "cover": 0.0,
+   "mean_D": -0.2166,
+   "true_D": -0.0,
+   "sd_D": 0.023,
+   "mean_pi": 0.2472,
+   "flip_rate": 0.4273,
+   "acc_drop": 0.2436
+  },
+  "Null: noise only, balanced design": {
+   "sig": 0.036,
+   "confirm": 0.028,
+   "old_pi060": 0.0,
+   "cover": 0.904,
+   "mean_D": -0.0053,
+   "true_D": -0.0,
+   "sd_D": 0.0207,
+   "mean_pi": 0.4936,
+   "flip_rate": 0.4145,
+   "acc_drop": 0.2317
+  },
+  "Effect: moderate pull (logit 0.35)": {
+   "sig": 0.07,
+   "confirm": 0.058,
+   "old_pi060": 0.0,
+   "cover": 0.138,
+   "mean_D": -0.0005,
+   "true_D": 0.0612,
+   "sd_D": 0.0207,
+   "mean_pi": 0.4994,
+   "flip_rate": 0.4146,
+   "acc_drop": 0.2323
+  },
+  "Effect: moderate pull, fixed timer on long items": {
+   "sig": 0.0,
+   "confirm": 0.0,
+   "old_pi060": 0.0,
+   "cover": 0.0,
+   "mean_D": -0.2151,
+   "true_D": 0.0612,
+   "sd_D": 0.0231,
+   "mean_pi": 0.2491,
+   "flip_rate": 0.4274,
+   "acc_drop": 0.2439
+  }
+ },
+ "personas": {
+  "Rested domain specialist": {
+   "n": 396,
+   "D": 0.022502107925800985,
+   "timeout": 0.0011574074074074073
+  },
+  "Gig annotator paid per item": {
+   "n": 712,
+   "D": 0.06022437681244319,
+   "timeout": 0.0007412609238451935
+  },
+  "Night-shift health worker": {
+   "n": 454,
+   "D": 0.06852399043196855,
+   "timeout": 0.018049437102300538
+  },
+  "Second-language reader": {
+   "n": 584,
+   "D": 0.05772157212572804,
+   "timeout": 0.338089802130898
+  },
+  "University student": {
+   "n": 644,
+   "D": 0.05230248159968742,
+   "timeout": 0.00511128364389234
+  },
+  "Retiree": {
+   "n": 415,
+   "D": 0.050198072488618184,
+   "timeout": 0.1531793842034806
+  },
+  "Overconfident generalist": {
+   "n": 371,
+   "D": 0.06319240334614518,
+   "timeout": 0.005390835579514825
+  },
+  "Anxious perfectionist": {
+   "n": 424,
+   "D": 0.028123089464030915,
+   "timeout": 0.0326585429769392
+  }
+ },
+ "h2": {
+  "No pull; valid proxy": {
+   "proxy_wp": 0.64,
+   "proxy_raw": 0.78,
+   "methods": {
+    "Uniform majority": {
+     "lean": 0.17,
+     "lean_sd": 0.96,
+     "ess": 1.0,
+     "l2": 1.0,
+     "night": 1.0
+    },
+    "Attention-check filter": {
+     "lean": 0.22,
+     "lean_sd": 1.13,
+     "ess": 0.83,
+     "l2": 1.07,
+     "night": 0.81
+    },
+    "Dawid-Skene reliability": {
+     "lean": 0.04,
+     "lean_sd": 1.09,
+     "ess": 0.77,
+     "l2": 0.88,
+     "night": 0.65
+    },
+    "CWHF (raw session score)": {
+     "lean": 0.16,
+     "lean_sd": 0.96,
+     "ess": 0.89,
+     "l2": 0.7,
+     "night": 0.72
+    },
+    "CWHF (within-person score)": {
+     "lean": 0.18,
+     "lean_sd": 0.95,
+     "ess": 0.93,
+     "l2": 1.0,
+     "night": 1.0
+    },
+    "CWHF within-person, sharp weights (c^4)": {
+     "lean": 0.14,
+     "lean_sd": 1.06,
+     "ess": 0.65,
+     "l2": 1.01,
+     "night": 1.01
+    },
+    "CWHF raw, sharp weights (c^4)": {
+     "lean": 0.11,
+     "lean_sd": 1.16,
+     "ess": 0.55,
+     "l2": 0.38,
+     "night": 0.41
+    },
+    "Oracle (true state)": {
+     "lean": 0.14,
+     "lean_sd": 0.98,
+     "ess": 0.86,
+     "l2": 1.04,
+     "night": 0.56
+    },
+    "Oracle, sharp (true state, ^4)": {
+     "lean": 0.04,
+     "lean_sd": 1.25,
+     "ess": 0.48,
+     "l2": 1.0,
+     "night": 0.25
+    }
+   }
+  },
+  "Pull; weak proxy": {
+   "proxy_wp": 0.32,
+   "proxy_raw": 0.45,
+   "methods": {
+    "Uniform majority": {
+     "lean": 5.47,
+     "lean_sd": 1.08,
+     "ess": 1.0,
+     "l2": 1.0,
+     "night": 1.0
+    },
+    "Attention-check filter": {
+     "lean": 5.23,
+     "lean_sd": 1.12,
+     "ess": 0.83,
+     "l2": 1.05,
+     "night": 0.81
+    },
+    "Dawid-Skene reliability": {
+     "lean": 5.0,
+     "lean_sd": 1.29,
+     "ess": 0.77,
+     "l2": 0.92,
+     "night": 0.69
+    },
+    "CWHF (raw session score)": {
+     "lean": 4.74,
+     "lean_sd": 1.18,
+     "ess": 0.83,
+     "l2": 0.75,
+     "night": 0.8
+    },
+    "CWHF (within-person score)": {
+     "lean": 5.04,
+     "lean_sd": 1.17,
+     "ess": 0.87,
+     "l2": 1.0,
+     "night": 1.0
+    },
+    "CWHF within-person, sharp weights (c^4)": {
+     "lean": 4.55,
+     "lean_sd": 1.43,
+     "ess": 0.51,
+     "l2": 1.04,
+     "night": 1.02
+    },
+    "CWHF raw, sharp weights (c^4)": {
+     "lean": 3.99,
+     "lean_sd": 1.48,
+     "ess": 0.48,
+     "l2": 0.53,
+     "night": 0.6
+    },
+    "Oracle (true state)": {
+     "lean": 4.16,
+     "lean_sd": 1.06,
+     "ess": 0.86,
+     "l2": 1.02,
+     "night": 0.56
+    },
+    "Oracle, sharp (true state, ^4)": {
+     "lean": 2.59,
+     "lean_sd": 1.34,
+     "ess": 0.48,
+     "l2": 0.95,
+     "night": 0.25
+    }
+   }
+  },
+  "Pull; moderate proxy": {
+   "proxy_wp": 0.5,
+   "proxy_raw": 0.66,
+   "methods": {
+    "Uniform majority": {
+     "lean": 5.36,
+     "lean_sd": 1.08,
+     "ess": 1.0,
+     "l2": 1.0,
+     "night": 1.0
+    },
+    "Attention-check filter": {
+     "lean": 5.03,
+     "lean_sd": 1.12,
+     "ess": 0.83,
+     "l2": 1.07,
+     "night": 0.84
+    },
+    "Dawid-Skene reliability": {
+     "lean": 4.84,
+     "lean_sd": 1.21,
+     "ess": 0.77,
+     "l2": 0.92,
+     "night": 0.63
+    },
+    "CWHF (raw session score)": {
+     "lean": 4.64,
+     "lean_sd": 1.08,
+     "ess": 0.87,
+     "l2": 0.72,
+     "night": 0.73
+    },
+    "CWHF (within-person score)": {
+     "lean": 4.96,
+     "lean_sd": 1.11,
+     "ess": 0.91,
+     "l2": 1.0,
+     "night": 1.0
+    },
+    "CWHF within-person, sharp weights (c^4)": {
+     "lean": 4.39,
+     "lean_sd": 1.31,
+     "ess": 0.59,
+     "l2": 1.04,
+     "night": 1.02
+    },
+    "CWHF raw, sharp weights (c^4)": {
+     "lean": 3.8,
+     "lean_sd": 1.26,
+     "ess": 0.53,
+     "l2": 0.43,
+     "night": 0.45
+    },
+    "Oracle (true state)": {
+     "lean": 4.09,
+     "lean_sd": 1.05,
+     "ess": 0.86,
+     "l2": 1.04,
+     "night": 0.56
+    },
+    "Oracle, sharp (true state, ^4)": {
+     "lean": 2.67,
+     "lean_sd": 1.29,
+     "ess": 0.48,
+     "l2": 1.0,
+     "night": 0.25
+    }
+   }
+  },
+  "Pull; strong proxy": {
+   "proxy_wp": 0.67,
+   "proxy_raw": 0.81,
+   "methods": {
+    "Uniform majority": {
+     "lean": 5.68,
+     "lean_sd": 0.99,
+     "ess": 1.0,
+     "l2": 1.0,
+     "night": 1.0
+    },
+    "Attention-check filter": {
+     "lean": 5.34,
+     "lean_sd": 1.06,
+     "ess": 0.83,
+     "l2": 1.06,
+     "night": 0.83
+    },
+    "Dawid-Skene reliability": {
+     "lean": 5.17,
+     "lean_sd": 1.21,
+     "ess": 0.77,
+     "l2": 0.9,
+     "night": 0.64
+    },
+    "CWHF (raw session score)": {
+     "lean": 4.86,
+     "lean_sd": 1.02,
+     "ess": 0.89,
+     "l2": 0.69,
+     "night": 0.7
+    },
+    "CWHF (within-person score)": {
+     "lean": 5.24,
+     "lean_sd": 0.99,
+     "ess": 0.94,
+     "l2": 1.0,
+     "night": 1.0
+    },
+    "CWHF within-person, sharp weights (c^4)": {
+     "lean": 4.57,
+     "lean_sd": 1.12,
+     "ess": 0.66,
+     "l2": 1.02,
+     "night": 1.01
+    },
+    "CWHF raw, sharp weights (c^4)": {
+     "lean": 3.78,
+     "lean_sd": 1.23,
+     "ess": 0.56,
+     "l2": 0.37,
+     "night": 0.38
+    },
+    "Oracle (true state)": {
+     "lean": 4.36,
+     "lean_sd": 0.97,
+     "ess": 0.86,
+     "l2": 1.03,
+     "night": 0.55
+    },
+    "Oracle, sharp (true state, ^4)": {
+     "lean": 2.89,
+     "lean_sd": 1.2,
+     "ess": 0.48,
+     "l2": 0.99,
+     "night": 0.24
+    }
+   }
+  },
+  "Pull; moderate proxy; correlated state (night queue)": {
+   "proxy_wp": 0.65,
+   "proxy_raw": 0.73,
+   "methods": {
+    "Uniform majority": {
+     "lean": 7.37,
+     "lean_sd": 1.19,
+     "ess": 1.0,
+     "l2": 1.0,
+     "night": 1.0
+    },
+    "Attention-check filter": {
+     "lean": 6.93,
+     "lean_sd": 1.34,
+     "ess": 0.8,
+     "l2": 1.06,
+     "night": 0.81
+    },
+    "Dawid-Skene reliability": {
+     "lean": 6.97,
+     "lean_sd": 1.45,
+     "ess": 0.76,
+     "l2": 0.88,
+     "night": 0.68
+    },
+    "CWHF (raw session score)": {
+     "lean": 6.04,
+     "lean_sd": 1.23,
+     "ess": 0.81,
+     "l2": 0.67,
+     "night": 0.71
+    },
+    "CWHF (within-person score)": {
+     "lean": 6.45,
+     "lean_sd": 1.25,
+     "ess": 0.86,
+     "l2": 1.0,
+     "night": 0.99
+    },
+    "CWHF within-person, sharp weights (c^4)": {
+     "lean": 5.22,
+     "lean_sd": 1.56,
+     "ess": 0.48,
+     "l2": 1.02,
+     "night": 0.94
+    },
+    "CWHF raw, sharp weights (c^4)": {
+     "lean": 4.53,
+     "lean_sd": 1.54,
+     "ess": 0.42,
+     "l2": 0.39,
+     "night": 0.43
+    },
+    "Oracle (true state)": {
+     "lean": 5.18,
+     "lean_sd": 1.31,
+     "ess": 0.77,
+     "l2": 1.01,
+     "night": 0.54
+    },
+    "Oracle, sharp (true state, ^4)": {
+     "lean": 3.25,
+     "lean_sd": 1.82,
+     "ess": 0.35,
+     "l2": 0.94,
+     "night": 0.28
+    }
+   }
+  },
+  "Pull; strong proxy; correlated state (night queue)": {
+   "proxy_wp": 0.8,
+   "proxy_raw": 0.86,
+   "methods": {
+    "Uniform majority": {
+     "lean": 7.22,
+     "lean_sd": 0.94,
+     "ess": 1.0,
+     "l2": 1.0,
+     "night": 1.0
+    },
+    "Attention-check filter": {
+     "lean": 6.9,
+     "lean_sd": 0.99,
+     "ess": 0.8,
+     "l2": 1.06,
+     "night": 0.8
+    },
+    "Dawid-Skene reliability": {
+     "lean": 6.85,
+     "lean_sd": 1.15,
+     "ess": 0.76,
+     "l2": 0.93,
+     "night": 0.69
+    },
+    "CWHF (raw session score)": {
+     "lean": 5.85,
+     "lean_sd": 1.0,
+     "ess": 0.83,
+     "l2": 0.66,
+     "night": 0.72
+    },
+    "CWHF (within-person score)": {
+     "lean": 6.22,
+     "lean_sd": 1.02,
+     "ess": 0.88,
+     "l2": 1.0,
+     "night": 0.99
+    },
+    "CWHF within-person, sharp weights (c^4)": {
+     "lean": 4.83,
+     "lean_sd": 1.29,
+     "ess": 0.51,
+     "l2": 1.02,
+     "night": 0.93
+    },
+    "CWHF raw, sharp weights (c^4)": {
+     "lean": 4.21,
+     "lean_sd": 1.41,
+     "ess": 0.43,
+     "l2": 0.37,
+     "night": 0.42
+    },
+    "Oracle (true state)": {
+     "lean": 5.17,
+     "lean_sd": 1.0,
+     "ess": 0.77,
+     "l2": 1.02,
+     "night": 0.56
+    },
+    "Oracle, sharp (true state, ^4)": {
+     "lean": 3.27,
+     "lean_sd": 1.5,
+     "ess": 0.35,
+     "l2": 0.96,
+     "night": 0.3
+    }
+   }
+  },
+  "Threshold pull (only when badly depleted); moderate proxy": {
+   "proxy_wp": 0.5,
+   "proxy_raw": 0.66,
+   "methods": {
+    "Uniform majority": {
+     "lean": 2.99,
+     "lean_sd": 0.79,
+     "ess": 1.0,
+     "l2": 1.0,
+     "night": 1.0
+    },
+    "Attention-check filter": {
+     "lean": 2.69,
+     "lean_sd": 0.92,
+     "ess": 0.83,
+     "l2": 1.06,
+     "night": 0.8
+    },
+    "Dawid-Skene reliability": {
+     "lean": 2.43,
+     "lean_sd": 0.85,
+     "ess": 0.77,
+     "l2": 0.91,
+     "night": 0.63
+    },
+    "CWHF (raw session score)": {
+     "lean": 1.9,
+     "lean_sd": 0.87,
+     "ess": 0.87,
+     "l2": 0.7,
+     "night": 0.73
+    },
+    "CWHF (within-person score)": {
+     "lean": 2.35,
+     "lean_sd": 0.88,
+     "ess": 0.91,
+     "l2": 1.0,
+     "night": 1.0
+    },
+    "CWHF within-person, sharp weights (c^4)": {
+     "lean": 1.64,
+     "lean_sd": 1.21,
+     "ess": 0.59,
+     "l2": 1.03,
+     "night": 1.02
+    },
+    "CWHF raw, sharp weights (c^4)": {
+     "lean": 0.97,
+     "lean_sd": 1.21,
+     "ess": 0.53,
+     "l2": 0.41,
+     "night": 0.45
+    },
+    "Oracle (true state)": {
+     "lean": 1.4,
+     "lean_sd": 0.88,
+     "ess": 0.86,
+     "l2": 1.02,
+     "night": 0.54
+    },
+    "Oracle, sharp (true state, ^4)": {
+     "lean": 0.52,
+     "lean_sd": 1.26,
+     "ess": 0.48,
+     "l2": 0.96,
+     "night": 0.24
+    }
+   }
+  },
+  "Threshold pull; moderate proxy; correlated state": {
+   "proxy_wp": 0.65,
+   "proxy_raw": 0.73,
+   "methods": {
+    "Uniform majority": {
+     "lean": 7.33,
+     "lean_sd": 1.03,
+     "ess": 1.0,
+     "l2": 1.0,
+     "night": 1.0
+    },
+    "Attention-check filter": {
+     "lean": 6.53,
+     "lean_sd": 1.12,
+     "ess": 0.8,
+     "l2": 1.07,
+     "night": 0.79
+    },
+    "Dawid-Skene reliability": {
+     "lean": 7.03,
+     "lean_sd": 1.37,
+     "ess": 0.77,
+     "l2": 0.89,
+     "night": 0.72
+    },
+    "CWHF (raw session score)": {
+     "lean": 4.76,
+     "lean_sd": 1.03,
+     "ess": 0.81,
+     "l2": 0.67,
+     "night": 0.73
+    },
+    "CWHF (within-person score)": {
+     "lean": 5.43,
+     "lean_sd": 1.03,
+     "ess": 0.86,
+     "l2": 1.0,
+     "night": 0.99
+    },
+    "CWHF within-person, sharp weights (c^4)": {
+     "lean": 3.3,
+     "lean_sd": 1.29,
+     "ess": 0.47,
+     "l2": 1.02,
+     "night": 0.95
+    },
+    "CWHF raw, sharp weights (c^4)": {
+     "lean": 2.47,
+     "lean_sd": 1.35,
+     "ess": 0.41,
+     "l2": 0.39,
+     "night": 0.46
+    },
+    "Oracle (true state)": {
+     "lean": 3.32,
+     "lean_sd": 0.97,
+     "ess": 0.76,
+     "l2": 1.0,
+     "night": 0.54
+    },
+    "Oracle, sharp (true state, ^4)": {
+     "lean": 1.4,
+     "lean_sd": 1.45,
+     "ess": 0.35,
+     "l2": 0.92,
+     "night": 0.28
+    }
+   }
+  },
+  "Source fix: shorter sessions and breaks (state -0.15); moderate proxy": {
+   "proxy_wp": 0.5,
+   "proxy_raw": 0.63,
+   "methods": {
+    "Uniform majority": {
+     "lean": 3.76,
+     "lean_sd": 1.02,
+     "ess": 1.0,
+     "l2": 1.0,
+     "night": 1.0
+    },
+    "Attention-check filter": {
+     "lean": 3.59,
+     "lean_sd": 1.06,
+     "ess": 0.86,
+     "l2": 1.05,
+     "night": 0.84
+    },
+    "Dawid-Skene reliability": {
+     "lean": 3.25,
+     "lean_sd": 1.13,
+     "ess": 0.79,
+     "l2": 0.92,
+     "night": 0.68
+    },
+    "CWHF (raw session score)": {
+     "lean": 3.21,
+     "lean_sd": 1.01,
+     "ess": 0.91,
+     "l2": 0.74,
+     "night": 0.77
+    },
+    "CWHF (within-person score)": {
+     "lean": 3.45,
+     "lean_sd": 0.99,
+     "ess": 0.94,
+     "l2": 1.0,
+     "night": 1.0
+    },
+    "CWHF within-person, sharp weights (c^4)": {
+     "lean": 3.11,
+     "lean_sd": 1.01,
+     "ess": 0.69,
+     "l2": 1.02,
+     "night": 1.06
+    },
+    "CWHF raw, sharp weights (c^4)": {
+     "lean": 2.62,
+     "lean_sd": 1.15,
+     "ess": 0.64,
+     "l2": 0.46,
+     "night": 0.54
+    },
+    "Oracle (true state)": {
+     "lean": 2.86,
+     "lean_sd": 0.98,
+     "ess": 0.91,
+     "l2": 1.03,
+     "night": 0.61
+    },
+    "Oracle, sharp (true state, ^4)": {
+     "lean": 1.83,
+     "lean_sd": 1.09,
+     "ess": 0.63,
+     "l2": 1.02,
+     "night": 0.3
+    }
+   }
+  }
+ },
+ "power_person": {
+  "null": [
+   [
+    20,
+    0.05,
+    0.043,
+    -0.0
+   ],
+   [
+    30,
+    0.04,
+    0.03,
+    -0.06
+   ],
+   [
+    40,
+    0.045,
+    0.013,
+    0.15
+   ],
+   [
+    60,
+    0.053,
+    0.004,
+    -0.01
+   ],
+   [
+    80,
+    0.06,
+    0.0,
+    0.0
+   ],
+   [
+    120,
+    0.04,
+    0.0,
+    -0.03
+   ]
+  ],
+  "tiny": [
+   [
+    20,
+    0.22,
+    0.185,
+    1.41
+   ],
+   [
+    30,
+    0.263,
+    0.195,
+    1.52
+   ],
+   [
+    40,
+    0.285,
+    0.145,
+    1.51
+   ],
+   [
+    60,
+    0.362,
+    0.115,
+    1.48
+   ],
+   [
+    80,
+    0.422,
+    0.043,
+    1.43
+   ],
+   [
+    120,
+    0.588,
+    0.04,
+    1.49
+   ]
+  ],
+  "small": [
+   [
+    20,
+    0.45,
+    0.417,
+    2.93
+   ],
+   [
+    30,
+    0.57,
+    0.465,
+    3.0
+   ],
+   [
+    40,
+    0.667,
+    0.487,
+    3.0
+   ],
+   [
+    60,
+    0.803,
+    0.475,
+    2.95
+   ],
+   [
+    80,
+    0.882,
+    0.485,
+    2.91
+   ],
+   [
+    120,
+    0.975,
+    0.497,
+    2.98
+   ]
+  ],
+  "moderate": [
+   [
+    20,
+    0.765,
+    0.757,
+    5.12
+   ],
+   [
+    30,
+    0.94,
+    0.907,
+    5.23
+   ],
+   [
+    40,
+    0.97,
+    0.94,
+    5.21
+   ],
+   [
+    60,
+    0.997,
+    0.96,
+    5.17
+   ],
+   [
+    80,
+    1.0,
+    0.98,
+    5.09
+   ],
+   [
+    120,
+    1.0,
+    0.99,
+    5.18
+   ]
+  ]
+ },
+ "person_nulls": {
+  "Null: noise only, balanced design|60": {
+   "sig": 0.053,
+   "confirm": 0.0035,
+   "mean_D": -6.246874239934786e-05,
+   "sd_Di": 0.0819554535747584,
+   "reps": 2000
+  },
+  "Null: noise + reflective dislike of attractors|60": {
+   "sig": 0.008,
+   "confirm": 0.002,
+   "mean_D": -0.00842481648702308,
+   "sd_Di": 0.08210865088367902,
+   "reps": 500
+  },
+  "Null: noise + reflective liking of attractors|60": {
+   "sig": 0.208,
+   "confirm": 0.034,
+   "mean_D": 0.008945362587899304,
+   "sd_Di": 0.08222303491751919,
+   "reps": 500
+  },
+  "Effect: tiny pull (logit 0.10)|60": {
+   "sig": 0.3616666666666667,
+   "confirm": 0.115,
+   "mean_D": 0.014806112986097086,
+   "sd_Di": 0.0852753013069843,
+   "reps": 600
+  },
+  "Effect: small pull (logit 0.20)|60": {
+   "sig": 0.8033333333333333,
+   "confirm": 0.475,
+   "mean_D": 0.029532853145792338,
+   "sd_Di": 0.08568386068924268,
+   "reps": 600
+  },
+  "Effect: moderate pull (logit 0.35)|60": {
+   "sig": 0.9966666666666667,
+   "confirm": 0.96,
+   "mean_D": 0.051714960956350614,
+   "sd_Di": 0.08709842301046054,
+   "reps": 600
+  }
+ }
+}

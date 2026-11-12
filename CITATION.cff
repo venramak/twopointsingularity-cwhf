@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "Signal ≠ Value: Coherence-Weighted Human Feedback (CWHF), whitepaper v2.0 and companion lab"
+version: "2.0"
+date-released: "2026-11-12"
+license: CC-BY-4.0
+url: "https://cwhf.vercel.app/"
+repository-code: "https://github.com/venramak/twopointsingularity-cwhf"
+authors:
+  - family-names: Rao
+    given-names: Venkat
+    orcid: "https://orcid.org/0009-0003-3477-1225"
